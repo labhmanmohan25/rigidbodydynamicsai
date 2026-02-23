@@ -10,10 +10,9 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
-// Logo: add your image as public/rbdlogo.jpg
-// Production (GitHub Pages) uses basePath /rigidbodydynamicsai
+// Logo: public/rbdlogo.svg (replace with public/rbdlogo.jpg if you add a custom image)
 const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
-const LOGO_SRC = `${basePath}/rbdlogo.jpg`;
+const LOGO_SRC = `${basePath}/rbdlogo.svg`;
 
 export default function Header() {
   const [logoError, setLogoError] = useState(false);
@@ -28,7 +27,7 @@ export default function Header() {
           {!logoError ? (
             <Image
               src={LOGO_SRC}
-              alt=""
+              alt="RBD"
               width={120}
               height={40}
               className="h-8 w-auto object-contain"
