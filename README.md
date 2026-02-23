@@ -29,6 +29,16 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Deploy on GitHub Pages
+
+This app is set up to deploy to GitHub Pages via GitHub Actions.
+
+1. **Enable GitHub Pages** (one-time): In your repo on GitHub go to **Settings → Pages**. Under "Build and deployment", set **Source** to **GitHub Actions**.
+2. **Push to `main`**: Each push to the `main` branch runs the workflow and deploys the static site.
+3. **Your site** will be at: `https://<your-username>.github.io/rigidbodydynamicsai/`
+
+To run the deployment manually, use **Actions → Deploy to GitHub Pages → Run workflow**.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
