@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 const navLinks = [
   { href: "#vision", label: "Vision" },
@@ -9,7 +10,14 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+// Logo: add your image as public/rbdlogo.jpg
+// Production (GitHub Pages) uses basePath /rigidbodydynamicsai
+const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
+const LOGO_SRC = `${basePath}/rbdlogo.jpg`;
+
 export default function Header() {
+  const [logoError, setLogoError] = useState(false);
+
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-[var(--max-width-content)] items-center justify-between px-6">
@@ -17,14 +25,17 @@ export default function Header() {
           href="/"
           className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
         >
-          <Image
-            src="/rbdlogo.jpg"
-            alt=""
-            width={120}
-            height={40}
-            className="h-8 w-auto object-contain"
-            priority
-          />
+          {!logoError ? (
+            <Image
+              src={LOGO_SRC}
+              alt=""
+              width={120}
+              height={40}
+              className="h-8 w-auto object-contain"
+              priority
+              onError={() => setLogoError(true)}
+            />
+          ) : null}
           <span className="font-display text-lg font-semibold tracking-tight text-foreground">
             Rigid Body Dynamics AI
           </span>
