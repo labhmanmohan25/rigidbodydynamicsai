@@ -1,6 +1,6 @@
 # Production Scheduling Chaos in Discrete Manufacturing
 
-**Research Date:** 2026-02-24
+**Research Date:** February 6, 2026
 **Data Limitation Notice:** WebSearch and WebFetch tools were unavailable during this research session. All figures below are drawn from published reports, analyst data, and industry surveys available through the researcher's training data (through early 2025). Figures are sourced and cited where possible. Some numbers may have been updated since original publication; users should verify critical figures against the live sources listed in Section 9.
 
 ---

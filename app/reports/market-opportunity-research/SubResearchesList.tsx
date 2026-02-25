@@ -10,7 +10,16 @@ type SubResearch = {
   href: string;
   title: string;
   description?: string;
+  date?: string;
+  slug?: string;
 };
+
+function subtitleForSlug(slug: string): string {
+  if (slug.startsWith("hc_")) return "Healthcare";
+  if (slug.startsWith("hosp_")) return "Hospitality";
+  if (slug.startsWith("mfg_")) return "Manufacturing";
+  return "";
+}
 
 export function SubResearchesList({ items }: { items: readonly SubResearch[] }) {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -60,9 +69,14 @@ export function SubResearchesList({ items }: { items: readonly SubResearch[] }) 
                       {sub.title}
                     </span>
                     <span className="text-xs font-medium uppercase tracking-widest text-neutral-400">
-                      February 2026
+                      {sub.date ?? "February 2026"}
                     </span>
                   </div>
+                  {sub.slug && subtitleForSlug(sub.slug) && (
+                    <p className="mt-0.5 text-sm text-neutral-500 italic">
+                      {subtitleForSlug(sub.slug)}
+                    </p>
+                  )}
                   {sub.description && (
                     <p className="mt-1.5 text-sm text-neutral-600 leading-snug max-w-2xl">
                       {sub.description}

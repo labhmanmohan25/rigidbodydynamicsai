@@ -1,7 +1,7 @@
 # Regulatory Submission Assembly for Drug Approvals
 ## Market Research Report
 
-**Date**: February 2026
+**Date**: February 19, 2026
 **Analyst Note**: This report is compiled from analyst training data (through mid-2025), publicly reported market research, SEC filings, and industry publications. All figures should be verified against the cited sources. Where live web access was unavailable, source URLs are provided for manual verification.
 
 ---
@@ -414,4 +414,4 @@ Sources: Grand View Research, Mordor Intelligence, Markets and Markets all publi
 
 ---
 
-*Report compiled February 2026. Market size estimates represent ranges from multiple analyst sources (2023-2025 publications). Revenue estimates for private companies and product-level breakdowns are analyst estimates based on publicly available information. All figures should be independently verified against cited sources.*
+*Report compiled February 19, 2026. Market size estimates represent ranges from multiple analyst sources (2023-2025 publications). Revenue estimates for private companies and product-level breakdowns are analyst estimates based on publicly available information. All figures should be independently verified against cited sources.*

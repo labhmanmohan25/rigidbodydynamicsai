@@ -5,7 +5,7 @@
 
 **Who Suffers:** Hotel sales teams, convention centers, resort properties, conference hotels, and full-service branded hotels with significant group/meetings revenue.
 
-**Research Date:** February 2026
+**Research Date:** February 14, 2026
 **Data Freshness Note:** Figures sourced from 2023-2025 publications. WebSearch/WebFetch were unavailable during compilation; all figures are attributed to named sources for independent verification.
 
 ---

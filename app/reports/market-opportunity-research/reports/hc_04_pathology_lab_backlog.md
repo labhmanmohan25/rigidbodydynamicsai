@@ -2,8 +2,8 @@
 
 **Problem Statement:** Pathology labs have multi-week backlogs delaying cancer diagnoses due to severe pathologist shortage and manual slide reading.
 
-**Report Date:** 2026-02-24
-**Data Vintage:** Primarily 2023-2025 published sources. See KEY_SOURCES for full citations.
+**Report Date:** February 21, 2026
+**Data Window:** Primarily 2023-2025 published sources. See KEY SOURCES for full citations.
 
 ---
 

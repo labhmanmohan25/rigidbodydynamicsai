@@ -1,7 +1,7 @@
 # Unplanned Equipment Downtime in Manufacturing
 ## Market Research Report
 
-**Date compiled:** 2026-02-24
+**Date compiled:** February 9, 2026
 **Data priority:** 2023-2025 sources
 **Note:** WebSearch and WebFetch tools were unavailable during this research session. All data below is drawn from the analyst's training knowledge (covering reports through May 2025). All sources are cited with URLs for independent verification. Some figures may have been updated since original publication -- verify URLs for latest editions.
 

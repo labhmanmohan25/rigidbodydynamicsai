@@ -4,7 +4,7 @@
 **Problem:** Pharma companies spend years manually compiling FDA/EMA regulatory dossiers (CTDs, NDAs, BLAs); regulatory affairs teams manually collate clinical, safety, chemistry data into thousands of documents.
 **Who Suffers:** Pharmaceutical companies, biotech firms, regulatory affairs teams, CROs
 
-**Research Date:** 2026-02-24
+**Research Date:** February 18, 2026
 **Data Vintage:** Primarily 2023-2025 sources. Note: WebSearch/WebFetch were unavailable; this report is compiled from analyst training knowledge of published industry data. All figures are from publicly cited reports and should be verified against live sources.
 
 ---

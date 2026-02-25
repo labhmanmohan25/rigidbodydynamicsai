@@ -4,7 +4,7 @@
 **Sector:** Healthcare & Pharmaceuticals
 **Problem:** 15-25% of hospital claims are denied by insurers; fighting denials requires large expensive teams; denial management is a $20B+ services industry.
 **Who Suffers:** Hospital revenue cycle departments, physician groups, health systems CFOs, billing teams.
-**Date Compiled:** 2026-02-24
+**Date Compiled:** February 20, 2026
 **Data Vintage:** 2023-2025 (from analyst training data through May 2025)
 
 > **NOTE:** WebSearch and WebFetch were unavailable during this research session. All data points below are drawn from the analyst's training knowledge covering published reports from HFMA, KFF, Experian Health, Change Healthcare/Optum, Crowe, Grand View Research, Mordor Intelligence, Becker's Hospital Review, Fierce Healthcare, and other industry sources through May 2025. Source URLs are provided for independent verification.

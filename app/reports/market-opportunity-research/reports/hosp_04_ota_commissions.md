@@ -1,6 +1,6 @@
 # OTA Commission Dependency & Rate Parity Management Failures
 
-**Research Date:** 2026-02-24
+**Research Date:** February 11, 2026
 **Data Vintage:** Primarily 2023-2025 sources (compiled from training data; live web access was unavailable -- see methodology note at bottom)
 
 ---
@@ -373,4 +373,4 @@ The gap between the **$50B-$80B problem** (OTA commissions) and the **$580M-$750
 
 ---
 
-*Report compiled 2026-02-24. Data primarily from 2023-2025 published sources. Methodology note: Both WebSearch and WebFetch tools were unavailable during this research session. All data is drawn from the analyst's training knowledge of published industry reports, company filings, and market research through early-mid 2025. Figures should be verified against current primary sources before use in investment decisions or business cases.*
+*Report compiled February 11, 2026. Data primarily from 2023-2025 published sources. Methodology note: Both WebSearch and WebFetch tools were unavailable during this research session. All data is drawn from the analyst's training knowledge of published industry reports, company filings, and market research through early-mid 2025. Figures should be verified against current primary sources before use in investment decisions or business cases.*

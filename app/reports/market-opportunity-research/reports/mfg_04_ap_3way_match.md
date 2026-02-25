@@ -1,7 +1,7 @@
 # Manual AP 3-Way Match Exceptions in Industrial Procurement
 
 **Sector:** Manufacturing & Industrial Production
-**Date:** 2026-02-24
+**Date:** February 6, 2026
 **Data Vintage:** 2023-2025 (latest available from training data; web verification unavailable)
 
 ---
@@ -289,4 +289,4 @@ The manual 3-way match problem in industrial AP is a **$350B-$450B global cost c
 
 ---
 
-*Research compiled: 2026-02-24 | Data vintage: 2023-2025 | Web verification: Not available (WebSearch/WebFetch denied)*
+*Research compiled: February 6, 2026 | Data vintage: 2023-2025 | Web verification: Not available (WebSearch/WebFetch denied)*

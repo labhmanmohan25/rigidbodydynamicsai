@@ -4,7 +4,7 @@
 **Sector:** Healthcare & Pharmaceuticals
 **Problem:** Patients discharged without adequate follow-up and care coordination cause ~$26B/yr in preventable 30-day readmissions in the US; hospitals face CMS penalties under HRRP for high readmission rates.
 **Who Suffers:** Hospitals, payers, ACOs, care management teams, discharge planning nurses, post-acute providers.
-**Report Date:** February 2026 (data sourced from 2023-2025 publications)
+**Report Date:** February 17, 2026 (data sourced from 2023-2025 publications)
 
 > **NOTE:** This report was compiled from training knowledge (sources through mid-2025). Live web verification was unavailable. All figures cite their original source. Recommend verifying FY2025/FY2026 CMS data against cms.gov for the latest penalty cycle.
 

@@ -1,7 +1,7 @@
 # Untracked Energy Waste in Manufacturing Plants
 
 **Market Research Report**
-**Date**: 2026-02-24
+**Date**: February 2, 2026
 **Analyst Note**: This report is compiled from IEA, DOE, Eurostat, and major market research firm data (2023-2025). All figures are drawn from analyst training data through Q1 2025. URLs to original sources are provided for independent verification.
 
 ---
@@ -438,4 +438,4 @@ The winner in this space will own the **machine-level energy data graph** -- onc
 
 ---
 
-*Report compiled February 2026. Figures represent best available estimates from cited sources as of early 2025. Readers should verify current figures via the referenced URLs, as market conditions and regulatory frameworks continue to evolve rapidly.*
+*Report compiled February 2, 2026. Figures represent best available estimates from cited sources as of early 2025. Readers should verify current figures via the referenced URLs, as market conditions and regulatory frameworks continue to evolve rapidly.*

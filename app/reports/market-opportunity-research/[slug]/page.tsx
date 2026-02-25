@@ -7,7 +7,7 @@ import {
   getSubResearchBySlug,
   MARKET_OPPORTUNITY_SUB_RESEARCHES,
 } from "../sub-researches";
-import { VirtualizedMarkdown } from "../VirtualizedMarkdown";
+import { ReportMarkdown } from "../ReportMarkdown";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -59,11 +59,11 @@ export default async function SubResearchPage({ params }: Props) {
         />
 
         <p className="mb-3 text-xs font-medium uppercase tracking-widest text-neutral-400">
-          Sub-research · February 2026
+          Research Report · {sub.date}
         </p>
 
         <article className="prose-report markdown-report">
-          <VirtualizedMarkdown content={content} />
+          <ReportMarkdown content={content} />
         </article>
 
         <div className="mt-16 flex flex-wrap items-center gap-4 border-t border-neutral-100 pt-8">

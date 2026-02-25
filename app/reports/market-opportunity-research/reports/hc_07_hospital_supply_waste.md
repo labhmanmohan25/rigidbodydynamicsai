@@ -2,7 +2,7 @@
 
 ## Market Research Report
 
-**Date:** 2026-02-24
+**Date:** February 17, 2026
 **Data Recency:** Primarily 2023-2025 sources; noted where older data is used
 **Caveat:** WebSearch and WebFetch were unavailable during this research session. All data is sourced from analyst training knowledge through mid-2025, drawing on published market research reports, AHA data, peer-reviewed literature, SEC filings, and industry publications. Numbers should be cross-verified with live sources before use in investment memos.
 
@@ -456,4 +456,4 @@ At ~5,200 acute care hospitals averaging 45,000 SKUs each, the US hospital syste
 
 ---
 
-*Report compiled February 2026. Data points sourced from analyst training knowledge through mid-2025. All figures should be verified against cited sources before use in investment or strategic decisions.*
+*Report compiled February 17, 2026. Data points sourced from analyst training knowledge through mid-2025. All figures should be verified against cited sources before use in investment or strategic decisions.*

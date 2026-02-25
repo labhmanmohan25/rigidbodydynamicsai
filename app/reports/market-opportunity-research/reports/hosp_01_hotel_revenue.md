@@ -1,6 +1,6 @@
 # Revenue Leakage at Independent Hotels from Manual Pricing
 
-**Research Date:** 2026-02-24
+**Research Date:** February 15, 2026
 **Methodology Note:** This report was compiled from industry data available through May 2025 (analyst training data cutoff). Live web search was unavailable during compilation. All figures are sourced from publicly available industry reports, earnings filings, and hospitality research databases. Users should verify current figures against live sources where noted.
 
 ---
@@ -351,4 +351,4 @@ All sources referenced in this report. URLs are provided where stable links exis
 
 ---
 
-*Report compiled 2026-02-24. Data primarily from 2023-2025 industry sources. Figures are estimates based on publicly available data and should be validated against current primary sources for investment decisions.*
+*Report compiled February 15, 2026. Data primarily from 2023-2025 industry sources. Figures are estimates based on publicly available data and should be validated against current primary sources for investment decisions.*

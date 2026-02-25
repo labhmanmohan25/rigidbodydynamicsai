@@ -1,6 +1,6 @@
 # Preventable Hospital Readmissions
 
-**Date:** 2026-02-24
+**Date:** February 16, 2026
 **Problem:** Patients discharged without adequate follow-up cause ~$26B/yr in preventable 30-day readmissions; hospitals face CMS penalties under the Hospital Readmissions Reduction Program (HRRP).
 
 **Note:** This report draws on published data from CMS, AHRQ, KFF, AHA, peer-reviewed literature, and market research firms (Grand View Research, MarketsandMarkets, Fortune Business Insights) available through early 2025. Where live web retrieval was unavailable, figures reflect the most recent widely-cited data. Sources with URLs are listed in Section 9.
@@ -332,4 +332,4 @@ The market remains fragmented with no dominant integrated solution. The highest-
 
 ---
 
-*Report compiled 2026-02-24. Data primarily from 2023-2025 sources. Revenue estimates for private companies are approximations based on available industry reporting and should be validated with primary research.*
+*Report compiled February 16, 2026. Data primarily from 2023-2025 sources. Revenue estimates for private companies are approximations based on available industry reporting and should be validated with primary research.*

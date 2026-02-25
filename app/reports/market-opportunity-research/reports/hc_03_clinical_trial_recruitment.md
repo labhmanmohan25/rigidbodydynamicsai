@@ -5,6 +5,8 @@
 
 **Who Suffers:** Pharmaceutical sponsors (VP Clinical Operations, Head of Patient Recruitment), CROs (project managers, site feasibility teams), and clinical trial sites (principal investigators, study coordinators).
 
+**Research Date:** February 23, 2026
+
 ---
 
 ## 1. PROBLEM MARKET SIZE

@@ -2,7 +2,7 @@
 
 **Problem Statement:** PO/invoice/receipt 3-way matching is done manually in industrial companies; AP teams spend 60%+ of their time resolving exceptions.
 
-**Report Date:** February 2026
+**Report Date:** February 5, 2026
 **Data Sources:** Primarily 2023-2025 publications (Ardent Partners, IOFM, Hackett Group, Grand View Research, Mordor Intelligence, MarketsandMarkets, Verified Market Research, industry filings, analyst reports)
 
 > **Note:** This report was compiled from analyst training data through mid-2025. All figures include source attributions. Readers should verify the most current data points directly from cited sources.
@@ -347,4 +347,4 @@ Despite clear ROI, AP automation penetration in mid-market manufacturing ($50M-$
 
 ---
 
-*Report compiled February 2026. Data primarily from 2023-2025 publications. Verify current figures directly with cited sources for investment decisions.*
+*Report compiled February 5, 2026. Data primarily from 2023-2025 publications. Verify current figures directly with cited sources for investment decisions.*

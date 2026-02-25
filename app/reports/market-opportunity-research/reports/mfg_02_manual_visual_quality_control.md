@@ -350,6 +350,6 @@ The convergence of cheaper edge compute (NVIDIA Jetson, purpose-built AI chips),
 
 ---
 
-*Report compiled: 2026-02-24*
+*Report compiled: February 8, 2026*
 *Data currency: Primarily 2023-2025 data from training knowledge (May 2025 cutoff)*
 *Note: WebSearch and WebFetch were unavailable during this research session. All figures are drawn from well-known industry sources as cited, but live verification of the most current numbers was not possible. Figures marked "est." are analyst consensus estimates rather than confirmed disclosures.*

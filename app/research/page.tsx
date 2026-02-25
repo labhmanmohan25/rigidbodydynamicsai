@@ -10,11 +10,14 @@ type ListItem = {
   internal: boolean;
   date: string;
   tag?: string;
+  tagHighlight?: boolean;
 };
 
 const mainArticles: ListItem[] = [
   {
     title: "The Paradigm Shift to Agent-First Organizations",
+    tag: "Latest · High value",
+    tagHighlight: true,
     subtitle: "Specialized agents vs. general LLMs",
     date: "Feb 25, 2026",
     description:
@@ -34,9 +37,17 @@ const mainArticles: ListItem[] = [
   },
 ];
 
+function subtitleForSlug(slug: string): string {
+  if (slug.startsWith("hc_")) return "Healthcare";
+  if (slug.startsWith("hosp_")) return "Hospitality";
+  if (slug.startsWith("mfg_")) return "Manufacturing";
+  return "";
+}
+
 const subReportItems: ListItem[] = MARKET_OPPORTUNITY_SUB_RESEARCHES.map((sub) => ({
   title: sub.title,
-  date: "Feb 24, 2026",
+  subtitle: subtitleForSlug(sub.slug),
+  date: sub.date,
   description: sub.description ?? undefined,
   href: sub.href,
   internal: true,
@@ -54,10 +65,6 @@ export default function ResearchPage() {
     <div className="min-h-screen bg-white text-foreground">
       <main className="mx-auto max-w-3xl px-6 pt-28 pb-16">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Research" }]} />
-        <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Research</h1>
-        <p className="mt-3 text-sm text-neutral-500">
-          Publications and articles from our lab.
-        </p>
 
         <div className="mt-12">
           {articles.length === 0 ? (
@@ -78,7 +85,13 @@ export default function ResearchPage() {
                             {article.title}
                           </h2>
                           {article.tag && (
-                            <span className="rounded bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-500">
+                            <span
+                              className={
+                                article.tagHighlight
+                                  ? "rounded bg-violet-100 px-2 py-0.5 text-xs font-medium text-violet-700"
+                                  : "rounded bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-500"
+                              }
+                            >
                               {article.tag}
                             </span>
                           )}

@@ -3,7 +3,7 @@
 ## Problem Statement
 Hotel guest complaints surface publicly on TripAdvisor/Google before staff even knows; by the time management responds the review is live; reactive handling costs future bookings at scale.
 
-**Report Date:** February 2026
+**Report Date:** February 11, 2026
 **Data Vintage:** 2023--2025 where available; seminal studies noted with original dates.
 **Methodology Note:** This report was compiled from analyst training knowledge of published research, market reports, and industry publications. All sources are cited with URLs for independent verification. Where exact 2025 figures were unavailable, the most recent credible data point is used and noted.
 
@@ -328,4 +328,4 @@ The whitespace opportunity is clear: **a proactive, mid-stay complaint intercept
 
 ---
 
-*Report compiled February 2026. Revenue estimates for private companies are approximate and based on available industry data, funding disclosures, and analyst estimates. Verify critical figures with primary sources before use in financial models.*
+*Report compiled February 11, 2026. Revenue estimates for private companies are approximate and based on available industry data, funding disclosures, and analyst estimates. Verify critical figures with primary sources before use in financial models.*

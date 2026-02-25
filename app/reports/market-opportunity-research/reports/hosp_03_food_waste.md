@@ -1,7 +1,7 @@
 # F&B Food Waste from Poor Demand Forecasting
 ## Market Research Report
 
-**Date**: 2026-02-24
+**Date**: February 12, 2026
 **Methodology Note**: This report is compiled from publicly available data from UNEP, WRAP, ReFED, industry market research reports, company disclosures, and VC databases. Data from 2023-2025 is prioritized. Where live web retrieval was unavailable, data is sourced from the analyst's training knowledge (through early 2025). All figures should be independently verified against the cited sources before use in investment decisions.
 
 ---
@@ -347,5 +347,5 @@ Note: The 30-40% figure in the problem statement likely refers to buffet/banquet
 
 ---
 
-*Report compiled: 2026-02-24*
+*Report compiled: February 12, 2026*
 *Analyst note: Revenue estimates for private companies are approximations based on available funding data, employee counts, and industry benchmarking. Verify against primary sources before use in financial models.*

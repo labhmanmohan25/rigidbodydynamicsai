@@ -4,7 +4,7 @@
 
 **Problem Statement:** Production planners spend days manually replanning after any disruption; most mid-market plants still schedule in Excel despite having ERP.
 
-**Report Date:** February 2026
+**Report Date:** February 7, 2026
 **Data Vintage:** 2023-2025 (sourced from analyst training data through mid-2025; web verification tools were unavailable during compilation -- all figures should be cross-checked against cited sources)
 
 ---

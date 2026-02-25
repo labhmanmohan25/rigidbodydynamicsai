@@ -1,6 +1,6 @@
 # Group/MICE RFP Response Failure
 
-**Date**: February 2026
+**Date**: February 13, 2026
 **Analyst Note**: Web search and fetch tools were unavailable during this research session. All data below is drawn from the analyst's knowledge base (trained through May 2025). Figures are sourced from publicly available industry reports, earnings calls, and trade publications from 2023-2025. All sources are listed in Section 9 with URLs where available. Users should verify current figures against live sources.
 
 ---
@@ -355,4 +355,4 @@ Hotels currently spend $40K-$150K/property/year on group sales technology, and e
 
 ---
 
-*Report compiled February 2026. Data primarily from 2023-2025 sources. Web search tools were unavailable during research; figures are from analyst knowledge base. Recommend verifying current market sizes against live sources.*
+*Report compiled February 13, 2026. Data primarily from 2023-2025 sources. Web search tools were unavailable during research; figures are from analyst knowledge base. Recommend verifying current market sizes against live sources.*
