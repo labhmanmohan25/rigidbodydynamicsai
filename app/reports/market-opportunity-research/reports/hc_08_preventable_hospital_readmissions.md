@@ -8,6 +8,7 @@
 
 > **NOTE:** This report was compiled from training knowledge (sources through mid-2025). Live web verification was unavailable. All figures cite their original source. Recommend verifying FY2025/FY2026 CMS data against cms.gov for the latest penalty cycle.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

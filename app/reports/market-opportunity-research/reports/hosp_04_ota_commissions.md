@@ -3,6 +3,7 @@
 **Research Date:** February 11, 2026
 **Data Vintage:** Primarily 2023-2025 sources (compiled from training data; live web access was unavailable -- see methodology note at bottom)
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## Executive Summary

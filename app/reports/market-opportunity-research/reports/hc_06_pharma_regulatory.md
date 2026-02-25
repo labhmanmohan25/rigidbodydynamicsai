@@ -4,6 +4,7 @@
 **Date**: February 19, 2026
 **Analyst Note**: This report is compiled from analyst training data (through mid-2025), publicly reported market research, SEC filings, and industry publications. All figures should be verified against the cited sources. Where live web access was unavailable, source URLs are provided for manual verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## Executive Summary

@@ -7,6 +7,7 @@
 
 **Data Provenance Note:** WebSearch and WebFetch tools were unavailable during this research session. All data points below are drawn from the analyst's training knowledge base (sourced from industry reports, press releases, SEC filings, and trade publications through May 2025). Figures are marked with their approximate source year. Users should verify critical numbers against the original sources listed in Section 9.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

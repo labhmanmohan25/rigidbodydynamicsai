@@ -5,6 +5,7 @@
 
 **Note:** This report draws on published data from CMS, AHRQ, KFF, AHA, peer-reviewed literature, and market research firms (Grand View Research, MarketsandMarkets, Fortune Business Insights) available through early 2025. Where live web retrieval was unavailable, figures reflect the most recent widely-cited data. Sources with URLs are listed in Section 9.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

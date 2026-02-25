@@ -8,6 +8,7 @@
 **Research Date:** February 14, 2026
 **Data Freshness Note:** Figures sourced from 2023-2025 publications. WebSearch/WebFetch were unavailable during compilation; all figures are attributed to named sources for independent verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

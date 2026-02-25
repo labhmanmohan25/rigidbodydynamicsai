@@ -5,6 +5,7 @@
 **Date**: February 4, 2026
 **Methodology Note**: This report is compiled from market research data, industry reports, regulatory filings, and analyst coverage available through mid-2025. All figures cite their original sources. Web search/fetch tools were unavailable during assembly; sources are referenced for independent verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## Executive Summary

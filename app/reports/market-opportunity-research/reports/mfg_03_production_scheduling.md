@@ -7,6 +7,7 @@
 **Report Date:** February 7, 2026
 **Data Vintage:** 2023-2025 (sourced from analyst training data through mid-2025; web verification tools were unavailable during compilation -- all figures should be cross-checked against cited sources)
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

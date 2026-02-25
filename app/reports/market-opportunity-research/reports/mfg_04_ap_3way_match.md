@@ -4,6 +4,7 @@
 **Date:** February 6, 2026
 **Data Vintage:** 2023-2025 (latest available from training data; web verification unavailable)
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## PROBLEM STATEMENT

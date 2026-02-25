@@ -7,6 +7,7 @@ Hotel guest complaints surface publicly on TripAdvisor/Google before staff even 
 **Data Vintage:** 2023--2025 where available; seminal studies noted with original dates.
 **Methodology Note:** This report was compiled from analyst training knowledge of published research, market reports, and industry publications. All sources are cited with URLs for independent verification. Where exact 2025 figures were unavailable, the most recent credible data point is used and noted.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

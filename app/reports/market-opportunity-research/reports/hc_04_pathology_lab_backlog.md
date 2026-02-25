@@ -5,6 +5,7 @@
 **Report Date:** February 21, 2026
 **Data Window:** Primarily 2023-2025 published sources. See KEY SOURCES for full citations.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

@@ -3,6 +3,7 @@
 **Date**: February 13, 2026
 **Analyst Note**: Web search and fetch tools were unavailable during this research session. All data below is drawn from the analyst's knowledge base (trained through May 2025). Figures are sourced from publicly available industry reports, earnings calls, and trade publications from 2023-2025. All sources are listed in Section 9 with URLs where available. Users should verify current figures against live sources.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

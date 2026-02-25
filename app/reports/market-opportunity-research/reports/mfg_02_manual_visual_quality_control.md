@@ -6,6 +6,7 @@ Manual visual inspection on production lines is inconsistent, slow, and misses d
 ## Who Suffers
 QC managers, production line supervisors, consumer goods / automotive / electronics / pharmaceutical manufacturers. Companies with high-mix product lines and SME manufacturers who cannot justify $500K+ vision systems are disproportionately affected.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

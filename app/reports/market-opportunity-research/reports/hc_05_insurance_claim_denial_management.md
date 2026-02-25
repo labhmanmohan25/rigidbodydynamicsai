@@ -9,6 +9,7 @@
 
 > **NOTE:** WebSearch and WebFetch were unavailable during this research session. All data points below are drawn from the analyst's training knowledge covering published reports from HFMA, KFF, Experian Health, Change Healthcare/Optum, Crowe, Grand View Research, Mordor Intelligence, Becker's Hospital Review, Fierce Healthcare, and other industry sources through May 2025. Source URLs are provided for independent verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

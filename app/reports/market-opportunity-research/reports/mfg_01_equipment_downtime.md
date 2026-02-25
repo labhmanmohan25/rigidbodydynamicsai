@@ -6,6 +6,7 @@
 **Data Window:** 2023-2025 (latest available from analyst reports)
 **Note:** This report was compiled from knowledge of published analyst reports, industry surveys, and market research. All source URLs are provided in Section 9 for verification. Live web access was unavailable during compilation; figures should be cross-checked against the cited sources.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE -- Total Annual Cost of Unplanned Downtime

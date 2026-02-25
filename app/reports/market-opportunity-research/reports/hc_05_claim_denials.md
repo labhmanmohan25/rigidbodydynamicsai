@@ -4,6 +4,7 @@
 **Data vintage:** Primarily 2023-2025 sources (from analyst training data; live web verification was unavailable)
 **Caveat:** WebSearch and WebFetch tools were blocked during this session. All figures below are drawn from the analyst's training corpus (cut-off May 2025) and cite the original publication sources. Numbers should be independently verified before use in investment memos.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

@@ -6,6 +6,7 @@
 **Data Recency:** Primarily 2023-2025 sources; noted where older data is used
 **Caveat:** WebSearch and WebFetch were unavailable during this research session. All data is sourced from analyst training knowledge through mid-2025, drawing on published market research reports, AHA data, peer-reviewed literature, SEC filings, and industry publications. Numbers should be cross-verified with live sources before use in investment memos.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

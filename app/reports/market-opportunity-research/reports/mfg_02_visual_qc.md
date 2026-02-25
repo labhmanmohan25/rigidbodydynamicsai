@@ -6,6 +6,7 @@
 **Problem:** Manual visual inspection on production lines is inconsistent, slow, and misses defects; product recalls from quality failures cost $10B+/yr.
 **Note:** This report is compiled from market research data available through mid-2025. All figures from named research firms and industry bodies should be verified against their latest published reports. URLs are provided for source verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

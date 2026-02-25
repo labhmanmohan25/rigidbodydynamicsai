@@ -7,6 +7,7 @@
 
 **Research Date:** February 23, 2026
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

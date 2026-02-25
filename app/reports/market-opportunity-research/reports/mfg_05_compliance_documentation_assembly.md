@@ -5,6 +5,7 @@
 **Problem:** Manufacturers spend millions manually assembling ISO 9001/FDA 21 CFR/CE Mark/IATF compliance documents; audit preparation takes months of manual effort; failure to comply results in massive fines, recalls, or loss of certification.
 **Who Suffers:** Quality/compliance teams, regulatory affairs managers, document control specialists in pharmaceutical, medical device, automotive, aerospace, and general manufacturing companies.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

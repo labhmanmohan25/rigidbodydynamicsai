@@ -3,6 +3,7 @@
 **Research Date:** February 15, 2026
 **Methodology Note:** This report was compiled from industry data available through May 2025 (analyst training data cutoff). Live web search was unavailable during compilation. All figures are sourced from publicly available industry reports, earnings filings, and hospitality research databases. Users should verify current figures against live sources where noted.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## Executive Summary

@@ -7,6 +7,7 @@
 
 > **Note:** This report was compiled from analyst training data through mid-2025. All figures include source attributions. Readers should verify the most current data points directly from cited sources.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

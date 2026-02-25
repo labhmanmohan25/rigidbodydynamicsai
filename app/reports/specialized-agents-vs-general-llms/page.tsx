@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { ReportSummaryWithButton } from "./ReportSummaryWithButton";
 
 export const metadata = {
   title: "The Paradigm Shift to Agent-First Organizations — RBD AI Reports",
@@ -32,6 +33,62 @@ export default function ReportPage() {
           </p>
           <div className="mt-6 h-px bg-neutral-100" />
         </header>
+
+        {/* Report Summary — shown after clicking Summarize */}
+        <ReportSummaryWithButton>
+          <h2 className="mb-4 text-lg font-semibold text-neutral-900">Report Summary</h2>
+          <p className="mb-5 text-[0.9375rem] leading-relaxed text-neutral-600">
+            The document, <strong>"Specialized Agents vs. General LLMs,"</strong> argues that the enterprise AI paradigm is shifting from using monolithic, general-purpose Large Language Models (LLMs) to deploying <strong>orchestrated, specialized Small Language Models (SLMs)</strong> in autonomous multi-agent systems.
+          </p>
+          <p className="mb-5 text-sm font-medium text-neutral-700">Key findings:</p>
+          <ol className="mb-6 list-decimal space-y-3 pl-5 text-[0.9375rem] leading-relaxed text-neutral-600">
+            <li>
+              <strong className="text-neutral-800">Validation of the Specialized Agent Hypothesis</strong> — Specialized, fine-tuned SLMs outperform general-purpose LLMs for routine business tasks due to the "Generalist Tax" (latency, cost, context pathologies, instruction drift). Benchmarks show SLMs achieve higher accuracy, superior throughput (e.g., 17× faster), and far lower cost (e.g., 1/80th). The exception is creative writing and open-ended content, where frontier LLMs retain an advantage.
+            </li>
+            <li>
+              <strong className="text-neutral-800">The Necessity of Multi-Agent Orchestration</strong> — An Agentic Orchestration Layer is critical: Planner/Supervisor Agent, centralized state and context management, deterministic guardrails, and Human-in-the-Loop (HITL). The Model Context Protocol (MCP) standardizes tool discovery and execution.
+            </li>
+            <li>
+              <strong className="text-neutral-800">Architecture of the Agent-First Enterprise</strong> — Data re-architecture for autonomous machine actors (EKG, event-driven streaming), modernized IAM with least-privilege agent identities, and human capital evolution toward strategic direction and governance (e.g., Orchestration Engineer, Workforce Planning Architect) in the "Frontier Firm."
+            </li>
+            <li>
+              <strong className="text-neutral-800">Commercial Ecosystem: Agent-as-a-Service (AaaS)</strong> — Shift from SaaS to AaaS; agent marketplaces (Azure AI Foundry, AWS Marketplace, Google Agentspace); outcome-based pricing for measurable, verified results.
+            </li>
+          </ol>
+          <div className="overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-neutral-200 bg-neutral-50">
+                  <th className="px-4 py-3 text-left font-medium text-neutral-700">Business Function</th>
+                  <th className="px-4 py-3 text-left font-medium text-neutral-700">Recommended Model Paradigm</th>
+                  <th className="px-4 py-3 text-left font-medium text-neutral-700">Rationale</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-neutral-100">
+                <tr className="bg-white">
+                  <td className="px-4 py-3 font-medium text-neutral-800 align-top">Research & Data Extraction</td>
+                  <td className="px-4 py-3 text-neutral-600 align-top whitespace-nowrap">Fine-Tuned SLM + RAG</td>
+                  <td className="px-4 py-3 text-neutral-500 align-top">Requires extreme structural adherence and reliability.</td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="px-4 py-3 font-medium text-neutral-800 align-top">Marketing (Structured Copy)</td>
+                  <td className="px-4 py-3 text-neutral-600 align-top whitespace-nowrap">Fine-Tuned SLM</td>
+                  <td className="px-4 py-3 text-neutral-500 align-top">Embeds brand voice directly into model weights for consistency.</td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="px-4 py-3 font-medium text-neutral-800 align-top">Creative Writing</td>
+                  <td className="px-4 py-3 text-neutral-600 align-top whitespace-nowrap">Frontier LLM (Prompted)</td>
+                  <td className="px-4 py-3 text-neutral-500 align-top">Superior for emergent reasoning and emotive nuance.</td>
+                </tr>
+                <tr className="bg-white">
+                  <td className="px-4 py-3 font-medium text-neutral-800 align-top">Customer Support</td>
+                  <td className="px-4 py-3 text-neutral-600 align-top whitespace-nowrap">Fine-Tuned SLM</td>
+                  <td className="px-4 py-3 text-neutral-500 align-top">Requires rapid, low-latency execution and strict adherence to policy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ReportSummaryWithButton>
 
         {/* Body */}
         <article className="prose-report">

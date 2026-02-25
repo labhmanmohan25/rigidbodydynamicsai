@@ -4,6 +4,7 @@
 **Date**: February 2, 2026
 **Analyst Note**: This report is compiled from IEA, DOE, Eurostat, and major market research firm data (2023-2025). All figures are drawn from analyst training data through Q1 2025. URLs to original sources are provided for independent verification.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE

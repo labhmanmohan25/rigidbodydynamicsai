@@ -4,6 +4,7 @@
 **Date**: February 12, 2026
 **Methodology Note**: This report is compiled from publicly available data from UNEP, WRAP, ReFED, industry market research reports, company disclosures, and VC databases. Data from 2023-2025 is prioritized. Where live web retrieval was unavailable, data is sourced from the analyst's training knowledge (through early 2025). All figures should be independently verified against the cited sources before use in investment decisions.
 
+**Author:** Rigid Body Dynamics
 ---
 
 ## 1. PROBLEM MARKET SIZE
