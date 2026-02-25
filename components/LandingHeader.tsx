@@ -9,7 +9,8 @@ const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
 const LOGO_WHITE_URL = basePath ? `${basePath}/logowhite.png` : "/logowhite.png";
 
 const navLinks = [
-  { href: "/research", label: "Research" },
+  { href: "/research", label: "the research" },
+  { href: "/about", label: "the human" },
 ];
 
 export default function LandingHeader() {
@@ -17,7 +18,9 @@ export default function LandingHeader() {
   const isHome = pathname === "/";
   const logoUrl = isHome ? LOGO_WHITE_URL : LOGO_URL;
 
-  const navLinkClass = isHome
+  const isResearch = pathname === "/research" || pathname.startsWith("/research/");
+  const isAbout = pathname === "/about";
+  const baseNavClass = isHome
     ? "rounded-md px-3 py-1.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
     : "rounded-md px-3 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2";
 
@@ -26,11 +29,11 @@ export default function LandingHeader() {
       <div className="flex w-full items-center gap-2 rounded-xl bg-white/10 px-3 py-3 shadow-lg backdrop-blur-sm ring-1 ring-inset ring-white/20 sm:w-auto sm:py-2" style={{boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25)"}}>
         <Link
           href="/"
-          className="mr-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
+          className={`mr-1 flex flex-shrink-0 items-center justify-center p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2 ${isHome ? "h-9 w-9 rounded-full bg-white/20" : "h-7 w-7 rounded-md"}`}
           aria-label="Rigid Body Dynamics home"
         >
           <span
-            className="h-7 w-7 rounded-md bg-center bg-no-repeat"
+            className={`bg-center bg-no-repeat ${isHome ? "h-6 w-6 rounded-full" : "h-7 w-7 rounded-md"}`}
             style={{ backgroundImage: `url('${logoUrl}')`, backgroundSize: "contain" }}
             aria-hidden
           />
@@ -38,13 +41,19 @@ export default function LandingHeader() {
 
         <nav aria-label="Main navigation">
           <ul className="flex items-center gap-1">
-            {navLinks.map(({ href, label }) => (
-              <li key={href}>
-                <Link href={href} className={navLinkClass}>
-                  {label}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map(({ href, label }) => {
+              const isActive = href === "/research" ? isResearch : href === "/about" ? isAbout : false;
+              return (
+                <li key={href}>
+                  <Link
+                    href={href}
+                    className={`${baseNavClass} ${isActive ? "underline underline-offset-4 decoration-2" : ""}`}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -54,7 +63,7 @@ export default function LandingHeader() {
           rel="noopener noreferrer"
           className="ml-auto inline-flex h-9 flex-shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 sm:ml-1 sm:h-8"
         >
-          Get in touch
+          get in touch
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"

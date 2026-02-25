@@ -53,7 +53,7 @@ export default function VisionCta() {
             rel="noopener noreferrer"
             className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-base font-medium text-accent-foreground transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
           >
-            Get in touch
+            get in touch
           </Link>
         </motion.div>
       </div>
