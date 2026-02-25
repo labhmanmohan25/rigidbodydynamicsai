@@ -7,7 +7,6 @@ import { useState } from "react";
 const navLinks = [
   { href: "#vision", label: "Vision" },
   { href: "#approach", label: "Approach" },
-  { href: "#contact", label: "Contact" },
 ];
 
 // Logo: public/rbdlogo.svg (replace with public/rbdlogo.jpg if you add a custom image)
@@ -18,7 +17,7 @@ export default function Header() {
   const [logoError, setLogoError] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/60 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-[var(--max-width-content)] items-center justify-between px-6">
         <Link
           href="/"
