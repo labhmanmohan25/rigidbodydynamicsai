@@ -19,14 +19,14 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
   title: "Rigid Body Dynamics",
   description:
     "We research what's next in AI and make it accessible — one problem at a time. Proactive execution, not just answers.",
   icons: {
-    icon: `${basePath}/logowithwhitebg.png`,
+    icon: basePath ? `${basePath}/logowithwhitebg.png` : "/logowithwhitebg.png",
   },
   openGraph: {
     title: "Rigid Body Dynamics",

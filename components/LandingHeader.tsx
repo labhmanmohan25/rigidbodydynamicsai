@@ -4,9 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 // Same approach as background image on home page: inline style url() so logo is always visible
-const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
-const LOGO_URL = `${basePath || ""}/logo.png`;
-const LOGO_WHITE_URL = `${basePath || ""}/logowhite.png`;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
+const LOGO_WHITE_URL = basePath ? `${basePath}/logowhite.png` : "/logowhite.png";
 
 const navLinks = [
   { href: "/research", label: "Research" },

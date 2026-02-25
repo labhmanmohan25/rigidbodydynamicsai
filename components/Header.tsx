@@ -8,8 +8,8 @@ const navLinks = [
 ];
 
 // Same approach as background image: inline style url() so logo is always visible (public/logo.png)
-const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
-const LOGO_URL = `${basePath || ""}/logo.png`;
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
 
 export default function Header() {
   return (
