@@ -13,7 +13,7 @@ export default function Footer() {
     },
   ];
 
-  const brandName = "Rigid Body Dynamics AI";
+  const brandName = "Rigid Body Dynamics";
 
   return (
     <footer

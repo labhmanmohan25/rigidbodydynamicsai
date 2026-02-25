@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const COMPANY_NAME = "Rigid Body Dynamics AI";
+const COMPANY_NAME = "Rigid Body Dynamics";
 const TAGLINE = "Agentic systems are on the horizon, and we're building them.";
 
 export default function Home() {
@@ -18,7 +18,7 @@ export default function Home() {
 
       {/* Company name — upper-center */}
       <div className="relative flex min-h-screen flex-col items-center justify-start px-6 pt-28 sm:pt-36">
-        <h1 className="text-center text-3xl font-semibold tracking-wide text-white drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl" style={{ fontFamily: "var(--font-pixel)" }}>
+        <h1 className="doto-title text-center text-3xl font-semibold tracking-wide text-white drop-shadow-lg sm:text-5xl md:text-6xl lg:text-7xl">
           {COMPANY_NAME}
         </h1>
       </div>

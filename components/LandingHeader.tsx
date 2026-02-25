@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+// Same approach as background image on home page: inline style url() so logo is always visible
 const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
-const LOGO_SRC = `${basePath}/logo.png`;
+const LOGO_URL = `${basePath || ""}/logo.png`;
+const LOGO_WHITE_URL = `${basePath || ""}/logowhite.png`;
 
 const navLinks = [
   { href: "/research", label: "Research" },
@@ -14,6 +15,7 @@ const navLinks = [
 export default function LandingHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const logoUrl = isHome ? LOGO_WHITE_URL : LOGO_URL;
 
   const navLinkClass = isHome
     ? "rounded-md px-3 py-1.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
@@ -24,16 +26,13 @@ export default function LandingHeader() {
       <div className="flex w-full items-center gap-2 rounded-xl bg-white/10 px-3 py-3 shadow-lg backdrop-blur-sm ring-1 ring-inset ring-white/20 sm:w-auto sm:py-2" style={{boxShadow: "0 8px 32px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.25)"}}>
         <Link
           href="/"
-          className="mr-1 flex items-center justify-center rounded-md p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
-          aria-label="Rigid Body Dynamics AI home"
+          className="mr-1 flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-md p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
+          aria-label="Rigid Body Dynamics home"
         >
-          <Image
-            src={LOGO_SRC}
-            alt=""
-            width={28}
-            height={28}
-            className="h-7 w-7 object-contain"
-            priority
+          <span
+            className="h-7 w-7 rounded-md bg-center bg-no-repeat"
+            style={{ backgroundImage: `url('${logoUrl}')`, backgroundSize: "contain" }}
+            aria-hidden
           />
         </Link>
 

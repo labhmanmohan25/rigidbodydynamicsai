@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Playfair_Display, Pixelify_Sans } from "next/font/google";
+import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import LandingHeader from "@/components/LandingHeader";
 
@@ -19,18 +19,17 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"],
 });
 
-const pixelifySans = Pixelify_Sans({
-  variable: "--font-pixel",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
+const basePath = process.env.NODE_ENV === "production" ? "/rigidbodydynamicsai" : "";
 
 export const metadata: Metadata = {
-  title: "Rigid Body Dynamics AI — AI That Does the Work for You",
+  title: "Rigid Body Dynamics",
   description:
     "We research what's next in AI and make it accessible — one problem at a time. Proactive execution, not just answers.",
+  icons: {
+    icon: `${basePath}/logowithwhitebg.png`,
+  },
   openGraph: {
-    title: "Rigid Body Dynamics AI — AI That Does the Work for You",
+    title: "Rigid Body Dynamics",
     description:
       "We research what's next in AI and make it accessible — one problem at a time.",
   },
@@ -43,8 +42,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="light">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Doto:wght,ROND@100..900,0..100&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${pixelifySans.variable} antialiased font-sans bg-background text-foreground`}
+        className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans bg-background text-foreground`}
       >
         <a
           href="#main"

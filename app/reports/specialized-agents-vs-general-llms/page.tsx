@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const metadata = {
   title: "The Paradigm Shift to Agent-First Organizations — RBD AI Reports",
@@ -10,14 +11,13 @@ export default function ReportPage() {
   return (
     <div className="min-h-screen bg-white text-foreground">
       <main className="mx-auto max-w-3xl px-6 pt-28 pb-24">
-        {/* Breadcrumb */}
-        <nav className="mb-10 flex items-center gap-2 text-xs text-neutral-400">
-          <Link href="/" className="hover:text-neutral-600 transition-colors">Home</Link>
-          <span>/</span>
-          <Link href="/research" className="hover:text-neutral-600 transition-colors">Research</Link>
-          <span>/</span>
-          <span className="text-neutral-500">The Paradigm Shift to Agent-First Organizations</span>
-        </nav>
+        <Breadcrumb
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Research", href: "/research" },
+            { label: "The Paradigm Shift to Agent-First Organizations" },
+          ]}
+        />
 
         {/* Header */}
         <header className="mb-12">

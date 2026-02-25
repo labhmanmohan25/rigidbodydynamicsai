@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d out"
   },
   "dependencies": {
+    "@tanstack/react-virtual": "^3.13.19",
     "gh-pages": "^6.3.0",
     "motion": "^12.34.3",
     "next": "16.1.6",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Breadcrumb } from "@/components/Breadcrumb";
 import { MARKET_OPPORTUNITY_SUB_RESEARCHES } from "@/app/reports/market-opportunity-research/sub-researches";
 
 type ListItem = {
@@ -44,14 +45,15 @@ const subReportItems: ListItem[] = MARKET_OPPORTUNITY_SUB_RESEARCHES.map((sub) =
 const articles: ListItem[] = [...mainArticles, ...subReportItems];
 
 export const metadata = {
-  title: "Research — Rigid Body Dynamics AI",
-  description: "Research publications and articles from Rigid Body Dynamics AI.",
+  title: "Research — Rigid Body Dynamics",
+  description: "Research publications and articles from Rigid Body Dynamics.",
 };
 
 export default function ResearchPage() {
   return (
     <div className="min-h-screen bg-white text-foreground">
       <main className="mx-auto max-w-3xl px-6 pt-28 pb-16">
+        <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Research" }]} />
         <h1 className="text-3xl font-semibold tracking-tight text-neutral-900">Research</h1>
         <p className="mt-3 text-sm text-neutral-500">
           Publications and articles from our lab.
