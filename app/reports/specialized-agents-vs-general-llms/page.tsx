@@ -22,9 +22,14 @@ export default function ReportPage() {
 
         {/* Header */}
         <header className="mb-12">
-          <p className="mb-3 text-xs font-medium uppercase tracking-widest text-neutral-400">
-            Research Report · February 25, 2026
-          </p>
+          <div className="mb-3 flex flex-wrap items-center gap-2">
+            <p className="text-xs font-medium uppercase tracking-widest text-neutral-400">
+              Research Report · February 25, 2026
+            </p>
+            <span className="rounded bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800">
+              Business opportunity
+            </span>
+          </div>
           <h1 className="text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
             The Paradigm Shift to Agent-First Organizations
           </h1>

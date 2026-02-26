@@ -1,6 +1,10 @@
 import type { Components } from "react-markdown";
 
 export const reportMarkdownComponents: Components = {
+  img: ({ src, alt, ...props }) => {
+    if (src == null || src === "") return null;
+    return <img src={src} alt={alt ?? ""} {...props} />;
+  },
   h1: ({ children }) => (
     <h1 className="text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl mt-0 mb-4">
       {children}
@@ -67,4 +71,19 @@ export const reportMarkdownComponents: Components = {
     <strong className="font-semibold text-neutral-800">{children}</strong>
   ),
   hr: () => <hr className="my-8 border-neutral-100" />,
+  // Wrap display math so it doesn’t overflow on small screens
+  span: ({ className, children, ...props }) => {
+    if (typeof className === "string" && className.includes("katex-display")) {
+      return (
+        <div className="my-4 overflow-x-auto overflow-y-hidden" {...props}>
+          <span className={className}>{children}</span>
+        </div>
+      );
+    }
+    return (
+      <span className={className} {...props}>
+        {children}
+      </span>
+    );
+  },
 };
