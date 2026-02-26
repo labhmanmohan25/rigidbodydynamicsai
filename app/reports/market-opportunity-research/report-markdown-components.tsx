@@ -72,7 +72,7 @@ export const reportMarkdownComponents: Components = {
   ),
   hr: () => <hr className="my-8 border-neutral-100" />,
   // Wrap display math so it doesn’t overflow on small screens
-  span: ({ className, children, ...props }) => {
+  span: ({ className, children, ref: _ref, ...props }) => {
     if (typeof className === "string" && className.includes("katex-display")) {
       return (
         <div className="my-4 overflow-x-auto overflow-y-hidden" {...props}>
@@ -81,7 +81,7 @@ export const reportMarkdownComponents: Components = {
       );
     }
     return (
-      <span className={className} {...props}>
+      <span className={className} ref={_ref} {...props}>
         {children}
       </span>
     );
