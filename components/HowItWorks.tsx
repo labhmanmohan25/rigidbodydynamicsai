@@ -67,7 +67,7 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       style={SECTION_STYLE}
-      className="scroll-mt-[var(--how-header-clearance)] bg-black text-white"
+      className="scroll-mt-[var(--how-header-clearance)] bg-background text-neutral-950 dark:bg-black dark:text-white"
     >
       <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:min-h-[calc(100svh-var(--how-header-clearance))]">
         <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:max-h-none lg:min-h-0 lg:aspect-auto">
@@ -79,17 +79,17 @@ export default function HowItWorks() {
             sizes="(max-width: 1024px) 100vw, 58vw"
             priority={false}
           />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:to-black/40" aria-hidden />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-900/35 via-transparent to-transparent dark:from-black/50 lg:bg-gradient-to-r lg:from-transparent lg:to-neutral-900/35 dark:lg:to-black/40" aria-hidden />
         </div>
 
-        <div className="flex min-w-0 flex-col justify-center bg-black px-4 py-8 sm:px-6 sm:py-10">
+        <div className="flex min-w-0 flex-col justify-center bg-background px-4 py-8 sm:px-6 sm:py-10 dark:bg-black">
           <div className="mx-auto w-full max-w-3xl lg:mx-0">
-            <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
-              <span className="inline-block h-1.5 w-1.5 shrink-0 bg-white" aria-hidden />
+            <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
+              <span className="inline-block h-1.5 w-1.5 shrink-0 bg-neutral-800 dark:bg-white" aria-hidden />
               How it works
             </div>
 
-            <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
+            <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
               We plug into what you already do —
               <br />
               no new tools, no migration.
@@ -100,16 +100,16 @@ export default function HowItWorks() {
               {FEATURES.map((feature, i) => (
                 <li
                   key={feature.title}
-                  className={`flex gap-4 py-6 sm:gap-5 sm:py-7 ${i > 0 ? "border-t border-white/10" : ""}`}
+                  className={`flex gap-4 py-6 sm:gap-5 sm:py-7 ${i > 0 ? "border-t border-neutral-200 dark:border-white/10" : ""}`}
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-white/[0.12] bg-white/[0.035] text-white/85">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-300/80 bg-white text-neutral-800 dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
                     {feature.icon}
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-lg font-semibold leading-snug text-white">
+                    <h3 className="text-lg font-semibold leading-snug text-neutral-950 dark:text-white">
                       {feature.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-white/55">
+                    <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">
                       {feature.description}
                     </p>
                   </div>

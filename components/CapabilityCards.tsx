@@ -195,7 +195,7 @@ function CapabilityCardPanel({
   const stack = layout === "stack";
 
   return (
-    <div className="bg-[#0a0a0a]">
+    <div className="bg-background dark:bg-[#0a0a0a]">
       <div
         className={
           stack
@@ -244,25 +244,25 @@ function CapabilityCardPanel({
           className={`flex flex-col justify-center p-6 sm:p-9 ${stack ? "animate-[fadeIn_0.4s_ease-out]" : ""}`}
         >
           {showIndexChip ? (
-            <span className="inline-flex w-fit items-center rounded border border-white/15 bg-white/[0.04] px-2 py-1 font-mono text-[11px] tracking-wider text-white/70">
+            <span className="inline-flex w-fit items-center rounded border border-neutral-200 bg-neutral-100/90 px-2 py-1 font-mono text-[11px] tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
               {visualKey}
             </span>
           ) : null}
           <h3
-            className={`text-xl font-semibold leading-snug text-white sm:text-2xl ${showIndexChip ? "mt-4" : "mt-0"}`}
+            className={`text-xl font-semibold leading-snug text-neutral-950 sm:text-2xl dark:text-white ${showIndexChip ? "mt-4" : "mt-0"}`}
           >
             {card.title}
           </h3>
-          <p className="mt-3 text-sm leading-relaxed text-white/55 sm:text-[15px]">
+          <p className="mt-3 text-sm leading-relaxed text-neutral-600 sm:text-[15px] dark:text-white/55">
             {card.blurb}
           </p>
-          <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-5">
+          <ul className="mt-6 space-y-2.5 border-t border-neutral-200 pt-5 dark:border-white/10">
             {card.bullets.map((b) => (
               <li
                 key={b}
-                className="flex gap-3 text-sm leading-relaxed text-white/75"
+                className="flex gap-3 text-sm leading-relaxed text-neutral-800 dark:text-white/75"
               >
-                <span className="mt-1.5 inline-block h-3 w-[2px] flex-shrink-0 bg-white/40" />
+                <span className="mt-1.5 inline-block h-3 w-[2px] flex-shrink-0 bg-neutral-400 dark:bg-white/40" />
                 <span>{b}</span>
               </li>
             ))}
@@ -288,25 +288,25 @@ export default function CapabilityCards() {
   }
 
   return (
-    <section className="bg-black py-8 sm:py-10">
+    <section className="bg-background py-8 dark:bg-black sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
-          <span className="inline-block h-1.5 w-1.5 bg-white" />
+        <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
+          <span className="inline-block h-1.5 w-1.5 bg-neutral-800 dark:bg-white" />
           Why us
         </div>
-        <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
+        <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
           The problems you live with daily - solved.
         </h2>
 
-        <div className="mt-14 overflow-hidden rounded-xl border border-white/10">
+        <div className="mt-14 overflow-hidden rounded-xl border border-neutral-200/90 dark:border-white/10">
           {/* Phone / tablet: stacked cards, no numbered index */}
-          <div className="flex flex-col divide-y divide-white/10 lg:hidden">
+          <div className="flex flex-col divide-y divide-neutral-200/90 dark:divide-white/10 lg:hidden">
             {CARDS.map((c, i) => (
               <article key={c.label} aria-labelledby={`cap-mobile-${i}`}>
-                <div className="border-b border-white/10 bg-black/50 px-4 py-3 sm:px-5">
+                <div className="border-b border-neutral-200/90 bg-background px-4 py-3 dark:border-white/10 dark:bg-black/50 sm:px-5">
                   <h3
                     id={`cap-mobile-${i}`}
-                    className="text-[13px] font-medium uppercase tracking-[0.12em] text-white"
+                    className="text-[13px] font-medium uppercase tracking-[0.12em] text-neutral-900 dark:text-white"
                   >
                     {c.label}
                   </h3>
@@ -323,8 +323,8 @@ export default function CapabilityCards() {
 
           {/* Large screens: tab rail + numbered index */}
           <div className="hidden lg:grid lg:grid-cols-[280px_1fr]">
-            <div className="border-b border-white/10 bg-[#050505] lg:border-b-0 lg:border-r lg:border-white/10">
-              <p className="border-b border-white/10 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+            <div className="border-b border-neutral-200/90 bg-background lg:border-b-0 lg:border-r lg:border-neutral-200/90 dark:border-white/10 dark:bg-[#050505] dark:lg:border-white/10">
+              <p className="border-b border-neutral-200/90 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 dark:border-white/10 dark:text-white/40">
                 Select a capability
               </p>
               <ul
@@ -337,7 +337,7 @@ export default function CapabilityCards() {
                   return (
                     <li
                       key={c.label}
-                      className="border-b border-white/10 last:border-b-0"
+                      className="border-b border-neutral-200/90 last:border-b-0 dark:border-white/10"
                     >
                       <button
                         type="button"
@@ -348,15 +348,15 @@ export default function CapabilityCards() {
                         onClick={() => selectTab(i)}
                         className={`group flex w-full cursor-pointer items-center gap-3.5 text-left transition-[background-color,border-color,box-shadow,margin,padding,border-radius] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400/90 ${
                           isActive
-                            ? "mx-2 my-2.5 rounded-sm border border-white/25 bg-[#12161c] px-4 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
-                            : "border border-transparent px-4 py-4 hover:bg-white/[0.025]"
+                            ? "mx-2 my-2.5 rounded-sm border border-neutral-300 bg-white px-4 py-4 shadow-inner dark:border-white/25 dark:bg-[#12161c] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+                            : "border border-transparent px-4 py-4 hover:bg-neutral-100/90 dark:hover:bg-white/[0.025]"
                         }`}
                       >
                         <span
                           className={`inline-flex h-8 w-9 flex-shrink-0 items-center justify-center font-mono text-[11px] font-semibold tabular-nums tracking-wide transition-colors ${
                             isActive
-                              ? "rounded-[2px] bg-sky-500 text-[#07090d]"
-                              : "rounded-[2px] text-white/30 group-hover:text-white/45"
+                              ? "rounded-[2px] bg-sky-600 text-white dark:bg-sky-500 dark:text-[#07090d]"
+                              : "rounded-[2px] text-neutral-400 group-hover:text-neutral-700 dark:text-white/30 dark:group-hover:text-white/45"
                           }`}
                           aria-hidden
                         >
@@ -364,7 +364,9 @@ export default function CapabilityCards() {
                         </span>
                         <span
                           className={`min-w-0 flex-1 text-[12px] font-medium uppercase leading-snug tracking-[0.14em] ${
-                            isActive ? "text-white" : "text-white/75 group-hover:text-white/90"
+                            isActive
+                              ? "text-neutral-950 dark:text-white"
+                              : "text-neutral-600 group-hover:text-neutral-950 dark:text-white/75 dark:group-hover:text-white/90"
                           }`}
                         >
                           {c.label}
@@ -380,7 +382,7 @@ export default function CapabilityCards() {
               id="capability-panel"
               role="tabpanel"
               aria-labelledby={`cap-tab-${active}`}
-              className="min-h-0 overflow-hidden bg-[#0a0a0a]"
+              className="min-h-0 overflow-hidden bg-background dark:bg-[#0a0a0a]"
             >
               <div
                 key={active}

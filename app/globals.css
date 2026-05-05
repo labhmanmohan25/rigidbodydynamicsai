@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: `#main.dark` on `/` and `/about` when theme is dark */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   /* GIC-inspired light theme: warm cream background, dark text */
   --background: #f8f6f2;

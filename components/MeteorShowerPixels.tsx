@@ -17,6 +17,46 @@ const LAND_LIFETIME_MS =
   LAND_FADE_IN_MS + LAND_HOLD_MS + LAND_FADE_OUT_MS;
 const LAND_PEAK_OPACITY = 0.92;
 
+export type MeteorSurface = "light" | "dark";
+
+type PixelPalette = {
+  pickStarRgb: () => { r: number; g: number; b: number };
+  starBaseMin: number;
+  starBaseSpread: number;
+  meteorHead: string;
+  meteorTrail: (alpha: number) => string;
+  landingStroke: string;
+};
+
+function paletteFor(surface: MeteorSurface): PixelPalette {
+  if (surface === "dark") {
+    return {
+      pickStarRgb: () => ({
+        r: 175 + Math.floor(Math.random() * 80),
+        g: 200 + Math.floor(Math.random() * 55),
+        b: 248 + Math.floor(Math.random() * 7),
+      }),
+      starBaseMin: 0.12,
+      starBaseSpread: 0.55,
+      meteorHead: "rgba(255, 255, 255, 0.95)",
+      meteorTrail: (alpha) => `rgba(200, 230, 255, ${alpha})`,
+      landingStroke: "rgba(255, 255, 255, 0.92)",
+    };
+  }
+  return {
+    pickStarRgb: () => ({
+      r: 38 + Math.floor(Math.random() * 72),
+      g: 62 + Math.floor(Math.random() * 58),
+      b: 108 + Math.floor(Math.random() * 92),
+    }),
+    starBaseMin: 0.2,
+    starBaseSpread: 0.52,
+    meteorHead: "rgba(15, 23, 42, 0.96)",
+    meteorTrail: (alpha) => `rgba(30, 58, 95, ${alpha})`,
+    landingStroke: "rgba(30, 41, 59, 0.91)",
+  };
+}
+
 function landingOpacity(ageMs: number): number {
   if (ageMs <= 0) return 0;
   if (ageMs < LAND_FADE_IN_MS) {
@@ -187,29 +227,41 @@ function spawnMeteor(w: number, h: number, meteors: Meteor[]) {
   });
 }
 
-function generateNebulaStars(w: number, h: number): NebulaStar[] {
+function generateNebulaStars(
+  w: number,
+  h: number,
+  pal: PixelPalette,
+): NebulaStar[] {
   const area = w * h;
   const count = Math.min(520, Math.max(220, Math.floor(area / 5500)));
   const stars: NebulaStar[] = [];
   for (let i = 0; i < count; i++) {
     const roll = Math.random();
     const size = roll > 0.88 ? 2 : 1;
+    const { r, g, b } = pal.pickStarRgb();
     stars.push({
       x: Math.random() * w,
       y: Math.random() * h,
       size,
-      base: 0.12 + Math.random() * 0.55,
+      base: pal.starBaseMin + Math.random() * pal.starBaseSpread,
       phase: Math.random() * Math.PI * 2,
       speed: 0.65 + Math.random() * 2.4,
-      r: 175 + Math.floor(Math.random() * 80),
-      g: 200 + Math.floor(Math.random() * 55),
-      b: 248 + Math.floor(Math.random() * 7),
+      r,
+      g,
+      b,
     });
   }
   return stars;
 }
 
-export default function MeteorShowerPixels() {
+type MeteorShowerPixelsProps = {
+  /** Match home cream vs black hero; dark keeps the original cool-white meteor look. */
+  surface?: MeteorSurface;
+};
+
+export default function MeteorShowerPixels({
+  surface = "dark",
+}: MeteorShowerPixelsProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -223,6 +275,8 @@ export default function MeteorShowerPixels() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
     }
+
+    const pal = paletteFor(surface);
 
     let meteors: Meteor[] = [];
     let stars: NebulaStar[] = [];
@@ -241,7 +295,7 @@ export default function MeteorShowerPixels() {
       canvas.style.width = `${w}px`;
       canvas.style.height = `${h}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      stars = generateNebulaStars(w, h);
+      stars = generateNebulaStars(w, h, pal);
       landings = [];
     };
 
@@ -301,9 +355,7 @@ export default function MeteorShowerPixels() {
           const t = n <= 1 ? 1 : i / (n - 1);
           const isHead = i === n - 1;
           const alpha = isHead ? 0.95 : 0.12 + t * 0.45;
-          ctx.fillStyle = isHead
-            ? "rgba(255, 255, 255, 0.95)"
-            : `rgba(200, 230, 255, ${alpha})`;
+          ctx.fillStyle = isHead ? pal.meteorHead : pal.meteorTrail(alpha);
           ctx.fillRect(
             Math.floor(p.x),
             Math.floor(p.y),
@@ -324,7 +376,7 @@ export default function MeteorShowerPixels() {
         ctx.save();
         ctx.translate(L.x, L.y);
         ctx.globalAlpha = e;
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.92)";
+        ctx.strokeStyle = pal.landingStroke;
         ctx.scale(iconPx / 24, iconPx / 24);
         ctx.translate(-12, -12);
         strokeLandingHiOutline(ctx, L.kind);
@@ -341,7 +393,7 @@ export default function MeteorShowerPixels() {
       cancelAnimationFrame(raf);
       ro.disconnect();
     };
-  }, []);
+  }, [surface]);
 
   return (
     <div

@@ -2,6 +2,7 @@ import Link from "next/link";
 
 const COMPANY_NAME = "Rigid Body Dynamics";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
 const LOGO_WHITE_URL = basePath ? `${basePath}/logowhite.png` : "/logowhite.png";
 
 export default function HomeDarkFooter() {
@@ -10,7 +11,7 @@ export default function HomeDarkFooter() {
   return (
     <footer
       id="footer"
-      className="scroll-mt-28 bg-[#050505] px-4 py-8 sm:px-6"
+      className="scroll-mt-28 border-t border-neutral-200/90 bg-background px-4 py-8 dark:border-transparent dark:bg-[#050505] sm:px-6"
       role="contentinfo"
       aria-labelledby="home-footer-heading"
     >
@@ -21,15 +22,20 @@ export default function HomeDarkFooter() {
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <span
-              className="h-7 w-7 flex-shrink-0 rounded-md bg-center bg-no-repeat"
+              className="h-7 w-7 flex-shrink-0 rounded-md bg-center bg-no-repeat dark:hidden"
+              style={{ backgroundImage: `url('${LOGO_URL}')`, backgroundSize: "contain" }}
+              aria-hidden
+            />
+            <span
+              className="hidden h-7 w-7 flex-shrink-0 rounded-md bg-center bg-no-repeat dark:block"
               style={{ backgroundImage: `url('${LOGO_WHITE_URL}')`, backgroundSize: "contain" }}
               aria-hidden
             />
-            <p className="text-base font-semibold tracking-tight text-white">
+            <p className="text-base font-semibold tracking-tight text-neutral-900 dark:text-white">
               {COMPANY_NAME}
             </p>
           </div>
-          <p className="text-sm text-zinc-400">
+          <p className="text-sm text-neutral-600 dark:text-zinc-400">
             Transform your operations with Rigid Body Dynamics.
           </p>
           <nav aria-label="Legal">
@@ -37,7 +43,7 @@ export default function HomeDarkFooter() {
               <li>
                 <Link
                   href="/privacy"
-                  className="cursor-pointer text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                  className="cursor-pointer text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 dark:text-zinc-400 dark:hover:text-white dark:focus-visible:outline-white"
                 >
                   Privacy Policy
                 </Link>
@@ -45,7 +51,7 @@ export default function HomeDarkFooter() {
               <li>
                 <Link
                   href="/terms"
-                  className="cursor-pointer text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
+                  className="cursor-pointer text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 dark:text-zinc-400 dark:hover:text-white dark:focus-visible:outline-white"
                 >
                   Terms &amp; Conditions
                 </Link>
@@ -53,7 +59,7 @@ export default function HomeDarkFooter() {
             </ul>
           </nav>
         </div>
-        <p className="text-sm text-zinc-500 sm:self-end">
+        <p className="text-sm text-neutral-500 sm:self-end dark:text-zinc-500">
           © {year} {COMPANY_NAME}
         </p>
       </div>

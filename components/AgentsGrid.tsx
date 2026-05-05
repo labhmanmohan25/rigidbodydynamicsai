@@ -39,51 +39,51 @@ const AGENTS = [
 
 export default function AgentsGrid() {
   return (
-    <section className="bg-black py-8 sm:py-10">
+    <section className="bg-background py-8 dark:bg-black sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
-          <span className="inline-block h-1.5 w-1.5 bg-white" />
+        <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
+          <span className="inline-block h-1.5 w-1.5 bg-neutral-800 dark:bg-white" />
           The agents
         </div>
         <div className="mt-6">
-          <h2 className="max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
+          <h2 className="max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
             Six agents.
             <br />
             One ops team that never sleeps.
           </h2>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/55 sm:text-base">
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
             Each agent owns a piece of your supply chain. They coordinate with
             each other the way your best ops people would - only faster, around
             the clock, and they never forget.
           </p>
         </div>
 
-        <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-neutral-200/90 bg-neutral-200/60 dark:border-white/10 dark:bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {AGENTS.map((a, i) => (
             <div
               key={a.name}
-              className="bg-[#0a0a0a] p-5 transition-colors hover:bg-[#0f0f0f] sm:p-7"
+              className="bg-background p-5 transition-colors hover:bg-card dark:bg-[#0a0a0a] dark:hover:bg-[#0f0f0f] sm:p-7"
             >
               <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-white/40">
+                <span className="font-mono text-xs text-neutral-500 dark:text-white/40">
                   /{(i + 1).toString().padStart(2, "0")}
                 </span>
-                <span className="inline-flex items-center gap-1.5 rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
-                  <span className="h-1 w-1 rounded-full bg-green-400" />
+                <span className="inline-flex items-center gap-1.5 rounded border border-neutral-300/90 bg-neutral-100/90 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
+                  <span className="h-1 w-1 rounded-full bg-green-600 dark:bg-green-400" />
                   active
                 </span>
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-white">
+              <h3 className="mt-5 text-lg font-semibold text-neutral-950 dark:text-white">
                 {a.name}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-white/55">
+              <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">
                 {a.purpose}
               </p>
               <div className="mt-5 flex flex-wrap gap-1.5">
                 {a.chips.map((c) => (
                   <span
                     key={c}
-                    className="rounded border border-white/10 bg-white/[0.04] px-2 py-1 text-[11px] text-white/70"
+                    className="rounded border border-neutral-200 bg-white px-2 py-1 text-[11px] text-neutral-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/70"
                   >
                     {c}
                   </span>

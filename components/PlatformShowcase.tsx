@@ -56,8 +56,8 @@ function DemandChart() {
       >
         <defs>
           <linearGradient id="actualFill" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.18)" />
-            <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+            <stop offset="0%" stopColor="var(--demand-fill-start)" />
+            <stop offset="100%" stopColor="var(--demand-fill-end)" />
           </linearGradient>
         </defs>
 
@@ -69,7 +69,7 @@ function DemandChart() {
             x2={w - pad}
             y1={pad + (h - pad * 2) * t}
             y2={pad + (h - pad * 2) * t}
-            stroke="rgba(255,255,255,0.06)"
+            stroke="var(--demand-grid)"
             strokeWidth={1}
           />
         ))}
@@ -81,7 +81,7 @@ function DemandChart() {
         <path
           d={forecastPath}
           fill="none"
-          stroke="rgba(255,255,255,0.35)"
+          stroke="var(--demand-forecast-stroke)"
           strokeWidth={1.25}
           strokeDasharray="3 3"
         />
@@ -90,27 +90,27 @@ function DemandChart() {
         <path
           d={actualPath}
           fill="none"
-          stroke="white"
+          stroke="var(--demand-actual-stroke)"
           strokeWidth={1.75}
           strokeLinejoin="round"
           strokeLinecap="round"
         />
 
         {/* divergence callout */}
-        <circle cx={divergeX} cy={divergeY} r={3.5} fill="white" />
+        <circle cx={divergeX} cy={divergeY} r={3.5} fill="var(--demand-marker-fill)" />
         <circle
           cx={divergeX}
           cy={divergeY}
           r={7}
           fill="none"
-          stroke="rgba(255,255,255,0.4)"
+          stroke="var(--demand-marker-ring)"
         />
         <line
           x1={divergeX}
           y1={divergeY}
           x2={divergeX}
           y2={h - pad}
-          stroke="rgba(255,255,255,0.25)"
+          stroke="var(--demand-callout-line)"
           strokeWidth={1}
           strokeDasharray="2 3"
         />
@@ -159,8 +159,12 @@ function Sparkline({ values, w = 60, h = 18 }: { values: number[]; w?: number; h
     .map((v, i) => `${i === 0 ? "M" : "L"} ${(i * step).toFixed(1)} ${(h - ((v - min) / range) * h).toFixed(1)}`)
     .join(" ");
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="block h-4 w-16" preserveAspectRatio="none">
-      <path d={d} fill="none" stroke="white" strokeWidth={1.25} strokeLinejoin="round" />
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      className="block h-4 w-16 text-neutral-700 dark:text-white"
+      preserveAspectRatio="none"
+    >
+      <path d={d} fill="none" stroke="currentColor" strokeWidth={1.25} strokeLinejoin="round" />
     </svg>
   );
 }
@@ -197,20 +201,20 @@ const COVER = [
 ];
 
 function cellTone(v: number) {
-  if (v < 14) return "bg-white text-black"; // risk
-  if (v <= 30) return "bg-white/35 text-white"; // healthy
-  if (v <= 45) return "bg-white/15 text-white/85";
-  return "bg-white/5 text-white/55"; // excess
+  if (v < 14) return "bg-neutral-950 text-white dark:bg-white dark:text-black"; // risk
+  if (v <= 30) return "bg-emerald-200 text-emerald-950 dark:bg-white/35 dark:text-white"; // healthy
+  if (v <= 45) return "bg-neutral-200 text-neutral-900 dark:bg-white/15 dark:text-white/85";
+  return "bg-neutral-100 text-neutral-600 dark:bg-white/5 dark:text-white/55"; // excess
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Receivables aging — stacked horizontal bar
  * ──────────────────────────────────────────────────────────────────────────── */
 const AGING = [
-  { bucket: "0–30 d", amt: 14.8, tone: "bg-white" },
-  { bucket: "31–60 d", amt: 7.6, tone: "bg-white/70" },
-  { bucket: "61–90 d", amt: 4.2, tone: "bg-white/40" },
-  { bucket: "90+ d", amt: 1.8, tone: "bg-white/20" },
+  { bucket: "0–30 d", amt: 14.8, tone: "bg-neutral-800 dark:bg-white" },
+  { bucket: "31–60 d", amt: 7.6, tone: "bg-neutral-500 dark:bg-white/70" },
+  { bucket: "61–90 d", amt: 4.2, tone: "bg-neutral-400 dark:bg-white/40" },
+  { bucket: "90+ d", amt: 1.8, tone: "bg-neutral-300 dark:bg-white/20" },
 ];
 
 const DASHBOARD_BASE_WIDTH = 1120;
@@ -313,18 +317,18 @@ export default function PlatformShowcase() {
   });
 
   return (
-    <section id="platform" className="bg-black py-8 sm:py-10">
+    <section id="platform" className="bg-background py-8 dark:bg-black sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
-          <span className="inline-block h-1.5 w-1.5 bg-white" />
+        <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
+          <span className="inline-block h-1.5 w-1.5 bg-neutral-800 dark:bg-white" />
           The platform
         </div>
-        <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
+        <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
           Watch your operations
           <br />
           run themselves.
         </h2>
-        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-white/60 sm:text-base">
+        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/60">
           Everything below comes from WhatsApp messages, Excel sheets, and
           phone calls your team already sends. No new data entry. No new tools
           to learn.
@@ -346,26 +350,26 @@ export default function PlatformShowcase() {
             <motion.div
               ref={dashboardRef}
               style={shouldAnimateDashboard ? { y: entranceY, scale: entranceScale } : undefined}
-              className="relative overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a]"
+              className="relative overflow-hidden rounded-xl border border-neutral-200/90 bg-[#fffefb] shadow-sm ring-1 ring-black/[0.04] [--demand-fill-end:rgba(0,0,0,0)] [--demand-fill-start:rgba(23,23,23,0.13)] [--demand-grid:rgba(0,0,0,0.06)] [--demand-forecast-stroke:rgba(0,0,0,0.36)] [--demand-actual-stroke:#171717] [--demand-marker-fill:#171717] [--demand-marker-ring:rgba(0,0,0,0.2)] [--demand-callout-line:rgba(0,0,0,0.2)] [--forecast-legend-dash:rgba(0,0,0,0.42)] dark:border-white/10 dark:bg-[#0a0a0a] dark:shadow-none dark:ring-0 dark:[--demand-fill-end:rgba(255,255,255,0)] dark:[--demand-fill-start:rgba(255,255,255,0.18)] dark:[--demand-grid:rgba(255,255,255,0.06)] dark:[--demand-forecast-stroke:rgba(255,255,255,0.35)] dark:[--demand-actual-stroke:#ffffff] dark:[--demand-marker-fill:#ffffff] dark:[--demand-marker-ring:rgba(255,255,255,0.4)] dark:[--demand-callout-line:rgba(255,255,255,0.25)] dark:[--forecast-legend-dash:rgba(255,255,255,0.5)]"
             >
           {/* Chrome */}
-          <div className="flex min-h-[2.75rem] flex-wrap items-center gap-x-2 gap-y-2 border-b border-white/10 bg-white/[0.02] px-4 py-3">
+          <div className="flex min-h-[2.75rem] flex-wrap items-center gap-x-2 gap-y-2 border-b border-neutral-200/80 bg-neutral-100/55 px-4 py-3 dark:border-white/10 dark:bg-white/[0.02]">
             <div className="flex shrink-0 items-center gap-2">
-              <span className="h-2.5 w-2.5 rounded-full bg-white/30" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]/95 dark:bg-white/30" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/95 dark:bg-white/20" />
+              <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/95 dark:bg-white/15" />
             </div>
-            <span className="min-w-0 flex-1 basis-auto truncate pl-0 font-mono text-xs text-white/45">
+            <span className="min-w-0 flex-1 basis-auto truncate pl-0 font-mono text-xs text-neutral-500 dark:text-white/45">
               ops.rigidbody.ai / acme-foods · operations
             </span>
-            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
-              <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded border border-neutral-200/90 bg-white px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-600 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
+              <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse dark:bg-green-400" />
               live
             </span>
           </div>
 
           {/* Sub-nav */}
-          <div className="flex items-center gap-1 overflow-x-auto border-b border-white/10 bg-[#0a0a0a] px-3">
+          <div className="flex items-center gap-1 overflow-x-auto border-b border-neutral-200/80 bg-[#fffefb] px-3 dark:border-white/10 dark:bg-[#0a0a0a]">
             {[
               "Operations",
               "Demand",
@@ -379,12 +383,12 @@ export default function PlatformShowcase() {
                 <span
                   key={t}
                   className={`relative whitespace-nowrap px-3 py-2.5 text-[12px] ${
-                    active ? "text-white" : "text-white/45"
+                    active ? "text-neutral-900 dark:text-white" : "text-neutral-500 dark:text-white/45"
                   }`}
                 >
                   {t}
                   {active ? (
-                    <span className="absolute inset-x-2 -bottom-px h-px bg-white" />
+                    <span className="absolute inset-x-2 -bottom-px h-px bg-neutral-900 dark:bg-white" />
                   ) : null}
                 </span>
               );
@@ -392,50 +396,50 @@ export default function PlatformShowcase() {
           </div>
 
           {/* KPI strip */}
-          <div className="grid grid-cols-5 gap-px bg-white/5">
+          <div className="grid grid-cols-5 gap-px bg-neutral-200/70 dark:bg-white/5">
             {KPIS.map((k) => (
-              <div key={k.k} className="bg-[#0a0a0a] p-4">
+              <div key={k.k} className="bg-[#fffefb] p-4 dark:bg-[#0a0a0a]">
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-[10.5px] uppercase tracking-wider text-white/45">
+                  <p className="text-[10.5px] uppercase tracking-wider text-neutral-500 dark:text-white/45">
                     {k.k}
                   </p>
                   <Sparkline values={k.trend} />
                 </div>
                 <div className="mt-2 flex items-baseline justify-between gap-2">
-                  <span className="text-[22px] font-semibold leading-none text-white">
+                  <span className="text-[22px] font-semibold leading-none text-neutral-900 dark:text-white">
                     {k.v}
                   </span>
                   <span
                     className={`font-mono text-[11px] ${
-                      k.up ? "text-white/85" : "text-white/55"
+                      k.up ? "text-emerald-800 dark:text-white/85" : "text-neutral-600 dark:text-white/55"
                     }`}
                   >
                     {k.d}
                   </span>
                 </div>
                 {"source" in k && k.source ? (
-                  <p className="mt-1 text-[10px] text-white/40">{k.source}</p>
+                  <p className="mt-1 text-[10px] text-neutral-500 dark:text-white/40">{k.source}</p>
                 ) : null}
               </div>
             ))}
           </div>
 
           {/* Main: chart + radar */}
-          <div className="grid grid-cols-[1.5fr_1fr] gap-px bg-white/5">
+          <div className="grid grid-cols-[1.5fr_1fr] gap-px bg-neutral-200/70 dark:bg-white/5">
             {/* Demand vs Forecast */}
-            <div className="bg-[#0a0a0a] p-6">
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
               <div className="flex flex-row items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-white">
+                  <p className="text-sm font-medium text-neutral-900 dark:text-white">
                     Demand vs Forecast
                   </p>
-                  <p className="mt-0.5 font-mono text-[11px] text-white/45">
+                  <p className="mt-0.5 font-mono text-[11px] text-neutral-500 dark:text-white/45">
                     SKU-228 · Maharashtra · last 14 days
                   </p>
                 </div>
-                <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-white/55">
+                <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-neutral-600 dark:text-white/55">
                   <span className="inline-flex items-center gap-1.5">
-                    <span className="inline-block h-[2px] w-3 bg-white" />
+                    <span className="inline-block h-[2px] w-3 bg-neutral-900 dark:bg-white" />
                     Actual
                   </span>
                   <span className="inline-flex items-center gap-1.5">
@@ -443,7 +447,7 @@ export default function PlatformShowcase() {
                       className="inline-block h-[2px] w-3"
                       style={{
                         backgroundImage:
-                          "repeating-linear-gradient(90deg, rgba(255,255,255,0.5) 0 2px, transparent 2px 4px)",
+                          "repeating-linear-gradient(90deg, var(--forecast-legend-dash) 0 2px, transparent 2px 4px)",
                       }}
                     />
                     Forecast
@@ -453,17 +457,17 @@ export default function PlatformShowcase() {
               <div className="mt-5">
                 <DemandChart />
               </div>
-              <div className="mt-4 flex flex-row items-center justify-between gap-0 border-t border-white/10 pt-3 font-mono text-[11px] text-white/55">
+              <div className="mt-4 flex flex-row items-center justify-between gap-0 border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span>Forecast accuracy · 91.2%</span>
                 <span>Auto-corrections this week · 4</span>
               </div>
             </div>
 
             {/* Disruption radar */}
-            <div className="bg-[#0a0a0a] p-6">
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-white">Disruption radar</p>
-                <span className="rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white/70">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">Disruption radar</p>
+                <span className="rounded border border-neutral-200/90 bg-neutral-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
                   3 active
                 </span>
               </div>
@@ -472,16 +476,16 @@ export default function PlatformShowcase() {
                 {DISRUPTIONS.map((item) => (
                   <li
                     key={item}
-                    className="rounded border border-white/8 bg-white/[0.02] p-3"
+                    className="rounded border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/8 dark:bg-white/[0.02]"
                   >
-                    <p className="font-mono text-[11px] leading-relaxed text-white/70">
+                    <p className="font-mono text-[11px] leading-relaxed text-neutral-700 dark:text-white/70">
                       {item}
                     </p>
                   </li>
                 ))}
               </ul>
 
-              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[11px] text-white/55">
+              <div className="mt-4 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span>MTTR · 6m 22s</span>
                 <span>Auto-resolved · 87%</span>
               </div>
@@ -489,14 +493,14 @@ export default function PlatformShowcase() {
           </div>
 
           {/* Bottom: heatmap + aging */}
-          <div className="grid grid-cols-[1.4fr_1fr] gap-px bg-white/5">
+          <div className="grid grid-cols-[1.4fr_1fr] gap-px bg-neutral-200/70 dark:bg-white/5">
             {/* Inventory heatmap */}
-            <div className="bg-[#0a0a0a] p-6">
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
               <div className="flex flex-row items-center justify-between gap-3">
-                <p className="text-sm font-medium text-white">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
                   Inventory cover
                 </p>
-                <p className="font-mono text-[11px] text-white/45">
+                <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
                   days of cover · by SKU group × depot
                 </p>
               </div>
@@ -511,7 +515,7 @@ export default function PlatformShowcase() {
                   {DEPOTS.map((d) => (
                     <div
                       key={d}
-                      className="text-center font-mono text-[10px] uppercase tracking-wider text-white/45"
+                      className="text-center font-mono text-[10px] uppercase tracking-wider text-neutral-500 dark:text-white/45"
                     >
                       {d}
                     </div>
@@ -521,7 +525,7 @@ export default function PlatformShowcase() {
                   {SKU_GROUPS.flatMap((g, r) => [
                     <div
                       key={`${g}-label`}
-                      className="flex items-center font-mono text-[11px] text-white/65"
+                      className="flex items-center font-mono text-[11px] text-neutral-600 dark:text-white/65"
                     >
                       {g}
                     </div>,
@@ -538,39 +542,39 @@ export default function PlatformShowcase() {
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-white/10 pt-3 font-mono text-[10.5px] text-white/55">
+              <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-neutral-200/80 pt-3 font-mono text-[10.5px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-white" />
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-950 dark:bg-white" />
                   &lt; 14 d · risk
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-white/35" />
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-emerald-200 dark:bg-white/35" />
                   14–30 d · healthy
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-white/15" />
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-200 dark:bg-white/15" />
                   30–45 d
                 </span>
                 <span className="inline-flex items-center gap-1.5">
-                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-white/5 ring-1 ring-white/10" />
+                  <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-100 ring-1 ring-neutral-300 dark:bg-white/5 dark:ring-white/10" />
                   &gt; 45 d · excess
                 </span>
               </div>
             </div>
 
             {/* Receivables aging */}
-            <div className="bg-[#0a0a0a] p-6">
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-medium text-white">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
                   Receivables aging
                 </p>
-                <p className="font-mono text-[11px] text-white/45">
+                <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
                   ₹ Cr · 142 distributors
                 </p>
               </div>
 
               <div className="mt-6">
-                <div className="flex h-3 w-full overflow-hidden rounded">
+                <div className="flex h-3 w-full overflow-hidden rounded bg-neutral-200/90 dark:bg-white/10">
                   {AGING.map((a) => (
                     <div
                       key={a.bucket}
@@ -588,11 +592,11 @@ export default function PlatformShowcase() {
                       className="flex items-center gap-3 text-[12.5px]"
                     >
                       <span className={`h-2.5 w-2.5 flex-shrink-0 rounded-sm ${a.tone}`} />
-                      <span className="text-white/70">{a.bucket}</span>
-                      <span className="ml-auto font-mono text-white/85">
+                      <span className="text-neutral-600 dark:text-white/70">{a.bucket}</span>
+                      <span className="ml-auto font-mono text-neutral-900 dark:text-white/85">
                         ₹{a.amt.toFixed(1)} Cr
                       </span>
-                      <span className="w-12 text-right font-mono text-[11px] text-white/40">
+                      <span className="w-12 text-right font-mono text-[11px] text-neutral-500 dark:text-white/40">
                         {((a.amt / totalOutstanding) * 100).toFixed(0)}%
                       </span>
                     </li>
@@ -600,7 +604,7 @@ export default function PlatformShowcase() {
                 </ul>
               </div>
 
-              <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[11px] text-white/55">
+              <div className="mt-5 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span>Total · ₹{totalOutstanding.toFixed(1)} Cr</span>
                 <span>Auto-holds active · 9</span>
               </div>

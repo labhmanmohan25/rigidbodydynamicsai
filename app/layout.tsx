@@ -3,6 +3,10 @@ import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import LandingHeader from "@/components/LandingHeader";
 import HashScroll from "@/components/HashScroll";
+import {
+  HomeAppearanceProvider,
+  HomeThemeBootScript,
+} from "@/components/HomeAppearance";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
@@ -69,9 +73,14 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <LandingHeader />
-        <HashScroll />
-        <main id="main">{children}</main>
+        <HomeAppearanceProvider>
+          <LandingHeader />
+          <HashScroll />
+          <main id="main" suppressHydrationWarning>
+            <HomeThemeBootScript />
+            {children}
+          </main>
+        </HomeAppearanceProvider>
       </body>
     </html>
   );
