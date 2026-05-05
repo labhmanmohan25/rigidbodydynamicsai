@@ -28,7 +28,7 @@ export default function SupplyHero() {
             rel="noopener noreferrer"
             className="inline-flex h-11 items-center justify-center rounded-md bg-white px-6 text-[13px] font-medium uppercase tracking-[0.18em] text-black transition-colors hover:bg-white/90"
           >
-            Get started
+            Book Demo
           </Link>
         </div>
       </div>
