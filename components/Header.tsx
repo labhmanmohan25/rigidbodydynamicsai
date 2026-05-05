@@ -17,7 +17,7 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-[var(--max-width-content)] items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
-          className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          className="flex cursor-pointer items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
         >
           <span
             className="h-8 w-[120px] flex-shrink-0 rounded bg-center bg-no-repeat"
@@ -34,7 +34,7 @@ export default function Header() {
               <li key={href}>
                 <Link
                   href={href}
-                  className="text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 focus-visible:text-foreground"
+                  className="cursor-pointer text-sm text-muted-foreground transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 focus-visible:text-foreground"
                 >
                   {label}
                 </Link>

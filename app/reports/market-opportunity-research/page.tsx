@@ -58,7 +58,7 @@ export default function MarketOpportunityReportPage() {
                         : null;
                 return (
                   <li key={sub.href}>
-                    <Link href={sub.href} className="block group pr-2">
+                    <Link href={sub.href} className="block cursor-pointer group pr-2">
                       <div className="flex flex-wrap items-baseline gap-2">
                         <span className="text-sm font-medium text-neutral-800 underline decoration-neutral-300 underline-offset-2 transition-colors group-hover:text-neutral-900 group-hover:decoration-neutral-500">
                           {sub.title}
@@ -88,7 +88,7 @@ export default function MarketOpportunityReportPage() {
         <div className="mt-16 border-t border-neutral-100 pt-8">
           <Link
             href="/research"
-            className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-900 transition-colors group"
+            className="group inline-flex cursor-pointer items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">
               ←

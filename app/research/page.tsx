@@ -97,7 +97,7 @@ export default function ResearchPage() {
             <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-neutral-400">Featured</h2>
             <Link
               href={featuredArticle.href}
-              className="group block"
+              className="group block cursor-pointer"
             >
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs text-neutral-400">{featuredArticle.date}</span>
@@ -142,7 +142,7 @@ export default function ResearchPage() {
                     <Link
                       href={article.href}
                       {...(!article.internal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      className="group block"
+                      className="group block cursor-pointer"
                     >
                       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                         <div className="min-w-0">

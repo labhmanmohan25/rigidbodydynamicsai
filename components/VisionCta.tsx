@@ -51,9 +51,12 @@ export default function VisionCta() {
             href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 text-base font-medium text-accent-foreground transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+            className="mt-10 inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-accent px-8 text-base font-medium text-accent-foreground transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
           >
-            get in touch
+            <span className="cta-text-roll" aria-label="get in touch">
+              <span aria-hidden="true">get in touch</span>
+              <span aria-hidden="true">get in touch</span>
+            </span>
           </Link>
         </motion.div>
       </div>

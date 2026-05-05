@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import MeteorShowerPixels from "./MeteorShowerPixels";
+import TrustStrip from "./TrustStrip";
 
 export default function SupplyHero() {
   return (
@@ -26,11 +27,16 @@ export default function SupplyHero() {
             href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-11 items-center justify-center rounded-md bg-white px-6 text-[13px] font-medium uppercase tracking-[0.18em] text-black transition-colors hover:bg-white/90"
+            className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md bg-white px-6 text-[13px] font-medium uppercase tracking-[0.18em] text-black transition-colors hover:bg-white/90"
           >
-            Book Demo
+            <span className="cta-text-roll" aria-label="Book Demo">
+              <span aria-hidden="true">Book Demo</span>
+              <span aria-hidden="true">Book Demo</span>
+            </span>
           </Link>
         </div>
+
+        <TrustStrip />
       </div>
     </section>
   );

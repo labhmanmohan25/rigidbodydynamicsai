@@ -32,7 +32,7 @@ export default function AboutPage() {
               href="https://www.linkedin.com/in/apurva-biswas/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
+              className="mt-8 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
             >
               LinkedIn
               <span aria-hidden>→</span>
@@ -55,7 +55,7 @@ export default function AboutPage() {
               href="https://www.linkedin.com/in/manmohanlabh/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
+              className="mt-8 inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900"
             >
               LinkedIn
               <span aria-hidden>→</span>

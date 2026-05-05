@@ -755,7 +755,7 @@ export default function ReportPage() {
                     href={c.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-neutral-600 transition-colors"
+                    className="cursor-pointer transition-colors hover:text-neutral-600"
                   >
                     {c.text}
                   </a>
@@ -770,7 +770,7 @@ export default function ReportPage() {
         <div className="mt-16 border-t border-neutral-100 pt-8">
           <Link
             href="/research"
-            className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-900 transition-colors group"
+            className="group inline-flex cursor-pointer items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             Back to Research

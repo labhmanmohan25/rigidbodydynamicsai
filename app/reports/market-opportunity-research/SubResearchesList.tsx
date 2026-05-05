@@ -63,7 +63,7 @@ export function SubResearchesList({ items }: { items: readonly SubResearch[] }) 
                   transform: `translateY(${virtualRow.start}px)`,
                 }}
               >
-                <Link href={sub.href} className="block group pr-2">
+                <Link href={sub.href} className="block cursor-pointer group pr-2">
                   <div className="flex flex-wrap items-baseline gap-2">
                     <span className="text-sm font-medium text-neutral-800 underline decoration-neutral-300 underline-offset-2 transition-colors group-hover:text-neutral-900 group-hover:decoration-neutral-500">
                       {sub.title}

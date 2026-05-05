@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type Card = {
   label: string;
@@ -241,7 +241,7 @@ function CapabilityCardPanel({
 
         <div
           key={`content-${visualKey}`}
-          className={`flex flex-col justify-center p-6 sm:p-9 ${stack ? "" : "animate-[fadeIn_0.4s_ease-out]"}`}
+          className={`flex flex-col justify-center p-6 sm:p-9 ${stack ? "animate-[fadeIn_0.4s_ease-out]" : ""}`}
         >
           {showIndexChip ? (
             <span className="inline-flex w-fit items-center rounded border border-white/15 bg-white/[0.04] px-2 py-1 font-mono text-[11px] tracking-wider text-white/70">
@@ -275,10 +275,20 @@ function CapabilityCardPanel({
 
 export default function CapabilityCards() {
   const [active, setActive] = useState(0);
+  const [slideDir, setSlideDir] = useState<"up" | "down" | null>(null);
+  const prevActiveRef = useRef(0);
   const card = CARDS[active];
 
+  function selectTab(index: number) {
+    if (index === active) return;
+    const prev = prevActiveRef.current;
+    setSlideDir(index > prev ? "down" : "up");
+    prevActiveRef.current = index;
+    setActive(index);
+  }
+
   return (
-    <section className="bg-black py-24 sm:py-32">
+    <section className="bg-black py-8 sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
           <span className="inline-block h-1.5 w-1.5 bg-white" />
@@ -314,8 +324,11 @@ export default function CapabilityCards() {
           </div>
 
           {/* Large screens: tab rail + numbered index */}
-          <div className="hidden lg:grid lg:grid-cols-[260px_1fr]">
-            <div className="border-b border-white/10 bg-black lg:border-b-0 lg:border-r">
+          <div className="hidden lg:grid lg:grid-cols-[280px_1fr]">
+            <div className="border-b border-white/10 bg-[#050505] lg:border-b-0 lg:border-r lg:border-white/10">
+              <p className="border-b border-white/10 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-white/40">
+                Select a capability
+              </p>
               <ul
                 role="tablist"
                 aria-label="Capabilities"
@@ -324,38 +337,40 @@ export default function CapabilityCards() {
                 {CARDS.map((c, i) => {
                   const isActive = i === active;
                   return (
-                    <li key={c.label} className="w-full">
+                    <li
+                      key={c.label}
+                      className="border-b border-white/10 last:border-b-0"
+                    >
                       <button
                         type="button"
                         role="tab"
                         aria-selected={isActive}
                         aria-controls="capability-panel"
                         id={`cap-tab-${i}`}
-                        onClick={() => setActive(i)}
-                        className={`group flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors ${
+                        onClick={() => selectTab(i)}
+                        className={`group flex w-full cursor-pointer items-center gap-3.5 text-left transition-[background-color,border-color,box-shadow,margin,padding,border-radius] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400/90 ${
                           isActive
-                            ? "bg-white/[0.04] text-white"
-                            : "text-white/55 hover:bg-white/[0.02] hover:text-white/80"
+                            ? "mx-2 my-2.5 rounded-sm border border-white/25 bg-[#12161c] px-4 py-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
+                            : "border border-transparent px-4 py-4 hover:bg-white/[0.025]"
                         }`}
                       >
                         <span
-                          className={`inline-flex h-6 w-7 flex-shrink-0 items-center justify-center rounded font-mono text-[10.5px] tracking-wider transition-colors ${
+                          className={`inline-flex h-8 w-9 flex-shrink-0 items-center justify-center font-mono text-[11px] font-semibold tabular-nums tracking-wide transition-colors ${
                             isActive
-                              ? "bg-white text-black"
-                              : "bg-white/[0.06] text-white/55 group-hover:bg-white/10"
+                              ? "rounded-[2px] bg-sky-500 text-[#07090d]"
+                              : "rounded-[2px] text-white/30 group-hover:text-white/45"
                           }`}
+                          aria-hidden
                         >
                           {String(i + 1).padStart(2, "0")}
                         </span>
-                        <span className="text-[13px] font-medium uppercase tracking-[0.12em]">
+                        <span
+                          className={`min-w-0 flex-1 text-[12px] font-medium uppercase leading-snug tracking-[0.14em] ${
+                            isActive ? "text-white" : "text-white/75 group-hover:text-white/90"
+                          }`}
+                        >
                           {c.label}
                         </span>
-                        <span
-                          className={`ml-auto h-4 w-[2px] flex-shrink-0 rounded-full transition-colors ${
-                            isActive ? "bg-white" : "bg-transparent"
-                          }`}
-                          aria-hidden
-                        />
                       </button>
                     </li>
                   );
@@ -367,13 +382,25 @@ export default function CapabilityCards() {
               id="capability-panel"
               role="tabpanel"
               aria-labelledby={`cap-tab-${active}`}
+              className="min-h-0 overflow-hidden bg-[#0a0a0a]"
             >
-              <CapabilityCardPanel
-                card={card}
-                visualKey={String(active + 1).padStart(2, "0")}
-                showIndexChip
-                layout="split"
-              />
+              <div
+                key={active}
+                className={
+                  slideDir === "down"
+                    ? "cap-slide-from-bottom"
+                    : slideDir === "up"
+                      ? "cap-slide-from-top"
+                      : ""
+                }
+              >
+                <CapabilityCardPanel
+                  card={card}
+                  visualKey={String(active + 1).padStart(2, "0")}
+                  showIndexChip
+                  layout="split"
+                />
+              </div>
             </div>
           </div>
         </div>

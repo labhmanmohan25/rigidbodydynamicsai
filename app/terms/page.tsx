@@ -20,7 +20,7 @@ export default function TermsPage() {
         For questions, use{" "}
         <Link
           href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
-          className="text-foreground underline underline-offset-2 hover:opacity-80"
+          className="cursor-pointer text-foreground underline underline-offset-2 hover:opacity-80"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -30,7 +30,7 @@ export default function TermsPage() {
       </p>
       <Link
         href="/"
-        className="mt-10 inline-block text-sm font-medium text-foreground underline underline-offset-4 hover:opacity-80"
+        className="mt-10 inline-block cursor-pointer text-sm font-medium text-foreground underline underline-offset-4 hover:opacity-80"
       >
         ← Back home
       </Link>

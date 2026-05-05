@@ -33,7 +33,7 @@ const AGENTS = [
 
 export default function AgentsGrid() {
   return (
-    <section className="bg-black py-24 sm:py-32">
+    <section className="bg-black py-8 sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
           <span className="inline-block h-1.5 w-1.5 bg-white" />
@@ -63,7 +63,7 @@ export default function AgentsGrid() {
                   /{(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
-                  <span className="h-1 w-1 rounded-full bg-white/80" />
+                  <span className="h-1 w-1 rounded-full bg-green-400" />
                   active
                 </span>
               </div>

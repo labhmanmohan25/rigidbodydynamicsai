@@ -80,8 +80,81 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Why-us capability panel: direction hints when changing tabs */
+@keyframes capability-slide-from-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes capability-slide-from-top {
+  from {
+    opacity: 0;
+    transform: translateY(-1.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cap-slide-from-bottom {
+  animation: capability-slide-from-bottom 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.cap-slide-from-top {
+  animation: capability-slide-from-top 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* CTA button text roll effect */
+.cta-text-roll {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 1.2em;
+  line-height: 1.2;
+  overflow: hidden;
+}
+
+.cta-text-roll > span {
+  display: block;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cta-text-roll > span:last-child {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+a:hover .cta-text-roll > span,
+a:focus-visible .cta-text-roll > span,
+button:hover .cta-text-roll > span,
+button:focus-visible .cta-text-roll > span {
+  transform: translateY(-100%);
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  .cta-text-roll > span {
+    transition: none !important;
+  }
+
+  a:hover .cta-text-roll > span,
+  a:focus-visible .cta-text-roll > span,
+  button:hover .cta-text-roll > span,
+  button:focus-visible .cta-text-roll > span {
+    transform: none !important;
+  }
+
   *,
   *::before,
   *::after {

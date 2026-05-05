@@ -12,7 +12,7 @@ const LOGO_WHITE_URL = basePath ? `${basePath}/logowhite.png` : "/logowhite.png"
 const navLinks = [
   { href: "/", label: "the product" },
   { href: "/about", label: "the team" },
-  { href: "/#footer", label: "everything" },
+  { href: "/#final-cta", label: "everything else" },
 ] as const;
 
 export default function LandingHeader() {
@@ -23,12 +23,12 @@ export default function LandingHeader() {
 
   const isAbout = pathname === "/about";
   const baseNavClass = isHome
-    ? "rounded-md px-3 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 md:py-1.5"
-    : "rounded-md px-3 py-2 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 md:py-1.5";
+    ? "cursor-pointer rounded-md px-3 py-2 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 md:py-1.5"
+    : "cursor-pointer rounded-md px-3 py-2 text-sm text-neutral-600 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 md:py-1.5";
 
   const ctaClass = isHome
-    ? "inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md bg-white px-4 text-sm font-medium text-black transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 md:h-8 md:w-auto md:bg-foreground md:text-background"
-    : "inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 md:h-8 md:w-auto";
+    ? "inline-flex h-10 w-full cursor-pointer items-center justify-center gap-1.5 rounded-md bg-white px-4 text-sm font-medium text-black transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 md:h-8 md:w-auto md:bg-foreground md:text-background"
+    : "inline-flex h-10 w-full cursor-pointer items-center justify-center gap-1.5 rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 md:h-8 md:w-auto";
 
   useEffect(() => {
     setMenuOpen(false);
@@ -46,7 +46,7 @@ export default function LandingHeader() {
         <div className="flex w-full items-center gap-2">
           <Link
             href="/"
-            className={`flex flex-shrink-0 items-center justify-center p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2 ${isHome ? "h-9 w-9 rounded-full bg-white/20" : "h-8 w-8 rounded-md"}`}
+            className={`flex cursor-pointer flex-shrink-0 items-center justify-center p-1 transition-opacity hover:opacity-80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2 ${isHome ? "h-9 w-9 rounded-full bg-white/20" : "h-8 w-8 rounded-md"}`}
             aria-label="Rigid Body Dynamics home"
             onClick={() => setMenuOpen(false)}
           >
@@ -64,7 +64,7 @@ export default function LandingHeader() {
             <ul className="flex items-center gap-1">
               {navLinks.map(({ href, label }) => {
                 const isActive =
-                  href === "/#footer"
+                  href === "/#final-cta"
                     ? false
                     : href === "/"
                       ? isHome
@@ -75,13 +75,13 @@ export default function LandingHeader() {
                   <li key={href}>
                     <Link
                       href={href}
-                      scroll={href !== "/#footer"}
+                      scroll={href !== "/#final-cta"}
                       onClick={
-                        href === "/#footer" && isHome
+                        href === "/#final-cta" && isHome
                           ? (e) => {
                               e.preventDefault();
                               document
-                                .getElementById("footer")
+                                .getElementById("final-cta")
                                 ?.scrollIntoView({
                                   behavior: "smooth",
                                   block: "start",
@@ -89,7 +89,7 @@ export default function LandingHeader() {
                               window.history.replaceState(
                                 null,
                                 "",
-                                `${window.location.pathname}#footer`,
+                                `${window.location.pathname}#final-cta`,
                               );
                             }
                           : undefined
@@ -110,7 +110,10 @@ export default function LandingHeader() {
             rel="noopener noreferrer"
             className={`${ctaClass} ml-auto hidden md:inline-flex`}
           >
-            get in touch
+            <span className="cta-text-roll" aria-label="get in touch">
+              <span aria-hidden="true">get in touch</span>
+              <span aria-hidden="true">get in touch</span>
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
@@ -128,7 +131,7 @@ export default function LandingHeader() {
 
           <button
             type="button"
-            className={`ml-auto inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md md:ml-0 ${isHome ? "text-white/90 ring-1 ring-white/25 hover:bg-white/10" : "text-neutral-800 ring-1 ring-neutral-200 hover:bg-neutral-100"} md:hidden`}
+            className={`ml-auto inline-flex h-10 w-10 cursor-pointer flex-shrink-0 items-center justify-center rounded-md md:ml-0 ${isHome ? "text-white/90 ring-1 ring-white/25 hover:bg-white/10" : "text-neutral-800 ring-1 ring-neutral-200 hover:bg-neutral-100"} md:hidden`}
             aria-expanded={menuOpen}
             aria-controls="mobile-main-nav"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
@@ -152,7 +155,7 @@ export default function LandingHeader() {
           <ul className="flex flex-col gap-1">
             {navLinks.map(({ href, label }) => {
               const isActive =
-                href === "/#footer"
+                href === "/#final-cta"
                   ? false
                   : href === "/"
                     ? isHome
@@ -163,14 +166,14 @@ export default function LandingHeader() {
                 <li key={href}>
                   <Link
                     href={href}
-                    scroll={href !== "/#footer"}
+                    scroll={href !== "/#final-cta"}
                     onClick={
-                      href === "/#footer" && isHome
+                      href === "/#final-cta" && isHome
                         ? (e) => {
                             e.preventDefault();
                             setMenuOpen(false);
                             document
-                              .getElementById("footer")
+                              .getElementById("final-cta")
                               ?.scrollIntoView({
                                 behavior: "smooth",
                                 block: "start",
@@ -178,7 +181,7 @@ export default function LandingHeader() {
                             window.history.replaceState(
                               null,
                               "",
-                              `${window.location.pathname}#footer`,
+                              `${window.location.pathname}#final-cta`,
                             );
                           }
                         : () => setMenuOpen(false)
@@ -198,7 +201,10 @@ export default function LandingHeader() {
             className={`${ctaClass} mt-4`}
             onClick={() => setMenuOpen(false)}
           >
-            get in touch
+            <span className="cta-text-roll" aria-label="get in touch">
+              <span aria-hidden="true">get in touch</span>
+              <span aria-hidden="true">get in touch</span>
+            </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"

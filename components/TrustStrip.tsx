@@ -9,7 +9,7 @@ export default function TrustStrip() {
   ];
 
   return (
-    <section className="bg-black py-12">
+    <section className="bg-black pt-8 pb-0">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-3 text-white/40">
           {partners.map((p) => (

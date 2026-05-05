@@ -51,7 +51,7 @@ export default function Hero() {
           >
             <Link
               href="#approach"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-6 text-base font-medium text-accent-foreground transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+              className="inline-flex h-12 cursor-pointer items-center justify-center rounded-full bg-accent px-6 text-base font-medium text-accent-foreground transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
               Learn more
             </Link>
@@ -59,9 +59,12 @@ export default function Hero() {
               href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-12 items-center justify-center rounded-full border border-border px-6 text-base font-medium text-foreground transition-colors hover:border-muted-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+              className="inline-flex h-12 cursor-pointer items-center justify-center rounded-full border border-border px-6 text-base font-medium text-foreground transition-colors hover:border-muted-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
-              get in touch
+              <span className="cta-text-roll" aria-label="get in touch">
+                <span aria-hidden="true">get in touch</span>
+                <span aria-hidden="true">get in touch</span>
+              </span>
             </Link>
           </motion.div>
           <motion.div variants={item} className="mt-14 w-full">

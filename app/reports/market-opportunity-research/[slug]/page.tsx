@@ -69,7 +69,7 @@ export default async function SubResearchPage({ params }: Props) {
         <div className="mt-16 flex flex-wrap items-center gap-4 border-t border-neutral-100 pt-8">
           <Link
             href="/reports/market-opportunity-research"
-            className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-900 transition-colors group"
+            className="group inline-flex cursor-pointer items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             Back to AI Market Opportunity Research
@@ -77,7 +77,7 @@ export default async function SubResearchPage({ params }: Props) {
           <span className="text-neutral-300">·</span>
           <Link
             href="/research"
-            className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-900 transition-colors group"
+            className="group inline-flex cursor-pointer items-center gap-1.5 text-sm text-neutral-500 transition-colors hover:text-neutral-900"
           >
             <span className="transition-transform group-hover:-translate-x-0.5">←</span>
             Back to Research
