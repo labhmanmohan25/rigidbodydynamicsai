@@ -56,7 +56,7 @@ export default function Hero() {
               Learn more
             </Link>
             <Link
-              href="https://www.linkedin.com/company/rigid-body-dynamics-ai"
+              href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 items-center justify-center rounded-full border border-border px-6 text-base font-medium text-foreground transition-colors hover:border-muted-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"

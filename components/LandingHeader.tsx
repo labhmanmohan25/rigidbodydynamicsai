@@ -9,16 +9,18 @@ const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
 const LOGO_WHITE_URL = basePath ? `${basePath}/logowhite.png` : "/logowhite.png";
 
 const navLinks = [
-  { href: "/research", label: "the research" },
-  { href: "/about", label: "the human" },
-];
+  // { href: "/research", label: "the research" },
+  { href: "/", label: "the product" },
+  { href: "/about", label: "the team" },
+  { href: "/#footer", label: "everything" },
+] as const;
 
 export default function LandingHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const logoUrl = isHome ? LOGO_WHITE_URL : LOGO_URL;
 
-  const isResearch = pathname === "/research" || pathname.startsWith("/research/");
+  // const isResearch = pathname === "/research" || pathname.startsWith("/research/");
   const isAbout = pathname === "/about";
   const baseNavClass = isHome
     ? "rounded-md px-3 py-1.5 text-sm text-white/80 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2"
@@ -42,11 +44,37 @@ export default function LandingHeader() {
         <nav aria-label="Main navigation">
           <ul className="flex items-center gap-1">
             {navLinks.map(({ href, label }) => {
-              const isActive = href === "/research" ? isResearch : href === "/about" ? isAbout : false;
+              const isActive =
+                href === "/#footer"
+                  ? false
+                  : href === "/"
+                    ? isHome
+                    : href === "/about"
+                      ? isAbout
+                      : false;
               return (
                 <li key={href}>
                   <Link
                     href={href}
+                    scroll={href !== "/#footer"}
+                    onClick={
+                      href === "/#footer" && isHome
+                        ? (e) => {
+                            e.preventDefault();
+                            document
+                              .getElementById("footer")
+                              ?.scrollIntoView({
+                                behavior: "smooth",
+                                block: "start",
+                              });
+                            window.history.replaceState(
+                              null,
+                              "",
+                              `${window.location.pathname}#footer`,
+                            );
+                          }
+                        : undefined
+                    }
                     className={`${baseNavClass} ${isActive ? "underline underline-offset-4 decoration-2" : ""}`}
                   >
                     {label}
@@ -58,7 +86,7 @@ export default function LandingHeader() {
         </nav>
 
         <Link
-          href="https://www.linkedin.com/company/rigid-body-dynamics-ai"
+          href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
           target="_blank"
           rel="noopener noreferrer"
           className="ml-auto inline-flex h-9 flex-shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-85 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2 sm:ml-1 sm:h-8"
