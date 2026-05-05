@@ -48,7 +48,7 @@ export default async function SubResearchPage({ params }: Props) {
 
   return (
     <div className="min-h-screen bg-white text-foreground">
-      <main className="mx-auto max-w-3xl px-6 pt-28 pb-24">
+      <main className="mx-auto max-w-3xl px-4 pt-28 pb-24 sm:px-6">
         <Breadcrumb
           items={[
             { label: "Home", href: "/" },

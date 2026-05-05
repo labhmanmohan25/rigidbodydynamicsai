@@ -181,13 +181,105 @@ const CARDS: Card[] = [
   },
 ];
 
+function CapabilityCardPanel({
+  card,
+  visualKey,
+  showIndexChip,
+  layout,
+}: {
+  card: Card;
+  visualKey: string;
+  showIndexChip: boolean;
+  layout: "stack" | "split";
+}) {
+  const stack = layout === "stack";
+
+  return (
+    <div className="bg-[#0a0a0a]">
+      <div
+        className={
+          stack
+            ? "grid grid-cols-1 gap-0"
+            : "grid gap-0 md:grid-cols-[1.15fr_1fr]"
+        }
+      >
+        <div
+          key={`visual-${visualKey}`}
+          className={
+            stack
+              ? "relative h-56 w-full overflow-hidden sm:h-64"
+              : "relative h-72 w-full overflow-hidden md:h-full md:min-h-[460px]"
+          }
+          style={{ background: card.gradient }}
+        >
+          <div
+            className="absolute inset-0 mix-blend-overlay"
+            style={{ backgroundImage: noiseUrl }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 opacity-[0.16]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
+              backgroundSize: "44px 44px",
+            }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(120% 80% at 50% 60%, transparent 35%, rgba(0,0,0,0.5) 100%)",
+            }}
+            aria-hidden
+          />
+          <div className="absolute inset-0 flex items-center justify-center px-5">
+            {card.mockup}
+          </div>
+        </div>
+
+        <div
+          key={`content-${visualKey}`}
+          className={`flex flex-col justify-center p-6 sm:p-9 ${stack ? "" : "animate-[fadeIn_0.4s_ease-out]"}`}
+        >
+          {showIndexChip ? (
+            <span className="inline-flex w-fit items-center rounded border border-white/15 bg-white/[0.04] px-2 py-1 font-mono text-[11px] tracking-wider text-white/70">
+              {visualKey}
+            </span>
+          ) : null}
+          <h3
+            className={`text-xl font-semibold leading-snug text-white sm:text-2xl ${showIndexChip ? "mt-4" : "mt-0"}`}
+          >
+            {card.title}
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-white/55 sm:text-[15px]">
+            {card.blurb}
+          </p>
+          <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-5">
+            {card.bullets.map((b) => (
+              <li
+                key={b}
+                className="flex gap-3 text-sm leading-relaxed text-white/75"
+              >
+                <span className="mt-1.5 inline-block h-3 w-[2px] flex-shrink-0 bg-white/40" />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CapabilityCards() {
   const [active, setActive] = useState(0);
   const card = CARDS[active];
 
   return (
     <section className="bg-black py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
           <span className="inline-block h-1.5 w-1.5 bg-white" />
           Why us
@@ -199,31 +291,55 @@ export default function CapabilityCards() {
         </h2>
 
         <div className="mt-14 overflow-hidden rounded-xl border border-white/10">
-          <div className="grid lg:grid-cols-[260px_1fr]">
-            {/* Tabs — horizontal scroll on mobile, vertical on desktop */}
+          {/* Phone / tablet: stacked cards, no numbered index */}
+          <div className="flex flex-col divide-y divide-white/10 lg:hidden">
+            {CARDS.map((c, i) => (
+              <article key={c.label} aria-labelledby={`cap-mobile-${i}`}>
+                <div className="border-b border-white/10 bg-black/50 px-4 py-3 sm:px-5">
+                  <h3
+                    id={`cap-mobile-${i}`}
+                    className="text-[13px] font-medium uppercase tracking-[0.12em] text-white"
+                  >
+                    {c.label}
+                  </h3>
+                </div>
+                <CapabilityCardPanel
+                  card={c}
+                  visualKey={`m-${i}`}
+                  showIndexChip={false}
+                  layout="stack"
+                />
+              </article>
+            ))}
+          </div>
+
+          {/* Large screens: tab rail + numbered index */}
+          <div className="hidden lg:grid lg:grid-cols-[260px_1fr]">
             <div className="border-b border-white/10 bg-black lg:border-b-0 lg:border-r">
               <ul
                 role="tablist"
                 aria-label="Capabilities"
-                className="flex overflow-x-auto lg:flex-col lg:overflow-visible"
+                className="flex flex-col"
               >
                 {CARDS.map((c, i) => {
                   const isActive = i === active;
                   return (
-                    <li key={c.label} className="flex-shrink-0 lg:flex-shrink lg:w-full">
+                    <li key={c.label} className="w-full">
                       <button
                         type="button"
                         role="tab"
                         aria-selected={isActive}
+                        aria-controls="capability-panel"
+                        id={`cap-tab-${i}`}
                         onClick={() => setActive(i)}
-                        className={`group flex w-full items-center gap-3 whitespace-nowrap px-4 py-3.5 text-left transition-colors lg:whitespace-normal ${
+                        className={`group flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors ${
                           isActive
                             ? "bg-white/[0.04] text-white"
                             : "text-white/55 hover:bg-white/[0.02] hover:text-white/80"
                         }`}
                       >
                         <span
-                          className={`inline-flex h-6 w-7 items-center justify-center rounded font-mono text-[10.5px] tracking-wider transition-colors ${
+                          className={`inline-flex h-6 w-7 flex-shrink-0 items-center justify-center rounded font-mono text-[10.5px] tracking-wider transition-colors ${
                             isActive
                               ? "bg-white text-black"
                               : "bg-white/[0.06] text-white/55 group-hover:bg-white/10"
@@ -234,9 +350,8 @@ export default function CapabilityCards() {
                         <span className="text-[13px] font-medium uppercase tracking-[0.12em]">
                           {c.label}
                         </span>
-                        {/* Active rail (desktop only) */}
                         <span
-                          className={`ml-auto hidden h-4 w-[2px] rounded-full transition-colors lg:block ${
+                          className={`ml-auto h-4 w-[2px] flex-shrink-0 rounded-full transition-colors ${
                             isActive ? "bg-white" : "bg-transparent"
                           }`}
                           aria-hidden
@@ -248,69 +363,17 @@ export default function CapabilityCards() {
               </ul>
             </div>
 
-            {/* Active panel */}
-            <div className="bg-[#0a0a0a]">
-              <div className="grid gap-0 md:grid-cols-[1.15fr_1fr]">
-                {/* Visual */}
-                <div
-                  key={`visual-${active}`}
-                  className="relative h-72 w-full overflow-hidden md:h-full md:min-h-[460px]"
-                  style={{ background: card.gradient }}
-                >
-                  <div
-                    className="absolute inset-0 mix-blend-overlay"
-                    style={{ backgroundImage: noiseUrl }}
-                    aria-hidden
-                  />
-                  <div
-                    className="absolute inset-0 opacity-[0.16]"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                      backgroundSize: "44px 44px",
-                    }}
-                    aria-hidden
-                  />
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "radial-gradient(120% 80% at 50% 60%, transparent 35%, rgba(0,0,0,0.5) 100%)",
-                    }}
-                    aria-hidden
-                  />
-                  <div className="absolute inset-0 flex animate-[fadeIn_0.4s_ease-out] items-center justify-center px-5">
-                    {card.mockup}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div
-                  key={`content-${active}`}
-                  className="flex animate-[fadeIn_0.4s_ease-out] flex-col justify-center p-6 sm:p-9"
-                >
-                  <span className="inline-flex w-fit items-center rounded border border-white/15 bg-white/[0.04] px-2 py-1 font-mono text-[11px] tracking-wider text-white/70">
-                    {String(active + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="mt-4 text-xl font-semibold leading-snug text-white sm:text-2xl">
-                    {card.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-white/55 sm:text-[15px]">
-                    {card.blurb}
-                  </p>
-                  <ul className="mt-6 space-y-2.5 border-t border-white/10 pt-5">
-                    {card.bullets.map((b) => (
-                      <li
-                        key={b}
-                        className="flex gap-3 text-sm leading-relaxed text-white/75"
-                      >
-                        <span className="mt-1.5 inline-block h-3 w-[2px] flex-shrink-0 bg-white/40" />
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+            <div
+              id="capability-panel"
+              role="tabpanel"
+              aria-labelledby={`cap-tab-${active}`}
+            >
+              <CapabilityCardPanel
+                card={card}
+                visualKey={String(active + 1).padStart(2, "0")}
+                showIndexChip
+                layout="split"
+              />
             </div>
           </div>
         </div>

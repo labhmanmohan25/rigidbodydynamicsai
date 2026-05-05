@@ -8,8 +8,8 @@ export default function SupplyHero() {
     <section className="relative isolate overflow-hidden bg-black pt-32 pb-24 sm:pt-40 sm:pb-32">
       <MeteorShowerPixels />
 
-      <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
-        <h1 className="mx-auto max-w-4xl text-4xl font-semibold leading-[1.05] tracking-tight text-white sm:text-6xl md:text-[72px]">
+      <div className="relative z-10 mx-auto max-w-5xl px-4 text-center sm:px-6">
+        <h1 className="mx-auto max-w-4xl text-[clamp(1.875rem,6vw+1rem,4.5rem)] font-semibold leading-[1.06] tracking-tight text-white sm:text-6xl md:text-[72px]">
           Your supply chain decides what to do.
           <br />
           We handle the rest.

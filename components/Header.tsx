@@ -14,7 +14,7 @@ const LOGO_URL = basePath ? `${basePath}/logo.png` : "/logo.png";
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/60 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-[var(--max-width-content)] items-center justify-between px-6">
+      <div className="mx-auto flex h-16 max-w-[var(--max-width-content)] items-center justify-between px-4 sm:px-6">
         <Link
           href="/"
           className="flex items-center gap-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"

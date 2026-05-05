@@ -37,10 +37,15 @@
   font-variation-settings: "ROND" 50;
 }
 
+html {
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: clip;
 }
 
 .font-heading {
@@ -106,3 +111,11 @@ body {
 .report-prose pre code { background: none; padding: 0; }
 .report-prose > *:first-child { margin-top: 0; }
 .report-prose h1:first-child { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .report-prose h1 { font-size: 1.625rem; }
+  .report-prose h2 { font-size: 1.25rem; }
+  .report-prose pre { padding: 0.75rem; font-size: 0.8125rem; }
+  .prose table,
+  .report-prose table { font-size: 0.8125rem; display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}

@@ -54,7 +54,7 @@ export default function Differentiators() {
   return (
     <section
       id="differentiators"
-      className="relative overflow-hidden px-6 py-24 md:py-32"
+      className="relative overflow-hidden px-4 py-24 sm:px-6 md:py-32"
       aria-labelledby="differentiators-heading"
     >
       <GradientOrbs />

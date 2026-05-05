@@ -16,7 +16,7 @@ export default function SecurityBand() {
         }}
         aria-hidden
       />
-      <div className="relative mx-auto max-w-6xl px-6">
+      <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:items-center">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-orange-300/80">

@@ -122,9 +122,12 @@ function DemandChart() {
         ))}
       </div>
 
-      {/* divergence annotation */}
+      {/* divergence annotation — below chart on narrow screens to avoid clipping */}
+      <p className="mt-3 text-center font-mono text-[10px] leading-snug text-white/80 sm:hidden">
+        +18% vs forecast → RM PO triggered
+      </p>
       <div
-        className="absolute -translate-x-1/2 -translate-y-full rounded border border-white/20 bg-black px-2 py-1 font-mono text-[10px] text-white/85"
+        className="absolute hidden -translate-x-1/2 -translate-y-full rounded border border-white/20 bg-black px-2 py-1 font-mono text-[10px] text-white/85 sm:block"
         style={{
           left: `${(divergeX / w) * 100}%`,
           top: `${(divergeY / h) * 100 - 4}%`,
@@ -228,7 +231,7 @@ export default function PlatformShowcase() {
 
   return (
     <section id="platform" className="bg-black py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
           <span className="inline-block h-1.5 w-1.5 bg-white" />
           The platform
@@ -242,14 +245,16 @@ export default function PlatformShowcase() {
         {/* Window */}
         <div className="relative mt-14 overflow-hidden rounded-xl border border-white/10 bg-[#0a0a0a]">
           {/* Chrome */}
-          <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.02] px-4 py-3">
-            <span className="h-2.5 w-2.5 rounded-full bg-white/30" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
-            <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-            <span className="ml-3 font-mono text-xs text-white/45">
+          <div className="flex min-h-[2.75rem] flex-wrap items-center gap-x-2 gap-y-2 border-b border-white/10 bg-white/[0.02] px-3 py-2.5 sm:px-4 sm:py-3">
+            <div className="flex shrink-0 items-center gap-2">
+              <span className="h-2.5 w-2.5 rounded-full bg-white/30" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+              <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
+            </div>
+            <span className="min-w-0 flex-1 basis-[8rem] truncate pl-1 font-mono text-[10px] text-white/45 sm:basis-auto sm:pl-0 sm:text-xs">
               ops.rigidbody.ai / acme-foods · operations
             </span>
-            <span className="ml-auto inline-flex items-center gap-1.5 rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
+            <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded border border-white/15 bg-white/[0.04] px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-white/70">
               <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
               live
             </span>
@@ -312,8 +317,8 @@ export default function PlatformShowcase() {
           <div className="grid gap-px bg-white/5 lg:grid-cols-[1.5fr_1fr]">
             {/* Demand vs Forecast */}
             <div className="bg-[#0a0a0a] p-5 sm:p-6">
-              <div className="flex items-start justify-between">
-                <div>
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
+                <div className="min-w-0">
                   <p className="text-sm font-medium text-white">
                     Demand vs Forecast
                   </p>
@@ -321,7 +326,7 @@ export default function PlatformShowcase() {
                     SKU-228 · Maharashtra · last 14 days
                   </p>
                 </div>
-                <div className="flex items-center gap-3 text-[10.5px] text-white/55">
+                <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-white/55">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="inline-block h-[2px] w-3 bg-white" />
                     Actual
@@ -341,7 +346,7 @@ export default function PlatformShowcase() {
               <div className="mt-5">
                 <DemandChart />
               </div>
-              <div className="mt-4 flex items-center justify-between border-t border-white/10 pt-3 font-mono text-[11px] text-white/55">
+              <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-3 font-mono text-[11px] text-white/55 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
                 <span>Forecast accuracy · 91.2%</span>
                 <span>Auto-corrections this week · 4</span>
               </div>
@@ -395,7 +400,7 @@ export default function PlatformShowcase() {
           <div className="grid gap-px bg-white/5 lg:grid-cols-[1.4fr_1fr]">
             {/* Inventory heatmap */}
             <div className="bg-[#0a0a0a] p-5 sm:p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
                 <p className="text-sm font-medium text-white">
                   Inventory cover
                 </p>

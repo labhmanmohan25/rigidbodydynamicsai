@@ -34,7 +34,7 @@ const AGENTS = [
 export default function AgentsGrid() {
   return (
     <section className="bg-black py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="flex w-fit items-center gap-2 rounded-md border border-white/20 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-white/70">
           <span className="inline-block h-1.5 w-1.5 bg-white" />
           The agents
@@ -56,7 +56,7 @@ export default function AgentsGrid() {
           {AGENTS.map((a, i) => (
             <div
               key={a.name}
-              className="bg-[#0a0a0a] p-7 transition-colors hover:bg-[#0f0f0f]"
+              className="bg-[#0a0a0a] p-5 transition-colors hover:bg-[#0f0f0f] sm:p-7"
             >
               <div className="flex items-center justify-between">
                 <span className="font-mono text-xs text-white/40">

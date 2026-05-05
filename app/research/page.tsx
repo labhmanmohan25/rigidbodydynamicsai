@@ -88,7 +88,7 @@ export const metadata = {
 export default function ResearchPage() {
   return (
     <div className="min-h-screen bg-white text-foreground">
-      <main className="mx-auto max-w-3xl px-6 pt-28 pb-16">
+      <main className="mx-auto max-w-3xl px-4 pt-28 pb-16 sm:px-6">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Research" }]} />
 
         <div className="mt-12">
@@ -144,7 +144,7 @@ export default function ResearchPage() {
                       {...(!article.internal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="group block"
                     >
-                      <div className="flex items-start justify-between gap-4">
+                      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
                         <div className="min-w-0">
                           <div className="flex flex-wrap items-center gap-2">
                             <h2 className="text-base font-medium text-neutral-900 transition-colors group-hover:text-neutral-600">
@@ -175,7 +175,7 @@ export default function ResearchPage() {
                             <span className="transition-transform group-hover:translate-x-0.5">→</span>
                           </span>
                         </div>
-                        <span className="shrink-0 text-xs text-neutral-400 whitespace-nowrap">{article.date}</span>
+                        <span className="shrink-0 text-xs text-neutral-400 whitespace-nowrap sm:text-right">{article.date}</span>
                       </div>
                     </Link>
                   </li>

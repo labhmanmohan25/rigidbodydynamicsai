@@ -18,7 +18,7 @@ export default function Footer() {
   return (
     <footer
       id="contact"
-      className="relative overflow-hidden bg-[#1a1a1a] px-6 pb-48 pt-8"
+      className="relative overflow-hidden bg-[#1a1a1a] px-4 pb-48 pt-8 sm:px-6"
       role="contentinfo"
       aria-labelledby="footer-heading"
     >
@@ -49,7 +49,7 @@ export default function Footer() {
       </div>
       {/* Large faint brand name at bottom: left-aligned, line 1 full, line 2 half visible */}
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-start justify-end gap-0 pl-6 pt-4 text-left md:pl-8"
+        className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-col items-start justify-end gap-0 pl-4 pt-4 text-left sm:pl-6 md:pl-8"
         aria-hidden
       >
         <span

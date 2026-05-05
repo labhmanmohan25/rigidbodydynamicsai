@@ -9,7 +9,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white text-foreground">
-      <main className="mx-auto max-w-2xl px-6 pt-28 pb-16">
+      <main className="mx-auto max-w-2xl px-4 pt-28 pb-16 sm:px-6">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
 
         <h1 className="mt-16 text-2xl font-semibold tracking-tight text-neutral-900 sm:text-3xl">

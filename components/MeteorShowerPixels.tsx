@@ -52,7 +52,7 @@ type Meteor = {
   size: number;
 };
 
-/** Landed icons: generic FMCG pack shapes + generic supply-chain nodes (sources: FMCG flows — source → manufacture → warehousing → multimodal logistics → retail / trade). */
+/** Landed icons: Heroicons-outline product + logistics glyphs (canvas `Path2D`; matches `react-icons/hi2`). */
 type FloorLanding = {
   x: number;
   y: number;
@@ -60,8 +60,85 @@ type FloorLanding = {
   born: number;
 };
 
-/** FMCG silhouettes `0…7`; supply-chain `8…15` (warehouse, truck, pallets, factory, sourcing, rail, storefront, shipping container). */
+/**
+ * Landed marks use Heroicons v2 outline paths (MIT) — same artwork as `react-icons/hi2`.
+ * Canvas cannot render React icon components directly; paths are inlined for `Path2D` stroke.
+ * Order: retail / product mix (0–7), then supply chain (8–15).
+ */
 const LANDING_ICON_KIND_COUNT = 16;
+
+const LANDING_HI_OUTLINE_PATH_D: readonly (readonly string[])[] = [
+  [
+    "M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z",
+  ],
+  [
+    "M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0 1 12 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5",
+  ],
+  [
+    "M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z",
+  ],
+  [
+    "m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z",
+  ],
+  [
+    "M20.625 11.505v8.25a1.5 1.5 0 0 1-1.5 1.5H4.875a1.5 1.5 0 0 1-1.5-1.5v-8.25m8.25-6.375A2.625 2.625 0 1 0 9 7.755h2.625m0-2.625v2.625m0-2.625a2.625 2.625 0 1 1 2.625 2.625h-2.625m0 0v13.5M3 11.505h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.622-.504-1.125-1.125-1.125H3c-.621 0-1.125.503-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z",
+  ],
+  [
+    "M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z",
+  ],
+  [
+    "M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z",
+    "M6 6h.008v.008H6V6Z",
+  ],
+  [
+    "M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z",
+  ],
+  [
+    "M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z",
+  ],
+  [
+    "M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12",
+  ],
+  [
+    "M6 6.878V6a2.25 2.25 0 0 1 2.25-2.25h7.5A2.25 2.25 0 0 1 18 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 0 0 4.5 9v.878m13.5-3A2.25 2.25 0 0 1 19.5 9v.878m0 0a2.246 2.246 0 0 0-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0 1 21 12v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6c0-.98.626-1.813 1.5-2.122",
+  ],
+  [
+    "M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21",
+  ],
+  [
+    "m21 7.5-2.25-1.313M21 7.5v2.25m0-2.25-2.25 1.313M3 7.5l2.25-1.313M3 7.5l2.25 1.313M3 7.5v2.25m9 3 2.25-1.313M12 12.75l-2.25-1.313M12 12.75V15m0 6.75 2.25-1.313M12 21.75V19.5m0 2.25-2.25-1.313m0-16.875L12 2.25l2.25 1.313M21 14.25v2.25l-2.25 1.313m-13.5 0L3 16.5v-2.25",
+  ],
+  [
+    "M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5",
+  ],
+  [
+    "M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z",
+  ],
+  [
+    "m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9",
+  ],
+];
+
+let landingPath2DCache: Path2D[][] | null = null;
+
+function landingPath2DsForKind(kind: number): Path2D[] {
+  if (!landingPath2DCache) {
+    landingPath2DCache = LANDING_HI_OUTLINE_PATH_D.map((ds) =>
+      ds.map((d) => new Path2D(d)),
+    );
+  }
+  return landingPath2DCache[kind % LANDING_ICON_KIND_COUNT]!;
+}
+
+/** Heroicons outline / 24×24 viewBox; caller sets transform (scale + center). */
+function strokeLandingHiOutline(ctx: CanvasRenderingContext2D, kind: number) {
+  ctx.lineJoin = "round";
+  ctx.lineCap = "round";
+  ctx.lineWidth = 1.875;
+  for (const p of landingPath2DsForKind(kind)) {
+    ctx.stroke(p);
+  }
+}
 
 function rndKind() {
   return Math.floor(Math.random() * LANDING_ICON_KIND_COUNT);
@@ -80,270 +157,6 @@ function pushLanding(
   const ly = h - LAND_ICON_ANCHOR_Y;
   landings.push({ x: lx, y: ly, kind: rndKind(), born: time });
   while (landings.length > MAX_LANDINGS) landings.shift();
-}
-
-/**
- * Stroke-only B&W silhouettes in local coords centered at origin (~±12 px).
- */
-function drawLandingSilhouette(ctx: CanvasRenderingContext2D, kind: number) {
-  ctx.lineJoin = "round";
-  ctx.lineCap = "round";
-
-  switch (kind % LANDING_ICON_KIND_COUNT) {
-    case 0: {
-      // Biscuit / namkeen flow pack
-      ctx.beginPath();
-      ctx.roundRect(-11, -7, 22, 14, 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-7, -1);
-      ctx.lineTo(7, -1);
-      ctx.moveTo(-7, 3);
-      ctx.lineTo(7, 3);
-      ctx.stroke();
-      break;
-    }
-    case 1: {
-      // PET soft drink bottle (generic)
-      ctx.beginPath();
-      ctx.moveTo(-3, -10);
-      ctx.lineTo(3, -10);
-      ctx.lineTo(4, -6);
-      ctx.lineTo(5, 8);
-      ctx.quadraticCurveTo(5, 11, 2, 11);
-      ctx.lineTo(-2, 11);
-      ctx.quadraticCurveTo(-5, 11, -5, 8);
-      ctx.lineTo(-4, -6);
-      ctx.closePath();
-      ctx.stroke();
-      break;
-    }
-    case 2: {
-      // Washing soap / detergent bar
-      ctx.beginPath();
-      ctx.moveTo(-9, -4);
-      ctx.lineTo(9, -4);
-      ctx.lineTo(7, 5);
-      ctx.lineTo(-7, 5);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-6, -1);
-      ctx.lineTo(6, -1);
-      ctx.stroke();
-      break;
-    }
-    case 3: {
-      // Toothpaste tube
-      ctx.beginPath();
-      ctx.moveTo(-10, -2);
-      ctx.lineTo(6, -2);
-      ctx.lineTo(9, -5);
-      ctx.lineTo(10, -5);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-10, -2);
-      ctx.quadraticCurveTo(-11, 5, -9, 7);
-      ctx.lineTo(5, 7);
-      ctx.quadraticCurveTo(7, 5, 6, -2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(2, 10, 1.8, 0, Math.PI * 2);
-      ctx.stroke();
-      break;
-    }
-    case 4: {
-      // Stand-up liquid refill pouch + cap bump
-      ctx.beginPath();
-      ctx.moveTo(-8, -9);
-      ctx.lineTo(8, -9);
-      ctx.quadraticCurveTo(9, 2, 6, 11);
-      ctx.lineTo(-6, 11);
-      ctx.quadraticCurveTo(-9, 2, -8, -9);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(0, -9, 1.8, Math.PI, 0);
-      ctx.stroke();
-      break;
-    }
-    case 5: {
-      // Instant noodles cup / dry snack drum
-      ctx.beginPath();
-      ctx.moveTo(-8, -8);
-      ctx.lineTo(8, -8);
-      ctx.lineTo(9, -5);
-      ctx.lineTo(7, 9);
-      ctx.lineTo(-7, 9);
-      ctx.lineTo(-9, -5);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-7.5, -5);
-      ctx.lineTo(7.5, -5);
-      ctx.stroke();
-      break;
-    }
-    case 6: {
-      // Edible oil / ghee jar
-      ctx.beginPath();
-      ctx.moveTo(-4, -11);
-      ctx.lineTo(4, -11);
-      ctx.lineTo(4.5, -8);
-      ctx.arc(0, -5, 7, Math.PI, 0, true);
-      ctx.lineTo(-4.5, -8);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-9, -2);
-      ctx.lineTo(-8, 10);
-      ctx.quadraticCurveTo(0, 13, 8, 10);
-      ctx.lineTo(9, -2);
-      ctx.quadraticCurveTo(0, -5, -9, -2);
-      ctx.closePath();
-      ctx.stroke();
-      break;
-    }
-    case 7: {
-      // Tetra Pak–style beverage / juice brick
-      ctx.beginPath();
-      ctx.moveTo(-9, -8);
-      ctx.lineTo(2, -12);
-      ctx.lineTo(9, -6);
-      ctx.lineTo(9, 8);
-      ctx.lineTo(-9, 8);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-9, -8);
-      ctx.lineTo(9, -6);
-      ctx.stroke();
-      break;
-    }
-
-    /* —— Supply chain (logistics network; no brand marks) —— */
-
-    case 8: {
-      // Regional / DC warehouse — gabled roof + loading façade
-      ctx.beginPath();
-      ctx.moveTo(-12, 4);
-      ctx.lineTo(0, -9);
-      ctx.lineTo(12, 4);
-      ctx.lineTo(12, 11);
-      ctx.lineTo(-12, 11);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-7.5, 4);
-      ctx.lineTo(-7.5, 11);
-      ctx.moveTo(0, 4);
-      ctx.lineTo(0, 11);
-      ctx.moveTo(7.5, 4);
-      ctx.lineTo(7.5, 11);
-      ctx.stroke();
-      break;
-    }
-
-    case 9: {
-      // Road freight — rigid truck silhouette
-      ctx.strokeRect(-11, -6, 12, 8);
-      ctx.strokeRect(2, -3.5, 8.5, 6.5);
-      ctx.beginPath();
-      ctx.arc(-5.5, 6, 1.65, 0, Math.PI * 2);
-      ctx.arc(6, 6, 1.65, 0, Math.PI * 2);
-      ctx.stroke();
-      break;
-    }
-
-    case 10: {
-      // Pallet / unit load (floor stock)
-      ctx.beginPath();
-      ctx.moveTo(-10, 5);
-      ctx.lineTo(10, 5);
-      ctx.moveTo(-10, 0.5);
-      ctx.lineTo(10, 0.5);
-      ctx.moveTo(-10, -4);
-      ctx.lineTo(10, -4);
-      ctx.stroke();
-      ctx.strokeRect(-9, -7, 4, 2.5);
-      ctx.strokeRect(5, -7, 4, 2.5);
-      ctx.strokeRect(-9, 5, 4, 2.5);
-      ctx.strokeRect(5, 5, 4, 2.5);
-      break;
-    }
-
-    case 11: {
-      // Manufacturing plant — bays + chimney
-      ctx.strokeRect(-11, -1, 22, 11);
-      ctx.strokeRect(5, -11, 3.5, 10);
-      ctx.beginPath();
-      ctx.moveTo(-11, -1);
-      ctx.lineTo(-6, -7);
-      ctx.lineTo(-1, -1);
-      ctx.lineTo(4, -7);
-      ctx.lineTo(9, -1);
-      ctx.stroke();
-      break;
-    }
-
-    case 12: {
-      // Sourcing / inbound procurement — staged cartons + feed path
-      ctx.strokeRect(-9.5, 1, 7.5, 7);
-      ctx.strokeRect(-3, -7, 7.5, 7);
-      ctx.beginPath();
-      ctx.moveTo(-11, -10);
-      ctx.lineTo(-2, -1);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(-2.5, -1);
-      ctx.lineTo(-4.8, -1);
-      ctx.lineTo(-2.8, -3.8);
-      ctx.stroke();
-      break;
-    }
-
-    case 13: {
-      // Rail freight wagon
-      ctx.strokeRect(-11, -3.8, 22, 7.5);
-      ctx.beginPath();
-      ctx.arc(-6, 6, 1.45, 0, Math.PI * 2);
-      ctx.arc(0, 6, 1.45, 0, Math.PI * 2);
-      ctx.arc(6, 6, 1.45, 0, Math.PI * 2);
-      ctx.stroke();
-      break;
-    }
-
-    case 14: {
-      // Retail / kirana-trade storefront — awning over shopfront
-      ctx.beginPath();
-      ctx.moveTo(-10.5, 1.5);
-      ctx.lineTo(10.5, 1.5);
-      ctx.lineTo(10, -4.8);
-      ctx.lineTo(-10, -4.8);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.strokeRect(-8.5, 2, 17, 8.5);
-      ctx.strokeRect(-2.8, 4.8, 5.8, 5.8);
-      break;
-    }
-
-    case 15:
-    default: {
-      // Dry intermodal shipping container — corrugations + corners
-      ctx.strokeRect(-10, -7.2, 20, 14.5);
-      ctx.beginPath();
-      ctx.moveTo(-10, -1.8);
-      ctx.lineTo(10, -1.8);
-      ctx.moveTo(-10, 3.2);
-      ctx.lineTo(10, 3.2);
-      ctx.stroke();
-      ctx.strokeRect(-9.2, -6.4, 2.2, 2.2);
-      ctx.strokeRect(7, -6.4, 2.2, 2.2);
-      ctx.strokeRect(-9.2, 4.2, 2.2, 2.2);
-      ctx.strokeRect(7, 4.2, 2.2, 2.2);
-      break;
-    }
-  }
 }
 
 function spawnMeteor(w: number, h: number, meteors: Meteor[]) {
@@ -512,9 +325,9 @@ export default function MeteorShowerPixels() {
         ctx.translate(L.x, L.y);
         ctx.globalAlpha = e;
         ctx.strokeStyle = "rgba(255, 255, 255, 0.92)";
-        ctx.lineWidth = 1.15;
-        ctx.scale(iconPx / 13, iconPx / 13);
-        drawLandingSilhouette(ctx, L.kind);
+        ctx.scale(iconPx / 24, iconPx / 24);
+        ctx.translate(-12, -12);
+        strokeLandingHiOutline(ctx, L.kind);
         ctx.restore();
       }
 

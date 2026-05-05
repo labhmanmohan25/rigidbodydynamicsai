@@ -7,7 +7,7 @@ export default function VisionCta() {
   return (
     <section
       id="vision"
-      className="relative overflow-hidden px-6 py-20 md:py-28"
+      className="relative overflow-hidden px-4 py-20 sm:px-6 md:py-28"
       aria-labelledby="vision-heading"
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-30">

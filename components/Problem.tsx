@@ -111,7 +111,7 @@ export default function Problem() {
   return (
     <section
       id="problem"
-      className="relative px-6 py-20 md:py-28 overflow-hidden"
+      className="relative overflow-hidden px-4 py-20 sm:px-6 md:py-28"
       aria-labelledby="problem-heading"
     >
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(34,211,238,0.06),transparent)] pointer-events-none" />

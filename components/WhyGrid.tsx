@@ -46,7 +46,7 @@ const FEATURES = [
 export default function WhyGrid() {
   return (
     <section className="bg-[#070707] py-24 sm:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-orange-300/80">
             Why us

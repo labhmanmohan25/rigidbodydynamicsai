@@ -22,7 +22,7 @@ export default function Paradigm() {
   return (
     <section
       id="paradigm"
-      className="relative px-6 py-20 md:py-28"
+      className="relative px-4 py-20 sm:px-6 md:py-28"
       aria-labelledby="paradigm-heading"
     >
       <div

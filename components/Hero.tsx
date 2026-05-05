@@ -21,7 +21,7 @@ const item = {
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden px-6 py-24 md:py-32">
+    <section className="relative overflow-hidden px-4 py-24 sm:px-6 md:py-32">
       <GradientOrbs />
       <GridBackground />
       <div className="relative mx-auto max-w-[var(--max-width-content)] text-center">

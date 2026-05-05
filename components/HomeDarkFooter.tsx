@@ -8,7 +8,7 @@ export default function HomeDarkFooter() {
   return (
     <footer
       id="footer"
-      className="scroll-mt-28 bg-[#050505] px-6 py-12"
+      className="scroll-mt-28 bg-[#050505] px-4 py-12 sm:px-6"
       role="contentinfo"
       aria-labelledby="home-footer-heading"
     >
