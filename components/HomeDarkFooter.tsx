@@ -29,6 +29,9 @@ export default function HomeDarkFooter() {
               {COMPANY_NAME}
             </p>
           </div>
+          <p className="text-sm text-zinc-400">
+            Transform your operations with Rigid Body Dynamics.
+          </p>
           <nav aria-label="Legal">
             <ul className="flex flex-col gap-2 sm:flex-row sm:gap-6">
               <li>

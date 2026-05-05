@@ -1,33 +1,39 @@
 const AGENTS = [
   {
     name: "Procurement Agent",
-    purpose: "Auto-routes raw material orders across vendors based on price, lead time and quality history.",
-    chips: ["Vendor scoring", "Auto re-order", "PO generation"],
+    purpose:
+      "Detects when you're running low, picks the best vendor, and places the order - before your warehouse calls to complain.",
+    chips: ["Auto re-order", "Vendor scoring", "PO generation"],
   },
   {
     name: "Production Planner",
-    purpose: "Rebalances line schedules in real time as demand and inventory shift across SKUs.",
-    chips: ["MRP", "Line allocation", "Yield tracking"],
+    purpose:
+      "Shifts your line schedules when demand changes - so you're making what's selling, not what sold last month.",
+    chips: ["Real-time MRP", "Line rebalancing", "Yield tracking"],
   },
   {
     name: "Dispatch Coordinator",
-    purpose: "Plans truck loads, route assignments and depot transfers — and tells the warehouse team.",
-    chips: ["Load planning", "Route opt.", "ETA alerts"],
+    purpose:
+      "Fills trucks, assigns routes, and WhatsApps your warehouse team the loading plan. No phone calls needed.",
+    chips: ["Load planning", "Route optimization", "WhatsApp alerts"],
   },
   {
-    name: "Scheme Listener",
-    purpose: "Reads WhatsApp, calls, photos and Excel from the field. Tells you what retailers actually said.",
-    chips: ["WhatsApp", "Voice", "OCR"],
+    name: "Field Listener",
+    purpose:
+      "Reads every WhatsApp message, voice note, and photo from your sales team - and turns it into structured data you can act on.",
+    chips: ["WhatsApp", "Voice", "Photo OCR", "Hindi-English"],
   },
   {
     name: "Credit Watchdog",
-    purpose: "Tracks distributor outstanding, enforces limits and flags risky behavior — before sales does.",
-    chips: ["Limits", "Aging", "Holds"],
+    purpose:
+      "Catches distributors going over limit and holds their next order - before your accounts team even knows there's a problem.",
+    chips: ["Auto-holds", "Aging alerts", "Limit enforcement"],
   },
   {
     name: "Forecast Engine",
-    purpose: "Demand sensing across regions and SKUs — pushes signals back into procurement and planning.",
-    chips: ["Regional", "SKU-level", "Backtest"],
+    purpose:
+      "Learns demand patterns from every WhatsApp order - and tells procurement and production what's coming next week.",
+    chips: ["Regional sensing", "SKU-level", "Feeds procurement"],
   },
 ];
 
@@ -39,16 +45,16 @@ export default function AgentsGrid() {
           <span className="inline-block h-1.5 w-1.5 bg-white" />
           The agents
         </div>
-        <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div className="mt-6">
           <h2 className="max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
             Six agents.
             <br />
             One ops team that never sleeps.
           </h2>
-          <p className="max-w-md text-sm leading-relaxed text-white/55">
-            Each agent owns a node of your supply chain — and they coordinate
-            with each other the way your best ops people would, only faster
-            and around the clock.
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/55 sm:text-base">
+            Each agent owns a piece of your supply chain. They coordinate with
+            each other the way your best ops people would - only faster, around
+            the clock, and they never forget.
           </p>
         </div>
 

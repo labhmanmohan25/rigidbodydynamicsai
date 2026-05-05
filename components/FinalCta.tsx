@@ -17,12 +17,62 @@ export default function FinalCta() {
           />
         </div>
         <h2 className="mx-auto max-w-3xl text-[clamp(1.75rem,7vw+0.75rem,4.5rem)] font-semibold leading-[1.08] tracking-tight text-white sm:text-6xl md:text-7xl">
-          Your operations are ready.
-          Are you?
+          Your team already runs on{" "}
+          <span
+            className="inline-flex items-center gap-2 align-middle text-[0.88em]"
+            aria-label="WhatsApp, Excel, mail, and phone channels"
+          >
+            <Image
+              src="/icons/whatsapp.png"
+              alt="WhatsApp"
+              width={64}
+              height={64}
+              className="inline-block h-[0.9em] w-[0.9em]"
+            />
+            <Image
+              src="/icons/excel.png"
+              alt="Excel"
+              width={64}
+              height={64}
+              className="inline-block h-[0.9em] w-[0.9em]"
+            />
+            <Image
+              src="/icons/gmail.png"
+              alt="Mail"
+              width={64}
+              height={64}
+              className="inline-block h-[0.9em] w-[0.9em]"
+            />
+            <Image
+              src="/icons/mobile.png"
+              alt="Phone"
+              width={64}
+              height={64}
+              className="inline-block h-[0.9em] w-[0.9em]"
+            />
+          </span>
+          . Now it runs itself.
         </h2>
         <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
-          Onboard and upgrade your systems in weeks, not months. We integrate with
-          your existing systems, so you do not need to migrate to another platform.
+          No migration. No new software to learn. No 6-month implementation. We
+          plug into what you already do - and your operations start running
+          automatically in weeks.
+        </p>
+        <p className="mx-auto mt-4 max-w-2xl text-xs uppercase tracking-[0.18em] text-white/50 sm:text-sm">
+          WhatsApp · Excel · Phone · Tally · Paper
+        </p>
+        <p className="mx-auto mt-2 max-w-2xl text-sm leading-relaxed text-white/80 sm:text-base">
+          Works with your existing channels{" "}
+          <span
+            className="inline-flex items-center gap-1 align-middle"
+            aria-label="Excel, WhatsApp, mail and phone channels"
+          >
+            <Image src="/icons/whatsapp.png" alt="WhatsApp" width={48} height={48} className="inline-block h-[1em] w-[1em]" />
+            <Image src="/icons/excel.png" alt="Excel" width={48} height={48} className="inline-block h-[1em] w-[1em]" />
+            <Image src="/icons/gmail.png" alt="Mail" width={48} height={48} className="inline-block h-[1em] w-[1em]" />
+            <Image src="/icons/mobile.png" alt="Phone" width={48} height={48} className="inline-block h-[1em] w-[1em]" />
+          </span>
+          .
         </p>
         <div className="mt-10 flex justify-center">
           <Link

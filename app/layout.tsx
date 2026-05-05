@@ -32,16 +32,16 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Rigid Body Dynamics",
+  title: "Rigid Body Dynamics - AI operations for Indian FMCG manufacturers",
   description:
-    "We research what's next in AI and make it accessible — one problem at a time. Proactive execution, not just answers.",
+    "AI agents that handle order processing, procurement, production scheduling, and distribution for mid-size Indian FMCG companies. No migration. No new tools. We work with your WhatsApp, Excel, and phone calls.",
   icons: {
     icon: basePath ? `${basePath}/logowithwhitebg.png` : "/logowithwhitebg.png",
   },
   openGraph: {
-    title: "Rigid Body Dynamics",
+    title: "Rigid Body Dynamics - AI operations for Indian FMCG manufacturers",
     description:
-      "We research what's next in AI and make it accessible — one problem at a time.",
+      "AI agents that handle order processing, procurement, production scheduling, and distribution for mid-size Indian FMCG companies. No migration. No new tools. We work with your WhatsApp, Excel, and phone calls.",
   },
 };
 

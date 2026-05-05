@@ -63,13 +63,13 @@ const CARDS: Card[] = [
   },
   {
     label: "Disruption Radar",
-    title: "Know what will go wrong before it does",
+    title: "The system acts on disruptions - not just alerts you",
     blurb:
-      "Models monitor every signal in your chain — supplier slips, demand spikes, raw-material gaps — and act before disruptions cascade.",
+      "Vendor delayed? Auto-routed to backup. Demand spike? Procurement triggered. Distributor over credit limit? Orders held. You get a summary, not a fire to fight.",
     bullets: [
-      "Supplier delays auto-route to alternates",
-      "Demand sensing triggers raw-material orders",
-      "Cascade prevention across nodes",
+      "Vendor delays auto-route to alternates",
+      "Demand spikes trigger raw-material orders",
+      "87% of disruptions resolved without human action",
     ],
     gradient:
       "linear-gradient(135deg, #064e3b 0%, #10b981 35%, #2dd4bf 70%, #a7f3d0 100%)",
@@ -85,11 +85,11 @@ const CARDS: Card[] = [
     label: "Agent Ops",
     title: "Replace 10 admin staff with AI agents",
     blurb:
-      "Order processing, procurement scheduling, production planning, dispatch — handled by purpose-built agents that work 24/7.",
+      "Order processing, procurement scheduling, production planning, dispatch coordination - all handled by AI agents that read WhatsApp, parse Excel, and act 24/7. Your back-office team supervises instead of re-typing.",
     bullets: [
-      "Six agents, one back-office team",
-      "24/7 with human-in-the-loop on strategy",
-      "15-person ops now runs with 3 supervisors",
+      "WhatsApp orders processed end-to-end, no human re-typing",
+      "Procurement POs generated automatically from demand signals",
+      "₹48-60L/year saved in admin salary alone",
     ],
     gradient:
       "linear-gradient(135deg, #7c2d12 0%, #ea580c 30%, #fb923c 65%, #fed7aa 100%)",
@@ -115,13 +115,13 @@ const CARDS: Card[] = [
   },
   {
     label: "Field Signal",
-    title: "Measure scheme impact in hours, not weeks",
+    title: "Know what's selling at kirana stores before your distributor does",
     blurb:
-      "Salespeople send WhatsApp, voice, photos, Excel. We ingest every channel and pinpoint retailer response — same day.",
+      "Every WhatsApp order from a salesperson is a demand signal. We capture it, aggregate it, and push it into your procurement and production - in real time. No ERP gives you this.",
     bullets: [
-      "WhatsApp, voice, photo and Excel ingestion",
-      "Retailer response by territory and SKU",
-      "Launch at 9 AM, see uptake by 5 PM",
+      "Retail-edge demand via WhatsApp - seconds, not weeks",
+      "Salesperson sends order -> system detects demand pattern",
+      "Forecast improves with every message that flows through",
     ],
     gradient:
       "linear-gradient(135deg, #4c1d95 0%, #8b5cf6 30%, #ec4899 65%, #fbcfe8 100%)",
@@ -137,13 +137,13 @@ const CARDS: Card[] = [
   },
   {
     label: "Credit Control",
-    title: "Stop chasing payments manually",
+    title: "Credit limits enforced automatically - before bad debt happens",
     blurb:
-      "Outstanding, credit limits and payment behavior — tracked automatically across every distributor and retailer.",
+      "Outstanding tracked across every distributor. Limits enforced on new orders. Risky behavior flagged before your accounts team even opens Tally.",
     bullets: [
       "Auto-flag overdue accounts",
-      "Enforce limits on new orders",
-      "Clear cash-flow exposure, real time",
+      "New orders blocked when limit breached",
+      "Clear cash-flow exposure across 100+ distributors",
     ],
     gradient:
       "linear-gradient(135deg, #082f49 0%, #0284c7 30%, #22d3ee 65%, #ecfeff 100%)",
@@ -157,14 +157,14 @@ const CARDS: Card[] = [
     ),
   },
   {
-    label: "Scale Without Bloat",
-    title: "Scale ₹500 cr to ₹2,000 cr without back-office bloat",
+    label: "Grow Without Hiring",
+    title: "Add SKUs, states, and distributors - without new back-office hires",
     blurb:
-      "Add SKUs, states and distributors without new hires. Your back-office becomes the competitive advantage, not the bottleneck.",
+      "Go from ₹500 Cr to ₹2,000 Cr revenue without proportional headcount. Your operations become the competitive advantage, not the bottleneck.",
     bullets: [
       "New SKUs onboard in days, not quarters",
-      "Geo expansion without coordination cost",
-      "Operations scale without headcount",
+      "New states added without coordination cost",
+      "Operations scale - headcount stays flat",
     ],
     gradient:
       "linear-gradient(135deg, #365314 0%, #84cc16 30%, #facc15 65%, #fef9c3 100%)",
@@ -295,9 +295,7 @@ export default function CapabilityCards() {
           Why us
         </div>
         <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl">
-          Your operations are critical.
-          <br />
-          They should run that way.
+          The problems you live with daily - solved.
         </h2>
 
         <div className="mt-14 overflow-hidden rounded-xl border border-white/10">

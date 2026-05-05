@@ -141,7 +141,7 @@ function DemandChart() {
           top: `${(divergeY / h) * 100 - 4}%`,
         }}
       >
-        +18% vs forecast → RM PO triggered
+        +18% vs forecast -&gt; RM PO auto-triggered to vendor
       </div>
     </div>
   );
@@ -166,42 +166,21 @@ function Sparkline({ values, w = 60, h = 18 }: { values: number[]; w?: number; h
 }
 
 const KPIS = [
-  { k: "Orders processed", v: "12,840", d: "+12%", trend: [40, 42, 38, 50, 55, 52, 60, 64], up: true },
+  { k: "Orders processed", v: "12,840", d: "+12%", source: "from WhatsApp + phone", trend: [40, 42, 38, 50, 55, 52, 60, 64], up: true },
   { k: "On-time fulfilment", v: "94.2%", d: "+1.4 pts", trend: [88, 89, 90, 91, 92, 93, 93, 94], up: true },
-  { k: "Outstanding (₹ Cr)", v: "28.4", d: "−6%", trend: [34, 33, 32, 31, 30, 30, 29, 28], up: false },
-  { k: "Stockouts averted", v: "37", d: "+5", trend: [12, 14, 18, 22, 25, 30, 33, 37], up: true },
-  { k: "Active disruptions", v: "3", d: "−2", trend: [6, 5, 5, 4, 4, 5, 4, 3], up: false },
+  { k: "Outstanding (₹ Cr)", v: "28.4", d: "-6%", trend: [34, 33, 32, 31, 30, 30, 29, 28], up: false },
+  { k: "Stockouts averted", v: "37", d: "+5", source: "auto-procurement", trend: [12, 14, 18, 22, 25, 30, 33, 37], up: true },
+  { k: "Active disruptions", v: "3", d: "-2", source: "auto-resolved", trend: [6, 5, 5, 4, 4, 5, 4, 3], up: false },
 ];
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Disruption radar
  * ──────────────────────────────────────────────────────────────────────────── */
 const DISRUPTIONS = [
-  {
-    sev: "high",
-    title: "Sugar — Vendor #4 delayed 36h",
-    sub: "Auto-routed 18MT to Vendor #2 · Procurement Agent",
-    time: "12m ago",
-  },
-  {
-    sev: "med",
-    title: "SKU-228 demand +18% in MH",
-    sub: "RM PO ₹8.2L raised · Forecast Engine + Procurement",
-    time: "38m ago",
-  },
-  {
-    sev: "low",
-    title: "Distributor D-087 over limit",
-    sub: "Hold placed on next dispatch · Credit Watchdog",
-    time: "1h ago",
-  },
+  "Sugar - Vendor #4 delayed 36h -> auto-routed to Vendor #2",
+  "SKU-228 demand +18% in MH -> procurement triggered",
+  "Distributor D-087 over credit limit -> orders on hold",
 ];
-
-const SEV_DOT: Record<string, string> = {
-  high: "bg-white",
-  med: "bg-white/60",
-  low: "bg-white/30",
-};
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Inventory heatmap — 5 SKU groups × 6 depots
@@ -345,6 +324,11 @@ export default function PlatformShowcase() {
           <br />
           run themselves.
         </h2>
+        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-white/60 sm:text-base">
+          Everything below comes from WhatsApp messages, Excel sheets, and
+          phone calls your team already sends. No new data entry. No new tools
+          to learn.
+        </p>
 
         {/* Window */}
         <div
@@ -429,6 +413,9 @@ export default function PlatformShowcase() {
                     {k.d}
                   </span>
                 </div>
+                {"source" in k && k.source ? (
+                  <p className="mt-1 text-[10px] text-white/40">{k.source}</p>
+                ) : null}
               </div>
             ))}
           </div>
@@ -482,29 +469,14 @@ export default function PlatformShowcase() {
               </div>
 
               <ul className="mt-4 space-y-3">
-                {DISRUPTIONS.map((d, i) => (
+                {DISRUPTIONS.map((item) => (
                   <li
-                    key={i}
+                    key={item}
                     className="rounded border border-white/8 bg-white/[0.02] p-3"
                   >
-                    <div className="flex items-start gap-2.5">
-                      <span
-                        className={`mt-1 inline-block h-2 w-2 rounded-full ${SEV_DOT[d.sev]}`}
-                      />
-                      <div className="flex-1">
-                        <div className="flex items-start justify-between gap-2">
-                          <p className="text-[13px] leading-snug text-white">
-                            {d.title}
-                          </p>
-                          <span className="font-mono text-[10px] text-white/40">
-                            {d.time}
-                          </span>
-                        </div>
-                        <p className="mt-1 font-mono text-[10.5px] leading-snug text-white/55">
-                          {d.sub}
-                        </p>
-                      </div>
-                    </div>
+                    <p className="font-mono text-[11px] leading-relaxed text-white/70">
+                      {item}
+                    </p>
                   </li>
                 ))}
               </ul>

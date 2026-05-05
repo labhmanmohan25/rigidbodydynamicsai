@@ -1,0 +1,265 @@
+{
+  "project": "Rigid Body Dynamics",
+  "formatVersion": "1.1",
+  "scope": "home-page-only",
+  "homePage": {
+    "path": "/",
+    "metadata": {
+      "title": "Rigid Body Dynamics — AI operations for Indian FMCG manufacturers",
+      "description": "AI agents that handle order processing, procurement, production scheduling, and distribution for mid-size Indian FMCG companies. No migration. No new tools. We work with your WhatsApp, Excel, and phone calls."
+    },
+    "header": {
+      "navLinks": [
+        { "label": "the product", "href": "/" },
+        { "label": "the team", "href": "/about" },
+        { "label": "everything else", "href": "/#final-cta" }
+      ],
+      "cta": { "label": "get in touch", "href": "https://calendar.app.google/7roAZLoLHpcUxiYu7" }
+    },
+    "sections": [
+      {
+        "id": "supply-hero",
+        "title": "Your team runs your supply chain on WhatsApp and Excel. Our agents handle the rest.",
+        "description": "We read your WhatsApp messages, parse your Excel sheets, listen to your phone calls — and run your operations automatically. Order processing, procurement, production, distribution, and credit — handled, not tracked.",
+        "channels": ["WhatsApp", "Excel", "Phone", "Email", "Paper"],
+        "cta": { "label": "Book a Demo", "href": "https://calendar.app.google/7roAZLoLHpcUxiYu7" },
+        "trustStrip": ["PROCUREMENT", "PRODUCTION", "WAREHOUSING", "DISTRIBUTION", "RETAIL", "FINANCE"]
+      },
+      {
+        "id": "how-it-works",
+        "eyebrow": "How it works",
+        "title": "We plug into what you already do. No new tools. No migration.",
+        "description": "Your team keeps using WhatsApp, Excel, and phone calls. Our agents read everything, understand it, and act on it — automatically.",
+        "steps": [
+          {
+            "number": "01",
+            "title": "Your salesperson WhatsApps an order from the field",
+            "description": "\"Bhai, Sharma Store ko 50 carton Maggi aur 20 carton Surf bhejdo\" — mixed Hindi-English, shorthand, typos and all. Our agent reads it instantly."
+          },
+          {
+            "number": "02",
+            "title": "The agent parses, matches SKUs, and creates the order",
+            "description": "Product matched. Inventory checked. Order created in your system. Confirmation sent back on WhatsApp. No human re-typed anything."
+          },
+          {
+            "number": "03",
+            "title": "Demand pattern detected — procurement auto-triggered",
+            "description": "The agent notices SKU-228 orders are up 18% in Maharashtra this week. It auto-generates a purchase order to your sugar vendor before you run out."
+          },
+          {
+            "number": "04",
+            "title": "Production schedule adjusted, dispatch planned",
+            "description": "Line allocation shifts to meet the spike. Truck loads rebalanced. Warehouse team gets a WhatsApp with updated dispatch plan. Your ops head just watches."
+          }
+        ],
+        "footnote": "This entire chain runs without anyone opening a dashboard, filling a form, or making a phone call. The system acts — and tells you what it did."
+      },
+      {
+        "id": "platform",
+        "eyebrow": "The platform",
+        "title": "Watch your operations run themselves.",
+        "description": "Everything below comes from WhatsApp messages, Excel sheets, and phone calls your team already sends. No new data entry. No new tools to learn.",
+        "windowHeader": {
+          "pathLabel": "ops.rigidbody.ai / acme-foods · operations",
+          "status": "live"
+        },
+        "dashboardTabs": ["Operations", "Demand", "Inventory", "Credit", "Schemes", "Agents"],
+        "kpis": [
+          { "label": "Orders processed", "value": "12,840", "delta": "+12%", "source": "from WhatsApp + phone" },
+          { "label": "On-time fulfilment", "value": "94.2%", "delta": "+1.4 pts" },
+          { "label": "Outstanding (₹ Cr)", "value": "28.4", "delta": "-6%" },
+          { "label": "Stockouts averted", "value": "37", "delta": "+5", "source": "auto-procurement" },
+          { "label": "Active disruptions", "value": "3", "delta": "-2", "source": "auto-resolved" }
+        ],
+        "panels": [
+          {
+            "title": "Demand vs Forecast",
+            "subtitle": "SKU-228 · Maharashtra · last 14 days",
+            "legends": ["Actual", "Forecast"],
+            "summaryMetrics": ["Forecast accuracy · 91.2%", "Auto-corrections this week · 4"],
+            "annotation": "+18% vs forecast → RM PO auto-triggered to vendor"
+          },
+          {
+            "title": "Disruption radar",
+            "status": "3 active",
+            "items": [
+              "Sugar — Vendor #4 delayed 36h → auto-routed to Vendor #2",
+              "SKU-228 demand +18% in MH → procurement triggered",
+              "Distributor D-087 over credit limit → orders on hold"
+            ],
+            "summaryMetrics": ["MTTR · 6m 22s", "Auto-resolved · 87%"]
+          },
+          {
+            "title": "Inventory cover",
+            "subtitle": "days of cover · by SKU group × depot",
+            "legend": ["< 14 d · risk", "14–30 d · healthy", "30–45 d", "> 45 d · excess"]
+          },
+          {
+            "title": "Receivables aging",
+            "subtitle": "₹ Cr · 142 distributors",
+            "buckets": ["0-30 d", "31-60 d", "61-90 d", "90+ d"],
+            "summaryMetrics": ["Total · ₹28.4 Cr", "Auto-holds active · 9"]
+          }
+        ]
+      },
+      {
+        "id": "why-us",
+        "eyebrow": "Why us",
+        "title": "The problems you live with daily — solved.",
+        "capabilities": [
+          {
+            "label": "No More 9 PM Phone Calls",
+            "title": "See your entire supply chain without calling anyone",
+            "description": "Procurement, production, warehouse, distribution, retail — all live, one screen. Built from data your team already sends on WhatsApp and Excel. No one needs to report anything manually.",
+            "highlights": [
+              "Every node live — procurement to retail",
+              "Data comes from WhatsApp, Excel, phone — no new entry",
+              "One screen replaces 15 Excel sheets and 40 WhatsApp groups"
+            ]
+          },
+          {
+            "label": "Problems Fixed Before You Know",
+            "title": "The system acts on disruptions — not just alerts you",
+            "description": "Vendor delayed? Auto-routed to backup. Demand spike? Procurement triggered. Distributor over credit limit? Orders held. You get a summary, not a fire to fight.",
+            "highlights": [
+              "Vendor delays auto-route to alternates",
+              "Demand spikes trigger raw-material orders",
+              "87% of disruptions resolved without human action"
+            ]
+          },
+          {
+            "label": "10 Admin Staff → 3 Supervisors",
+            "title": "Agents handle the data entry. Your team handles strategy.",
+            "description": "Order processing, procurement scheduling, production planning, dispatch coordination — all handled by AI agents that read WhatsApp, parse Excel, and act 24/7. Your back-office team supervises instead of re-typing.",
+            "highlights": [
+              "WhatsApp orders processed end-to-end, no human re-typing",
+              "Procurement POs generated automatically from demand signals",
+              "₹48-60L/year saved in admin salary alone"
+            ]
+          },
+          {
+            "label": "Demand From the Field — Today",
+            "title": "Know what's selling at kirana stores before your distributor does",
+            "description": "Every WhatsApp order from a salesperson is a demand signal. We capture it, aggregate it, and push it into your procurement and production — in real time. No ERP gives you this.",
+            "highlights": [
+              "Retail-edge demand via WhatsApp — seconds, not weeks",
+              "Salesperson sends order → system detects demand pattern",
+              "Forecast improves with every message that flows through"
+            ]
+          },
+          {
+            "label": "No More Chasing Payments",
+            "title": "Credit limits enforced automatically — before bad debt happens",
+            "description": "Outstanding tracked across every distributor. Limits enforced on new orders. Risky behavior flagged before your accounts team even opens Tally.",
+            "highlights": [
+              "Auto-flag overdue accounts",
+              "New orders blocked when limit breached",
+              "Clear cash-flow exposure across 100+ distributors"
+            ]
+          },
+          {
+            "label": "Grow Without Hiring",
+            "title": "Add SKUs, states, and distributors — without new back-office hires",
+            "description": "Go from ₹500 Cr to ₹2,000 Cr revenue without proportional headcount. Your operations become the competitive advantage, not the bottleneck.",
+            "highlights": [
+              "New SKUs onboard in days, not quarters",
+              "New states added without coordination cost",
+              "Operations scale — headcount stays flat"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "agents",
+        "eyebrow": "The agents",
+        "title": "Six agents. One ops team that never sleeps.",
+        "description": "Each agent owns a piece of your supply chain. They coordinate with each other the way your best ops people would — only faster, around the clock, and they never forget.",
+        "cards": [
+          {
+            "name": "Procurement Agent",
+            "description": "Detects when you're running low, picks the best vendor, and places the order — before your warehouse calls to complain.",
+            "pills": ["Auto re-order", "Vendor scoring", "PO generation"],
+            "status": "active"
+          },
+          {
+            "name": "Production Planner",
+            "description": "Shifts your line schedules when demand changes — so you're making what's selling, not what sold last month.",
+            "pills": ["Real-time MRP", "Line rebalancing", "Yield tracking"],
+            "status": "active"
+          },
+          {
+            "name": "Dispatch Coordinator",
+            "description": "Fills trucks, assigns routes, and WhatsApps your warehouse team the loading plan. No phone calls needed.",
+            "pills": ["Load planning", "Route optimization", "WhatsApp alerts"],
+            "status": "active"
+          },
+          {
+            "name": "Field Listener",
+            "description": "Reads every WhatsApp message, voice note, and photo from your sales team — and turns it into structured data you can act on.",
+            "pills": ["WhatsApp", "Voice", "Photo OCR", "Hindi-English"],
+            "status": "active"
+          },
+          {
+            "name": "Credit Watchdog",
+            "description": "Catches distributors going over limit and holds their next order — before your accounts team even knows there's a problem.",
+            "pills": ["Auto-holds", "Aging alerts", "Limit enforcement"],
+            "status": "active"
+          },
+          {
+            "name": "Forecast Engine",
+            "description": "Learns demand patterns from every WhatsApp order — and tells procurement and production what's coming next week.",
+            "pills": ["Regional sensing", "SKU-level", "Feeds procurement"],
+            "status": "active"
+          }
+        ]
+      },
+      {
+        "id": "the-difference",
+        "eyebrow": "The difference",
+        "title": "We don't just show you data. We act on it.",
+        "comparison": [
+          {
+            "category": "Order comes in on WhatsApp",
+            "traditional": "Admin re-types into Excel. Takes 5-10 minutes per order.",
+            "rigidBody": "Agent reads it, creates order, confirms back on WhatsApp. 30 seconds."
+          },
+          {
+            "category": "Stock running low",
+            "traditional": "Warehouse calls HQ. HQ calls vendor. 2-3 day delay.",
+            "rigidBody": "Agent detects it, generates PO, sends to vendor. Same hour."
+          },
+          {
+            "category": "Demand spike in a region",
+            "traditional": "You find out 2-4 weeks later from distributor reports.",
+            "rigidBody": "Agent detects pattern from WhatsApp orders. Procurement triggered same day."
+          },
+          {
+            "category": "Distributor over credit limit",
+            "traditional": "Accounts team finds out at month-end reconciliation.",
+            "rigidBody": "Agent holds new orders and flags it immediately."
+          },
+          {
+            "category": "New state launch",
+            "traditional": "Hire 3-5 more admin staff. Train for 2 months.",
+            "rigidBody": "Same agents, new territory. Live in days."
+          }
+        ]
+      },
+      {
+        "id": "final-cta",
+        "title": "Your team already runs on WhatsApp and Excel. Now it runs itself.",
+        "description": "No migration. No new software to learn. No 6-month implementation. We plug into what you already do — and your operations start running automatically in weeks.",
+        "channels": ["WhatsApp", "Excel", "Phone", "Tally", "Paper"],
+        "cta": { "label": "Book a demo", "href": "https://calendar.app.google/7roAZLoLHpcUxiYu7" }
+      }
+    ],
+    "footer": {
+      "brand": "Rigid Body Dynamics",
+      "tagline": "AI operations for Indian FMCG manufacturers",
+      "legalLinks": [
+        { "label": "Privacy Policy", "href": "/privacy" },
+        { "label": "Terms & Conditions", "href": "/terms" }
+      ]
+    }
+  }
+}
