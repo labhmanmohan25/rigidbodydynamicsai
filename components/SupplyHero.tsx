@@ -18,7 +18,7 @@ export default function SupplyHero() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center text-neutral-950 sm:px-6 dark:text-white">
         <h1 className="mx-auto max-w-4xl text-[clamp(1.875rem,6vw+1rem,4.5rem)] font-semibold leading-[1.06] tracking-tight sm:text-6xl md:text-[72px]">
-          Your team runs your supply chain on{" "}
+          Your team runs your operations on{" "}
           <span
             className="inline-flex items-center gap-2 align-middle text-[0.9em]"
             aria-label="Excel, WhatsApp, mail and phone channels"

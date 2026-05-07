@@ -145,6 +145,27 @@ button:focus-visible .cta-text-roll > span {
   transform: translateY(-100%);
 }
 
+/* Flow diagram animations */
+@keyframes flowRight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(400%); }
+}
+
+@keyframes flowDown {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .cta-text-roll > span {

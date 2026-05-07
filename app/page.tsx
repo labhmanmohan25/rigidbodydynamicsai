@@ -5,6 +5,7 @@ import HomeDarkFooter from "@/components/HomeDarkFooter";
 import HowItWorks from "@/components/HowItWorks";
 import OutcomesStrip from "@/components/OutcomesStrip";
 import PlatformShowcase from "@/components/PlatformShowcase";
+import ProductSteps from "@/components/ProductSteps";
 import SupplyHero from "@/components/SupplyHero";
 
 export default function Home() {
@@ -13,6 +14,7 @@ export default function Home() {
       <SupplyHero />
       <OutcomesStrip />
       <HowItWorks />
+      <ProductSteps />
       <PlatformShowcase />
       <CapabilityCards />
       <AgentsGrid />

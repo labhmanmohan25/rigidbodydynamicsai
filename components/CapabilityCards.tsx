@@ -290,12 +290,8 @@ export default function CapabilityCards() {
   return (
     <section className="bg-background py-8 dark:bg-black sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
-          <span className="inline-block h-1.5 w-1.5 bg-neutral-800 dark:bg-white" />
-          Why us
-        </div>
         <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
-          The problems you live with daily - solved.
+          Grow without hiring.
         </h2>
 
         <div className="mt-14 overflow-hidden rounded-xl border border-neutral-200/90 dark:border-white/10">

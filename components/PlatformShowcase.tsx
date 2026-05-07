@@ -217,7 +217,28 @@ const AGING = [
   { bucket: "90+ d", amt: 1.8, tone: "bg-neutral-300 dark:bg-white/20" },
 ];
 
+/* ────────────────────────────────────────────────────────────────────────────
+ *  Manufacturing metrics — inspired by plant dashboards
+ *  OEE = Availability × Performance × Quality
+ * ──────────────────────────────────────────────────────────────────────────── */
+const PRODUCTION_LINES = [
+  { line: "Line A", product: "Glucose 200g", oee: 82, availability: 88, performance: 95, quality: 98, status: "running" as const },
+  { line: "Line B", product: "Biscuits 150g", oee: 77, availability: 84, performance: 94, quality: 97, status: "running" as const },
+  { line: "Line C", product: "Beverages 250ml", oee: 91, availability: 96, performance: 97, quality: 98, status: "running" as const },
+];
+
+const UNITS_YTD = 428297;
+const UNITS_TARGET = 450000;
+const UNITS_LOST = 476;
+const LOST_CAUSES = [
+  { cause: "Tooling Error", pct: 34 },
+  { cause: "Physical Damage", pct: 28 },
+  { cause: "Opener Damage", pct: 22 },
+  { cause: "Other", pct: 16 },
+];
+
 const DASHBOARD_BASE_WIDTH = 1120;
+const DASHBOARD_BASE_HEIGHT = 760;
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -231,7 +252,6 @@ export default function PlatformShowcase() {
   const dashboardRef = useRef<HTMLDivElement>(null);
   const lastScrollY = useRef(0);
   const [dashboardScale, setDashboardScale] = useState(1);
-  const [dashboardHeight, setDashboardHeight] = useState(0);
   const entranceProgress = useMotionValue(0);
   const smoothEntrance = useSpring(entranceProgress, {
     stiffness: 220,
@@ -264,20 +284,6 @@ export default function PlatformShowcase() {
     updateScale();
     const resizeObserver = new ResizeObserver(updateScale);
     resizeObserver.observe(shell);
-    return () => resizeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const dashboard = dashboardRef.current;
-    if (!dashboard) return;
-
-    const updateHeight = () => {
-      setDashboardHeight(dashboard.offsetHeight);
-    };
-
-    updateHeight();
-    const resizeObserver = new ResizeObserver(updateHeight);
-    resizeObserver.observe(dashboard);
     return () => resizeObserver.disconnect();
   }, []);
 
@@ -328,17 +334,12 @@ export default function PlatformShowcase() {
           <br />
           run themselves.
         </h2>
-        <p className="mt-5 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/60">
-          Everything below comes from WhatsApp messages, Excel sheets, and
-          phone calls your team already sends. No new data entry. No new tools
-          to learn.
-        </p>
 
         {/* Window */}
         <div
           ref={dashboardShellRef}
           className="relative mt-14"
-          style={{ height: dashboardHeight ? `${dashboardHeight * dashboardScale}px` : undefined }}
+          style={{ height: `${DASHBOARD_BASE_HEIGHT * dashboardScale}px` }}
         >
           <div
             style={{
@@ -350,7 +351,7 @@ export default function PlatformShowcase() {
             <motion.div
               ref={dashboardRef}
               style={shouldAnimateDashboard ? { y: entranceY, scale: entranceScale } : undefined}
-              className="relative overflow-hidden rounded-xl border border-neutral-200/90 bg-[#fffefb] shadow-sm ring-1 ring-black/[0.04] [--demand-fill-end:rgba(0,0,0,0)] [--demand-fill-start:rgba(23,23,23,0.13)] [--demand-grid:rgba(0,0,0,0.06)] [--demand-forecast-stroke:rgba(0,0,0,0.36)] [--demand-actual-stroke:#171717] [--demand-marker-fill:#171717] [--demand-marker-ring:rgba(0,0,0,0.2)] [--demand-callout-line:rgba(0,0,0,0.2)] [--forecast-legend-dash:rgba(0,0,0,0.42)] dark:border-white/10 dark:bg-[#0a0a0a] dark:shadow-none dark:ring-0 dark:[--demand-fill-end:rgba(255,255,255,0)] dark:[--demand-fill-start:rgba(255,255,255,0.18)] dark:[--demand-grid:rgba(255,255,255,0.06)] dark:[--demand-forecast-stroke:rgba(255,255,255,0.35)] dark:[--demand-actual-stroke:#ffffff] dark:[--demand-marker-fill:#ffffff] dark:[--demand-marker-ring:rgba(255,255,255,0.4)] dark:[--demand-callout-line:rgba(255,255,255,0.25)] dark:[--forecast-legend-dash:rgba(255,255,255,0.5)]"
+              className="relative flex h-[760px] flex-col overflow-hidden rounded-xl border border-neutral-200/90 bg-[#fffefb] shadow-sm ring-1 ring-black/[0.04] [--demand-fill-end:rgba(0,0,0,0)] [--demand-fill-start:rgba(23,23,23,0.13)] [--demand-grid:rgba(0,0,0,0.06)] [--demand-forecast-stroke:rgba(0,0,0,0.36)] [--demand-actual-stroke:#171717] [--demand-marker-fill:#171717] [--demand-marker-ring:rgba(0,0,0,0.2)] [--demand-callout-line:rgba(0,0,0,0.2)] [--forecast-legend-dash:rgba(0,0,0,0.42)] dark:border-white/10 dark:bg-[#0a0a0a] dark:shadow-none dark:ring-0 dark:[--demand-fill-end:rgba(255,255,255,0)] dark:[--demand-fill-start:rgba(255,255,255,0.18)] dark:[--demand-grid:rgba(255,255,255,0.06)] dark:[--demand-forecast-stroke:rgba(255,255,255,0.35)] dark:[--demand-actual-stroke:#ffffff] dark:[--demand-marker-fill:#ffffff] dark:[--demand-marker-ring:rgba(255,255,255,0.4)] dark:[--demand-callout-line:rgba(255,255,255,0.25)] dark:[--forecast-legend-dash:rgba(255,255,255,0.5)]"
             >
           {/* Chrome */}
           <div className="flex min-h-[2.75rem] flex-wrap items-center gap-x-2 gap-y-2 border-b border-neutral-200/80 bg-neutral-100/55 px-4 py-3 dark:border-white/10 dark:bg-white/[0.02]">
@@ -369,13 +370,13 @@ export default function PlatformShowcase() {
           </div>
 
           {/* Sub-nav */}
-          <div className="flex items-center gap-1 overflow-x-auto border-b border-neutral-200/80 bg-[#fffefb] px-3 dark:border-white/10 dark:bg-[#0a0a0a]">
+          <div className="flex flex-wrap items-center gap-1 border-b border-neutral-200/80 bg-[#fffefb] px-3 dark:border-white/10 dark:bg-[#0a0a0a]">
             {[
               "Operations",
               "Demand",
+              "Production",
               "Inventory",
               "Credit",
-              "Schemes",
               "Agents",
             ].map((t, i) => {
               const active = i === 0;
@@ -395,6 +396,7 @@ export default function PlatformShowcase() {
             })}
           </div>
 
+          <div className="min-h-0 flex-1 overflow-y-auto">
           {/* KPI strip */}
           <div className="grid grid-cols-5 gap-px bg-neutral-200/70 dark:bg-white/5">
             {KPIS.map((k) => (
@@ -488,6 +490,121 @@ export default function PlatformShowcase() {
               <div className="mt-4 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span>MTTR · 6m 22s</span>
                 <span>Auto-resolved · 87%</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Manufacturing: line OEE + production stats */}
+          <div className="grid grid-cols-[1.5fr_1fr] gap-px bg-neutral-200/70 dark:bg-white/5">
+            {/* Production line performance */}
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
+              <div className="flex flex-row items-center justify-between gap-3">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">
+                  Production line performance
+                </p>
+                <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
+                  OEE · 3 active lines
+                </p>
+              </div>
+
+              <div className="mt-5 space-y-3">
+                {PRODUCTION_LINES.map((line) => (
+                  <div key={line.line} className="rounded border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/8 dark:bg-white/[0.02]">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        <span className="font-mono text-[11.5px] text-neutral-900 dark:text-white">{line.line}</span>
+                        <span className="font-mono text-[10.5px] text-neutral-500 dark:text-white/45">· {line.product}</span>
+                      </div>
+                      <span className={`font-mono text-[13px] font-semibold ${
+                        line.oee >= 85 ? "text-emerald-700 dark:text-emerald-400" : line.oee >= 70 ? "text-neutral-800 dark:text-white/85" : "text-neutral-500 dark:text-white/55"
+                      }`}>
+                        {line.oee}% OEE
+                      </span>
+                    </div>
+                    {/* OEE breakdown bar */}
+                    <div className="mt-2.5 grid grid-cols-3 gap-3">
+                      {[
+                        { label: "Avail.", value: line.availability },
+                        { label: "Perf.", value: line.performance },
+                        { label: "Quality", value: line.quality },
+                      ].map((m) => (
+                        <div key={m.label}>
+                          <div className="flex justify-between text-[10px] text-neutral-500 dark:text-white/40">
+                            <span>{m.label}</span>
+                            <span>{m.value}%</span>
+                          </div>
+                          <div className="mt-1 h-1.5 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-white/10">
+                            <div
+                              className={`h-full rounded-full ${
+                                m.value >= 95 ? "bg-emerald-500 dark:bg-emerald-400" : m.value >= 85 ? "bg-neutral-600 dark:bg-white/60" : "bg-neutral-400 dark:bg-white/30"
+                              }`}
+                              style={{ width: `${m.value}%` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
+                <span>Plant OEE · 83.3%</span>
+                <span>Target · 85%</span>
+              </div>
+            </div>
+
+            {/* Units produced + loss causes */}
+            <div className="bg-[#fffefb] p-6 dark:bg-[#0a0a0a]">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-neutral-900 dark:text-white">Units produced</p>
+                <span className="rounded border border-neutral-200/90 bg-neutral-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-neutral-600 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
+                  YTD
+                </span>
+              </div>
+
+              {/* Big number */}
+              <div className="mt-5 flex items-baseline gap-3">
+                <span className="text-[28px] font-semibold leading-none text-neutral-900 dark:text-white">
+                  {UNITS_YTD.toLocaleString()}
+                </span>
+                <span className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
+                  / {UNITS_TARGET.toLocaleString()} target
+                </span>
+              </div>
+
+              {/* Progress bar */}
+              <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-neutral-200 dark:bg-white/10">
+                <div
+                  className="h-full rounded-full bg-neutral-800 dark:bg-white"
+                  style={{ width: `${(UNITS_YTD / UNITS_TARGET) * 100}%` }}
+                />
+              </div>
+              <p className="mt-1.5 font-mono text-[10.5px] text-neutral-500 dark:text-white/45">
+                {((UNITS_YTD / UNITS_TARGET) * 100).toFixed(1)}% of target · {(UNITS_TARGET - UNITS_YTD).toLocaleString()} remaining
+              </p>
+
+              {/* Lost units */}
+              <div className="mt-5 border-t border-neutral-200/80 pt-4 dark:border-white/10">
+                <div className="flex items-center justify-between">
+                  <span className="text-[12px] font-medium text-neutral-900 dark:text-white">Units lost</span>
+                  <span className="font-mono text-[15px] font-semibold text-neutral-900 dark:text-white">{UNITS_LOST}</span>
+                </div>
+                <div className="mt-3 space-y-2">
+                  {LOST_CAUSES.map((c) => (
+                    <div key={c.cause} className="flex items-center gap-3">
+                      <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-200 dark:bg-white/10">
+                        <div
+                          className="h-full rounded-full bg-neutral-700 dark:bg-white/60"
+                          style={{ width: `${c.pct}%` }}
+                        />
+                      </div>
+                      <span className="w-24 text-right font-mono text-[10.5px] text-neutral-600 dark:text-white/55">{c.cause}</span>
+                      <span className="w-8 text-right font-mono text-[10.5px] text-neutral-800 dark:text-white/80">{c.pct}%</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -609,6 +726,7 @@ export default function PlatformShowcase() {
                 <span>Auto-holds active · 9</span>
               </div>
             </div>
+          </div>
           </div>
             </motion.div>
           </div>
