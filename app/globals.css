@@ -166,6 +166,65 @@ button:focus-visible .cta-text-roll > span {
   to { opacity: 1; transform: scale(1); }
 }
 
+/* Final CTA — soft AI-style glow: fixed shape, only gradient angle moves */
+@property --cta-ai-glow-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes cta-ai-glow-spin {
+  from {
+    --cta-ai-glow-angle: 0deg;
+  }
+  to {
+    --cta-ai-glow-angle: 360deg;
+  }
+}
+
+.cta-ai-glow-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-ai-glow-wrap .cta-ai-glow-backdrop {
+  position: absolute;
+  z-index: 0;
+  /* Tight halo — reads as under-glow / shadow, not a large aura */
+  inset: -5px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.cta-ai-glow-wrap .cta-ai-glow-rotor {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  transform: translate(-50%, -50%);
+  /* Sized from the button box; slight vertical stretch reads like shadow spread */
+  width: 106%;
+  height: 124%;
+  border-radius: 0.45rem;
+  --cta-ai-glow-angle: 0deg;
+  background: conic-gradient(
+    from var(--cta-ai-glow-angle) at 50% 50%,
+    rgba(34, 211, 238, 0.88) 0deg,
+    rgba(99, 102, 241, 0.82) 100deg,
+    rgba(192, 132, 252, 0.8) 200deg,
+    rgba(244, 114, 182, 0.76) 300deg,
+    rgba(34, 211, 238, 0.88) 360deg
+  );
+  filter: blur(9px);
+  opacity: 0.52;
+  animation: cta-ai-glow-spin 9s linear infinite;
+}
+
+.dark .cta-ai-glow-wrap .cta-ai-glow-rotor {
+  opacity: 0.62;
+}
+
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
   .cta-text-roll > span {

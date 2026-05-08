@@ -15,17 +15,22 @@ export default function FinalCta() {
           are the ones automating now.
         </p>
         <div className="mt-10 flex justify-center">
-          <Link
-            href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-12 cursor-pointer items-center justify-center rounded-md bg-neutral-900 px-8 text-[13px] font-medium uppercase tracking-[0.18em] text-accent-foreground transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
-          >
-            <span className="cta-text-roll" aria-label="Book a demo">
-              <span aria-hidden="true">Book a demo</span>
-              <span aria-hidden="true">Book a demo</span>
+          <div className="cta-ai-glow-wrap">
+            <span className="cta-ai-glow-backdrop" aria-hidden>
+              <span className="cta-ai-glow-rotor" />
             </span>
-          </Link>
+            <Link
+              href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 inline-flex h-12 cursor-pointer items-center justify-center rounded-md bg-neutral-900 px-8 text-[13px] font-medium uppercase tracking-[0.18em] text-accent-foreground transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
+            >
+              <span className="cta-text-roll" aria-label="Book a demo">
+                <span aria-hidden="true">Book a demo</span>
+                <span aria-hidden="true">Book a demo</span>
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
