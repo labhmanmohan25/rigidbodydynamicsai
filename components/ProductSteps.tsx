@@ -2176,36 +2176,84 @@ export default function ProductSteps() {
 
           {/* ── RIGHT: scrollable panels ──────────────────────────── */}
           <div>
-            {PHASES.map((phase) =>
-              phase.steps.map((step, si) => {
-                const idx = globalIdx++;
-                const Visual = VISUALS[idx];
-                return (
-                  <div
-                    key={`${phase.id}-${si}`}
-                    ref={setPanelRef(idx)}
-                    data-idx={idx}
-                    className="flex flex-col py-8 lg:py-10"
-                  >
-                    {/* Mobile: step info inline */}
-                    <div className="lg:hidden mb-5">
-                      <div className="flex items-center gap-3 mb-3">
-                        <StepNumber num={si + 1} progress={stepProgress[idx] ?? 0} />
-                        <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-neutral-400">{phase.label}</span>
+            {/* Mobile: phase sections with true scroll-stacked cards */}
+            <div className="space-y-10 lg:hidden">
+              {PHASES.map((phase, phaseIdx) => (
+                <section key={`mobile-phase-stack-${phase.id}`} className="relative">
+                  <div className="sticky top-16 z-30 mb-4 bg-background/95 py-3 backdrop-blur-sm dark:bg-black/95">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900">
+                        {phase.icon}
                       </div>
-                      <p className="text-[20px] font-semibold leading-snug text-neutral-900 dark:text-white">{step.title}</p>
-                      <p className="mt-2 text-[14px] leading-relaxed text-neutral-500 dark:text-white/50">{step.description}</p>
+                      <h3 className="text-[26px] font-semibold leading-tight tracking-tight text-neutral-950 dark:text-white">
+                        {phase.label.split(" ")[0]}
+                      </h3>
                     </div>
-
-                    {/* Visual container — outline card, no shadow */}
-                    <div className="rounded-2xl border border-neutral-200 dark:border-white/10 bg-[#fafaf9] dark:bg-neutral-900/50 overflow-hidden h-[660px] flex items-center justify-center">
-                      <Visual />
-                    </div>
-
                   </div>
-                );
-              }),
-            )}
+
+                  <div className="relative">
+                    {phase.steps.map((step, si) => {
+                      const gi = ALL_STEPS.findIndex((s) => s.phaseIdx === phaseIdx && s.stepIdx === si);
+                      const Visual = VISUALS[gi];
+                      const isActive = gi === activeGlobal;
+                      const stickyTop = 124 + si * 18;
+                      return (
+                        <div
+                          key={`mobile-stack-card-${phase.id}-${step.title}`}
+                          ref={setPanelRef(gi)}
+                          data-idx={gi}
+                          className={`sticky mb-4 block w-full rounded-2xl border p-4 text-left ${
+                            isActive
+                              ? "border-neutral-900 bg-white dark:border-white dark:bg-neutral-950"
+                              : "border-neutral-200 bg-white dark:border-white/15 dark:bg-neutral-950"
+                          }`}
+                          style={{ top: `${stickyTop}px`, zIndex: 20 + si }}
+                        >
+                          <button onClick={() => scrollToPanel(gi)} className="block w-full text-left">
+                            <div className="mb-3 flex items-center gap-3">
+                              <StepNumber num={si + 1} progress={stepProgress[gi] ?? 0} />
+                              <p className="min-w-0 text-[17px] font-semibold leading-snug text-neutral-900 dark:text-white">
+                                {step.title}
+                              </p>
+                            </div>
+                            <p className="text-[13px] leading-relaxed text-neutral-600 dark:text-white/55">{step.description}</p>
+                            <div className="mt-4 h-[320px] overflow-hidden rounded-xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50">
+                              <div className="flex h-full w-full items-start justify-center pt-2">
+                                <div className="origin-top scale-[0.58]">
+                                  <Visual />
+                                </div>
+                              </div>
+                            </div>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
+            </div>
+
+            {/* Desktop: original right-side visual panels */}
+            <div className="hidden lg:block">
+              {PHASES.map((phase) =>
+                phase.steps.map((step, si) => {
+                  const idx = globalIdx++;
+                  const Visual = VISUALS[idx];
+                  return (
+                    <div
+                      key={`${phase.id}-${si}`}
+                      ref={setPanelRef(idx)}
+                      data-idx={idx}
+                      className="flex flex-col py-10"
+                    >
+                      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50 lg:flex lg:h-[660px] lg:items-center lg:justify-center">
+                        <Visual />
+                      </div>
+                    </div>
+                  );
+                }),
+              )}
+            </div>
           </div>
         </div>
       </div>

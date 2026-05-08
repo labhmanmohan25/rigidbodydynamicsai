@@ -84,10 +84,10 @@ export default function HowItWorks() {
 
         <div className="flex min-w-0 flex-col justify-center bg-background px-4 py-8 sm:px-6 sm:py-10 dark:bg-black">
           <div className="mx-auto w-full max-w-3xl lg:mx-0">
-            <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
+            {/* <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
               <span className="inline-block h-1.5 w-1.5 shrink-0 bg-neutral-800 dark:bg-white" aria-hidden />
               How it works
-            </div>
+            </div> */}
 
             <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
               We plug into what you already do —

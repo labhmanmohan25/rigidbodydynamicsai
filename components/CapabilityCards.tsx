@@ -290,35 +290,48 @@ export default function CapabilityCards() {
   return (
     <section className="bg-background py-8 dark:bg-black sm:py-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
+        <h2 className="sticky top-16 z-30 -mx-1 mt-6 max-w-3xl bg-background px-1 py-3 text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 dark:bg-black sm:text-5xl md:text-6xl dark:text-white lg:static lg:top-auto lg:z-auto lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 dark:lg:bg-transparent">
           Grow without hiring.
         </h2>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
+          Doubling orders shouldn't mean doubling headcount. Your agents absorb
+          the volume - taking calls, chasing payments, and running the floor -
+          so the team you have today scales with the business.
+        </p>
 
-        <div className="mt-14 overflow-hidden rounded-xl border border-neutral-200/90 dark:border-white/10">
-          {/* Phone / tablet: stacked cards, no numbered index */}
-          <div className="flex flex-col divide-y divide-neutral-200/90 dark:divide-white/10 lg:hidden">
-            {CARDS.map((c, i) => (
-              <article key={c.label} aria-labelledby={`cap-mobile-${i}`}>
-                <div className="border-b border-neutral-200/90 bg-background px-4 py-3 dark:border-white/10 dark:bg-black/50 sm:px-5">
-                  <h3
-                    id={`cap-mobile-${i}`}
-                    className="text-[13px] font-medium uppercase tracking-[0.12em] text-neutral-900 dark:text-white"
-                  >
-                    {c.label}
-                  </h3>
-                </div>
-                <CapabilityCardPanel
-                  card={c}
-                  visualKey={`m-${i}`}
-                  showIndexChip={false}
-                  layout="stack"
-                />
-              </article>
-            ))}
+        <div className="mt-14">
+          {/* Phone / tablet: sticky scroll-stack cards */}
+          <div className="px-0 pb-4 pt-5 lg:hidden">
+            {CARDS.map((c, i) => {
+              const stickyTop = 120 + i * 14;
+              return (
+                <article
+                  key={c.label}
+                  aria-labelledby={`cap-mobile-${i}`}
+                  className="sticky mb-4 overflow-hidden rounded-xl border border-neutral-200 bg-white dark:border-white/10 dark:bg-[#0a0a0a]"
+                  style={{ top: `${stickyTop}px`, zIndex: 20 + i }}
+                >
+                  <div className="border-b border-neutral-200/90 bg-white px-4 py-3 dark:border-white/10 dark:bg-[#0a0a0a] sm:px-5">
+                    <h3
+                      id={`cap-mobile-${i}`}
+                      className="text-[13px] font-medium uppercase tracking-[0.12em] text-neutral-900 dark:text-white"
+                    >
+                      {c.label}
+                    </h3>
+                  </div>
+                  <CapabilityCardPanel
+                    card={c}
+                    visualKey={`m-${i}`}
+                    showIndexChip={false}
+                    layout="stack"
+                  />
+                </article>
+              );
+            })}
           </div>
 
           {/* Large screens: tab rail + numbered index */}
-          <div className="hidden lg:grid lg:grid-cols-[280px_1fr]">
+          <div className="hidden overflow-hidden rounded-xl border border-neutral-200/90 dark:border-white/10 lg:grid lg:grid-cols-[280px_1fr]">
             <div className="border-b border-neutral-200/90 bg-background lg:border-b-0 lg:border-r lg:border-neutral-200/90 dark:border-white/10 dark:bg-[#050505] dark:lg:border-white/10">
               <p className="border-b border-neutral-200/90 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 dark:border-white/10 dark:text-white/40">
                 Select a capability
