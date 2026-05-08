@@ -11,7 +11,7 @@ export default function FinalCta() {
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-white/70">
           Every missed order, late dispatch, and unchecked credit limit is
-          margin you don&rsquo;t get back. The manufacturers moving ahead
+          margin you don&rsquo;t get back. The businesses moving ahead
           are the ones automating now.
         </p>
         <div className="mt-10 flex justify-center">

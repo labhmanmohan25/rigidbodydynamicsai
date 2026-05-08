@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Card = {
   label: string;
@@ -275,22 +275,82 @@ function CapabilityCardPanel({
 
 export default function CapabilityCards() {
   const [active, setActive] = useState(0);
-  const [slideDir, setSlideDir] = useState<"up" | "down" | null>(null);
   const prevActiveRef = useRef(0);
-  const card = CARDS[active];
+  const desktopMarkerRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const rafRef = useRef<number>(0);
 
-  function selectTab(index: number) {
-    if (index === active) return;
-    const prev = prevActiveRef.current;
-    setSlideDir(index > prev ? "down" : "up");
-    prevActiveRef.current = index;
-    setActive(index);
+  function scrollToCapability(index: number) {
+    const marker = desktopMarkerRefs.current[index];
+    if (!marker) {
+      prevActiveRef.current = index;
+      setActive(index);
+      return;
+    }
+    marker.scrollIntoView({ behavior: "smooth", block: "center" });
   }
+
+  const setDesktopMarkerRef = useCallback(
+    (index: number) => (el: HTMLDivElement | null) => {
+      desktopMarkerRefs.current[index] = el;
+    },
+    [],
+  );
+
+  useEffect(() => {
+    function updateFromScroll() {
+      if (window.innerWidth < 1024) return;
+      const markers = desktopMarkerRefs.current;
+      if (!markers.length) return;
+
+      let closest = 0;
+      let closestDist = Infinity;
+      const target = window.innerHeight * 0.42;
+
+      for (let i = 0; i < markers.length; i++) {
+        const marker = markers[i];
+        if (!marker) continue;
+        const rect = marker.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        const dist = Math.abs(center - target);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closest = i;
+        }
+      }
+
+      const prevIdx = prevActiveRef.current;
+      if (prevIdx === closest) return;
+      const prevMarker = markers[prevIdx];
+      if (prevMarker) {
+        const prevRect = prevMarker.getBoundingClientRect();
+        const prevDist = Math.abs(prevRect.top + prevRect.height / 2 - target);
+        if (prevDist - closestDist < 40) return;
+      }
+
+      prevActiveRef.current = closest;
+      setActive(closest);
+    }
+
+    function onScrollOrResize() {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(updateFromScroll);
+    }
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    onScrollOrResize();
+
+    return () => {
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
   return (
     <section className="bg-background pb-16 pt-8 dark:bg-black sm:pb-24 sm:pt-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="sticky top-16 z-30 -mx-1 mt-6 max-w-3xl bg-background px-1 py-3 text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 dark:bg-black sm:text-5xl md:text-6xl dark:text-white lg:static lg:top-auto lg:z-auto lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 dark:lg:bg-transparent">
+        <h2 className="sticky top-20 z-30 -mx-1 mt-6 max-w-3xl bg-background px-1 py-3 text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 dark:bg-black sm:text-5xl md:text-6xl dark:text-white lg:static lg:top-auto lg:z-auto lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 dark:lg:bg-transparent">
           Grow without hiring.
         </h2>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
@@ -330,9 +390,9 @@ export default function CapabilityCards() {
             })}
           </div>
 
-          {/* Large screens: tab rail + numbered index */}
-          <div className="hidden overflow-hidden rounded-xl border border-neutral-200/90 dark:border-white/10 lg:grid lg:grid-cols-[280px_1fr]">
-            <div className="border-b border-neutral-200/90 bg-background lg:border-b-0 lg:border-r lg:border-neutral-200/90 dark:border-white/10 dark:bg-[#050505] dark:lg:border-white/10">
+          {/* Large screens: sticky left rail + scroll-driven center/right panel */}
+          <div className="hidden gap-8 pt-3 lg:grid lg:grid-cols-[280px_1fr]">
+            <div className="sticky top-28 h-fit overflow-hidden rounded-xl border border-neutral-200/90 bg-background dark:border-white/10 dark:bg-[#050505]">
               <p className="border-b border-neutral-200/90 px-4 py-3 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 dark:border-white/10 dark:text-white/40">
                 Select a capability
               </p>
@@ -354,7 +414,7 @@ export default function CapabilityCards() {
                         aria-selected={isActive}
                         aria-controls="capability-panel"
                         id={`cap-tab-${i}`}
-                        onClick={() => selectTab(i)}
+                        onClick={() => scrollToCapability(i)}
                         className={`group flex w-full cursor-pointer items-center gap-3.5 text-left transition-[background-color,border-color,box-shadow,margin,padding,border-radius] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-400/90 ${
                           isActive
                             ? "mx-2 my-2.5 rounded-sm border border-neutral-300 bg-white px-4 py-4 shadow-inner dark:border-white/25 dark:bg-[#12161c] dark:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)]"
@@ -387,29 +447,22 @@ export default function CapabilityCards() {
               </ul>
             </div>
 
-            <div
-              id="capability-panel"
-              role="tabpanel"
-              aria-labelledby={`cap-tab-${active}`}
-              className="min-h-0 overflow-hidden bg-background dark:bg-[#0a0a0a]"
-            >
-              <div
-                key={active}
-                className={
-                  slideDir === "down"
-                    ? "cap-slide-from-bottom"
-                    : slideDir === "up"
-                      ? "cap-slide-from-top"
-                      : ""
-                }
-              >
-                <CapabilityCardPanel
-                  card={card}
-                  visualKey={String(active + 1).padStart(2, "0")}
-                  showIndexChip
-                  layout="split"
-                />
-              </div>
+            <div id="capability-panel" role="tabpanel" aria-labelledby={`cap-tab-${active}`} className="space-y-6">
+              {CARDS.map((c, i) => (
+                <article
+                  key={`desktop-capability-card-${c.label}`}
+                  ref={setDesktopMarkerRef(i)}
+                  data-idx={i}
+                  className="overflow-hidden rounded-xl border border-neutral-200/90 bg-background dark:border-white/10 dark:bg-[#0a0a0a]"
+                >
+                  <CapabilityCardPanel
+                    card={c}
+                    visualKey={String(i + 1).padStart(2, "0")}
+                    showIndexChip
+                    layout="split"
+                  />
+                </article>
+              ))}
             </div>
           </div>
         </div>

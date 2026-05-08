@@ -56,6 +56,14 @@ export default function HomeDarkFooter() {
                   Terms &amp; Conditions
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/llms.txt"
+                  className="cursor-pointer text-sm text-neutral-600 transition-colors hover:text-neutral-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-neutral-900 focus-visible:outline-offset-2 dark:text-zinc-400 dark:hover:text-white dark:focus-visible:outline-white"
+                >
+                  LLMs.txt
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

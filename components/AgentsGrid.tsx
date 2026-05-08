@@ -63,7 +63,13 @@ export default function AgentsGrid() {
                   /{(i + 1).toString().padStart(2, "0")}
                 </span>
                 <span className="inline-flex items-center gap-1.5 rounded border border-neutral-300/90 bg-neutral-100/90 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
-                  <span className="h-1 w-1 rounded-full bg-green-600 dark:bg-green-400" />
+                  <span
+                    aria-hidden
+                    className="heartbeat-wrap h-1.5 w-1.5 text-green-600 dark:text-green-400"
+                  >
+                    <span className="heartbeat-halo" />
+                    <span className="heartbeat-dot h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400" />
+                  </span>
                   active
                 </span>
               </div>

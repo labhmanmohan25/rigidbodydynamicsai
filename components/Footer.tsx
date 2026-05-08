@@ -44,7 +44,13 @@ export default function Footer() {
           </ul>
         </nav>
         <p className="text-sm text-muted-foreground">
-          © {brandName} {year}
+          © {brandName} {year} ·{" "}
+          <a
+            href="/llms.txt"
+            className="cursor-pointer transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 focus-visible:text-foreground"
+          >
+            LLMs.txt
+          </a>
         </p>
       </div>
       {/* Large faint brand name at bottom: left-aligned, line 1 full, line 2 half visible */}

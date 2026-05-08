@@ -1,0 +1,31 @@
+# Rigid Body Dynamics
+
+**Website:** https://rigidbodydynamics.com/
+**Description:** Rigid Body Dynamics provides AI agents designed to automate supply chain and back-office operations for Indian FMCG brand owners, manufacturers, and distributors. 
+
+## Core Value Proposition
+The platform turns unstructured communication channels (WhatsApp, Email, Excel, Phone voice notes) into fully automated, structured operations. 
+* **Zero Migration:** Plugs directly into existing workflows with no new tools, retraining, or IT projects required.
+* **Impact:** Delivers 99.99% accuracy, an 80% reduction in admin time, and a 4-week deployment cycle.
+* **Goal:** Enables traditional businesses to double their order volume and scale operations without increasing back-office headcount.
+
+## The Multi-Agent Architecture
+The system operates as a unified, 24/7 digital operations team where specialized AI agents coordinate autonomously:
+
+* **Procurement Agent:** Detects low stock, scores vendors, and automatically generates purchase orders.
+* **Production Planner:** Adjusts manufacturing line schedules in real-time based on actual demand signals (MRP, line rebalancing).
+* **Dispatch Coordinator:** Optimizes routes, plans truck loads, and alerts warehouse teams via WhatsApp.
+* **Field Listener:** Processes WhatsApp messages, voice notes, and photos (including mixed Hindi-English and OCR) from the sales team into structured data.
+* **Credit Watchdog:** Monitors distributor credit limits, enforces territory pricing, and places automatic holds on accounts exceeding limits.
+* **Forecast Engine:** Analyzes regional demand patterns from inbound orders to feed predictive data to procurement and production.
+
+## Key Capabilities & Workflows
+* **Unified Visibility:** Real-time metrics across procurement, production, warehousing, and distribution on a single screen.
+* **Disruption Radar:** Automatically flags delays, stockouts, or route exceptions and executes rapid recovery actions.
+* **Order Processing:** Instantly matches mixed-language voice/text orders to SKUs, checks live inventory, and confirms orders back via chat.
+
+## Target Audience
+Indian Fast-Moving Consumer Goods (FMCG) sector, specifically:
+* Brand Owners
+* Manufacturers
+* Distributors
