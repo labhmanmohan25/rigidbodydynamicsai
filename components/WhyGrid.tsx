@@ -51,7 +51,7 @@ export default function WhyGrid() {
           <p className="text-xs font-medium uppercase tracking-[0.25em] text-orange-300/80">
             Why us
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          <h2 className="mt-3 text-3xl font-normal tracking-tight text-white sm:text-5xl">
             Built for how Indian manufacturing actually works.
           </h2>
           <p className="mt-5 text-base leading-relaxed text-white/65">
@@ -78,7 +78,7 @@ export default function WhyGrid() {
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-white/5 text-orange-300">
                   {f.icon}
                 </div>
-                <h3 className="mt-5 text-base font-semibold text-white">
+                <h3 className="mt-5 text-base font-normal text-white">
                   {f.title}
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">

@@ -51,16 +51,16 @@ const OUTCOMES = [
 
 export default function OutcomesStrip() {
   return (
-    <section className="w-full bg-background pb-10 pt-2 dark:bg-black sm:pb-14 sm:pt-4">
+    <section className="w-full bg-background py-10 dark:bg-black sm:py-14">
       <div
-        className="w-full border-y border-neutral-200/90 bg-background [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:border-white/10 dark:bg-black dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)]"
+        className="w-full border-y border-neutral-300/90 bg-background [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:border-white/15 dark:bg-black dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)]"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid w-full grid-cols-1 gap-px bg-neutral-300/80 dark:bg-white/10 sm:grid-cols-3">
             {OUTCOMES.map((o) => (
               <div
                 key={o.metric}
-                className="group relative flex items-center justify-center gap-3 bg-background px-5 py-5 transition-colors first:border-l first:border-neutral-200/90 last:border-r last:border-neutral-200/90 hover:bg-card dark:bg-black dark:first:border-white/10 dark:last:border-white/10 dark:hover:bg-white/[0.03] sm:py-6"
+                className="group relative flex items-center justify-center gap-3 bg-background px-5 py-5 transition-colors first:border-l first:border-neutral-300/90 last:border-r last:border-neutral-300/90 hover:bg-card dark:bg-black dark:first:border-white/15 dark:last:border-white/15 dark:hover:bg-white/[0.03] sm:py-6"
               >
                 <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-neutral-300/90 bg-white/80 text-neutral-800 dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
                   {o.icon}

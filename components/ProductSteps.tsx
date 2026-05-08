@@ -2040,7 +2040,7 @@ export default function ProductSteps() {
 
   return (
     <section id="product-steps" className="relative bg-background dark:bg-black">
-      <div ref={containerRef} className="mx-auto max-w-[1200px] px-5 sm:px-8 pt-20 sm:pt-28 pb-10">
+      <div ref={containerRef} className="mx-auto max-w-[1200px] px-5 sm:px-8 pb-20 pt-20 sm:pb-28 sm:pt-28">
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] gap-0 lg:gap-12 xl:gap-16">
 
           {/* ── LEFT: sticky panel ────────────────────────────────── */}
@@ -2109,7 +2109,7 @@ export default function ProductSteps() {
                         })}
                     className="flex min-h-0 flex-col will-change-transform"
                   >
-                    <h3 className="mb-10 text-[36px] font-semibold leading-[1.1] tracking-tight text-neutral-950 dark:text-white">
+                    <h3 className="mb-10 text-[36px] font-normal leading-[1.1] tracking-tight text-neutral-950 dark:text-white">
                       {PHASES[activePhaseIdx].heading}
                     </h3>
                     <div className="min-h-0 flex-1">
@@ -2185,7 +2185,7 @@ export default function ProductSteps() {
                       <div className="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900">
                         {phase.icon}
                       </div>
-                      <h3 className="text-[26px] font-semibold leading-tight tracking-tight text-neutral-950 dark:text-white">
+                      <h3 className="text-[26px] font-normal leading-tight tracking-tight text-neutral-950 dark:text-white">
                         {phase.label.split(" ")[0]}
                       </h3>
                     </div>

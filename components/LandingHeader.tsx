@@ -172,13 +172,6 @@ export default function LandingHeader() {
           </nav>
 
           <div className="hidden shrink-0 items-center gap-2 md:flex">
-            {showHomeThemeToggle ? (
-              <HomeThemeToggle
-                value={homeTheme}
-                onChange={setHomeTheme}
-                variant={landingLight ? "on-light-hero" : "on-dark-hero"}
-              />
-            ) : null}
             <Link
               href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
               target="_blank"
@@ -333,6 +326,17 @@ export default function LandingHeader() {
           </Link>
         </nav>
       </div>
+      {showHomeThemeToggle ? (
+        <div className="pointer-events-none absolute top-1/2 right-[max(0.75rem,calc((100vw-var(--max-width-content))/2+0.75rem))] hidden -translate-y-1/2 md:flex">
+          <div className="pointer-events-auto">
+            <HomeThemeToggle
+              value={homeTheme}
+              onChange={setHomeTheme}
+              variant={landingLight ? "on-light-hero" : "on-dark-hero"}
+            />
+          </div>
+        </div>
+      ) : null}
     </header>
   );
 }

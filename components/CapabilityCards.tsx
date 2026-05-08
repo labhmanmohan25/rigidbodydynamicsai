@@ -288,9 +288,9 @@ export default function CapabilityCards() {
   }
 
   return (
-    <section className="bg-background py-8 dark:bg-black sm:py-10">
+    <section className="bg-background pb-16 pt-8 dark:bg-black sm:pb-24 sm:pt-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <h2 className="sticky top-16 z-30 -mx-1 mt-6 max-w-3xl bg-background px-1 py-3 text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 dark:bg-black sm:text-5xl md:text-6xl dark:text-white lg:static lg:top-auto lg:z-auto lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 dark:lg:bg-transparent">
+        <h2 className="sticky top-16 z-30 -mx-1 mt-6 max-w-3xl bg-background px-1 py-3 text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 dark:bg-black sm:text-5xl md:text-6xl dark:text-white lg:static lg:top-auto lg:z-auto lg:mx-0 lg:bg-transparent lg:px-0 lg:py-0 dark:lg:bg-transparent">
           Grow without hiring.
         </h2>
         <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">

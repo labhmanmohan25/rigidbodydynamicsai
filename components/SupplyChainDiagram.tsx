@@ -398,7 +398,7 @@ function RbdBand() {
       <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
         Unified supply chain dashboard
       </p>
-      <h3 className="mt-1 text-base font-semibold text-white sm:text-lg">
+      <h3 className="mt-1 text-base font-normal text-white sm:text-lg">
         Rigid Body Dynamics
       </h3>
       <p className="mt-1 max-w-3xl text-xs leading-relaxed text-white/65 sm:text-sm">

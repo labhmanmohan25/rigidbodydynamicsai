@@ -39,10 +39,10 @@ const AGENTS = [
 
 export default function AgentsGrid() {
   return (
-    <section className="bg-background py-8 dark:bg-black sm:py-10">
+    <section className="bg-background pb-16 pt-8 dark:bg-black sm:pb-24 sm:pt-10">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mt-6">
-          <h2 className="max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
+          <h2 className="max-w-3xl text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
             One ops team that never sleeps.
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
@@ -67,7 +67,7 @@ export default function AgentsGrid() {
                   active
                 </span>
               </div>
-              <h3 className="mt-5 text-lg font-semibold text-neutral-950 dark:text-white">
+              <h3 className="mt-5 text-lg font-normal text-neutral-950 dark:text-white">
                 {a.name}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">

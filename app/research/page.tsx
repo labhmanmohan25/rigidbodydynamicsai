@@ -115,7 +115,7 @@ export default function ResearchPage() {
                   </span>
                 )}
               </div>
-              <h3 className="mt-3 text-xl font-semibold tracking-tight text-neutral-900 transition-colors group-hover:text-violet-800 sm:text-2xl">
+              <h3 className="mt-3 text-xl font-normal tracking-tight text-neutral-900 transition-colors group-hover:text-violet-800 sm:text-2xl">
                 {featuredArticle.title}
               </h3>
               {featuredArticle.subtitle && (

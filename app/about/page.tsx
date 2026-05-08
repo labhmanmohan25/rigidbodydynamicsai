@@ -12,7 +12,7 @@ export default function AboutPage() {
       <main className="mx-auto max-w-2xl px-4 pt-28 pb-16 sm:px-6">
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "About Us" }]} />
 
-        <h1 className="mt-16 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
+        <h1 className="mt-16 text-2xl font-normal tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
           About us
         </h1>
 
@@ -21,7 +21,7 @@ export default function AboutPage() {
             <p className="text-xs font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
               CEO
             </p>
-            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
+            <h2 className="mt-1 text-2xl font-normal tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
               Apurva Biswas
             </h2>
             <ul className="mt-6 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed text-neutral-600 marker:text-neutral-400 dark:text-neutral-400 dark:marker:text-neutral-500">
@@ -45,7 +45,7 @@ export default function AboutPage() {
             <p className="text-xs font-medium uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
               CTO
             </p>
-            <h2 className="mt-1 text-2xl font-semibold tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
+            <h2 className="mt-1 text-2xl font-normal tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-3xl">
               Manmohan Labh
             </h2>
             <ul className="mt-6 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed text-neutral-600 marker:text-neutral-400 dark:text-neutral-400 dark:marker:text-neutral-500">

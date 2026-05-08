@@ -55,7 +55,7 @@ export default function FlowchartStage() {
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-orange-300/80">
               What you get
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-3 text-3xl font-normal tracking-tight text-white sm:text-5xl">
               Six capabilities. One operations advantage.
             </h2>
             <p className="mt-5 text-base leading-relaxed text-white/65">
@@ -96,7 +96,7 @@ export default function FlowchartStage() {
                         <span className="font-heading text-xs font-medium uppercase tracking-[0.2em] text-white/50">
                           {String(index + 1).padStart(2, "0")}
                         </span>
-                        <h3 className="font-heading mt-3 text-xl font-semibold leading-tight text-white sm:text-2xl">
+                        <h3 className="font-heading mt-3 text-xl font-normal leading-tight text-white sm:text-2xl">
                           {card.title}
                         </h3>
                         <p className="mt-3 text-sm leading-relaxed text-white/85 sm:text-base">

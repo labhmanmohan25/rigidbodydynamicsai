@@ -118,7 +118,7 @@ export default function Differentiators() {
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-background/80 text-accent transition-colors group-hover:border-accent/50 group-hover:bg-accent/10">
                   {icon}
                 </div>
-                <h3 className="font-display text-xl font-semibold text-foreground">
+                <h3 className="font-display text-xl font-normal text-foreground">
                   {title}
                 </h3>
                 <p className="mt-2.5 leading-relaxed text-muted-foreground">

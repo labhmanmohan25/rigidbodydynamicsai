@@ -30,7 +30,7 @@ export default function ReportPage() {
               Business opportunity
             </span>
           </div>
-          <h1 className="text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl">
+          <h1 className="text-3xl font-normal leading-tight tracking-tight text-neutral-900 sm:text-4xl">
             The Paradigm Shift to Agent-First Organizations
           </h1>
           <p className="mt-3 text-lg text-neutral-500 leading-relaxed">
@@ -41,7 +41,7 @@ export default function ReportPage() {
 
         {/* Report Summary — shown after clicking Summarize */}
         <ReportSummaryWithButton>
-          <h2 className="mb-4 text-lg font-semibold text-neutral-900">Report Summary</h2>
+          <h2 className="mb-4 text-lg font-normal text-neutral-900">Report Summary</h2>
           <p className="mb-5 text-[0.9375rem] leading-relaxed text-neutral-600">
             The document, <strong>"Specialized Agents vs. General LLMs,"</strong> argues that the enterprise AI paradigm is shifting from using monolithic, general-purpose Large Language Models (LLMs) to deploying <strong>orchestrated, specialized Small Language Models (SLMs)</strong> in autonomous multi-agent systems.
           </p>
@@ -745,7 +745,7 @@ export default function ReportPage() {
 
           {/* ── Works Cited ── */}
           <div className="mt-16 border-t border-neutral-100 pt-10">
-            <h2 className="mb-6 text-sm font-semibold uppercase tracking-widest text-neutral-400">
+            <h2 className="mb-6 text-sm font-normal uppercase tracking-widest text-neutral-400">
               Works Cited
             </h2>
             <ol className="space-y-2 text-xs text-neutral-400 leading-relaxed list-decimal list-outside pl-4">
@@ -796,7 +796,7 @@ function Section({
 }) {
   return (
     <section id={id} className="mt-14 scroll-mt-28">
-      <h2 className="mb-5 flex items-baseline gap-3 text-xl font-semibold text-neutral-900">
+      <h2 className="mb-5 flex items-baseline gap-3 text-xl font-normal text-neutral-900">
         <span className="shrink-0 tabular-nums text-neutral-300">{number}.</span>
         {title}
       </h2>

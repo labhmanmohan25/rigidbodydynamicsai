@@ -123,7 +123,7 @@ export default function Approach() {
                       {icon}
                     </span>
                   </div>
-                  <h3 className="font-display text-xl font-semibold text-foreground md:text-2xl">
+                  <h3 className="font-display text-xl font-normal text-foreground md:text-2xl">
                     {title}
                   </h3>
                   <ul className="mt-5 space-y-3" role="list">

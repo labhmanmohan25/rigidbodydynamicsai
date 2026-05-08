@@ -86,7 +86,7 @@ export default function Paradigm() {
               <span className="inline-block rounded-lg border border-border bg-background/80 px-2.5 py-1 font-mono text-xs text-muted-foreground">
                 Before
               </span>
-              <h3 className="mt-4 font-display text-xl font-semibold text-muted-foreground sm:text-2xl">
+              <h3 className="mt-4 font-display text-xl font-normal text-muted-foreground sm:text-2xl">
                 {reactive.title}
               </h3>
               <p className="mt-3 text-muted-foreground leading-relaxed">
@@ -114,7 +114,7 @@ export default function Paradigm() {
               <span className="inline-block rounded-lg border border-accent/30 bg-accent/10 px-2.5 py-1 font-mono text-xs font-medium text-accent">
                 After
               </span>
-              <h3 className="mt-4 font-display text-xl font-semibold text-accent sm:text-2xl">
+              <h3 className="mt-4 font-display text-xl font-normal text-accent sm:text-2xl">
                 {proactive.title}
               </h3>
               <p className="mt-3 text-foreground/90 leading-relaxed">

@@ -6,12 +6,12 @@ export const reportMarkdownComponents: Components = {
     return <img src={src} alt={alt ?? ""} {...props} />;
   },
   h1: ({ children }) => (
-    <h1 className="text-3xl font-semibold leading-tight tracking-tight text-neutral-900 sm:text-4xl mt-0 mb-4">
+    <h1 className="text-3xl font-normal leading-tight tracking-tight text-neutral-900 sm:text-4xl mt-0 mb-4">
       {children}
     </h1>
   ),
   h2: ({ children }) => (
-    <h2 className="text-xl font-semibold text-neutral-900 mt-14 mb-4 scroll-mt-28">
+    <h2 className="text-xl font-normal text-neutral-900 mt-14 mb-4 scroll-mt-28">
       {children}
     </h2>
   ),

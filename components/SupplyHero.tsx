@@ -10,30 +10,29 @@ export default function SupplyHero() {
   const { homeTheme } = useHomeAppearance();
 
   return (
-    <section className="relative isolate overflow-hidden bg-background pb-24 pt-32 dark:bg-black sm:pb-32 sm:pt-40">
+    <section className="relative isolate overflow-hidden bg-background pb-32 pt-32 dark:bg-black sm:pb-40 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.82] dark:opacity-100">
         <MeteorShowerPixels surface={homeTheme} />
       </div>
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/45 via-transparent to-background/75 dark:hidden" aria-hidden />
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center text-neutral-950 sm:px-6 dark:text-white">
-        <h1 className="mx-auto max-w-4xl text-[clamp(1.875rem,6vw+1rem,4.5rem)] font-semibold leading-[1.06] tracking-tight sm:text-6xl md:text-[72px]">
-          Your team runs your operations on{" "}
-          <span
-            className="inline-flex items-center gap-2 align-middle text-[0.9em]"
-            aria-label="Excel, WhatsApp, mail and phone channels"
-          >
-            <Image src="/icons/whatsapp.png" alt="WhatsApp" width={64} height={64} className="inline-block h-[0.9em] w-[0.9em]" />
-            <Image src="/icons/excel.png" alt="Excel" width={64} height={64} className="inline-block h-[0.9em] w-[0.9em]" />
-            <Image src="/icons/gmail.png" alt="Mail" width={64} height={64} className="inline-block h-[0.9em] w-[0.9em]" />
-            <Image src="/icons/mobile.png" alt="Phone" width={64} height={64} className="inline-block h-[0.9em] w-[0.9em]" />
-          </span>
-          <br />
-          We automate it!
+        <h1 className="mx-auto max-w-5xl text-[clamp(1.875rem,5vw+0.9rem,3.9rem)] font-normal leading-[1.08] tracking-tight sm:text-6xl md:text-[60px]">
+          AI agents for operations, 
+          <br className="hidden md:block" />
+          built for brand owners,
+          manufacturers and distributors
         </h1>
 
         <p className="mx-auto mt-7 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
-        AI agents that turn your WhatsApp, Emails, Excel, and Phone calls into fully automated operations — no new tools, no new hires. Reduce operational load today and unlock rapid growth tomorrow.
+          AI agents that turn your{" "}
+          <span className="inline-flex items-center gap-1 align-middle" aria-label="WhatsApp, email, Excel, and phone channels">
+            <Image src="/icons/whatsapp.png" alt="WhatsApp" width={64} height={64} className="inline-block h-[1.1em] w-[1.1em]" />
+            <Image src="/icons/gmail.png" alt="Email" width={64} height={64} className="inline-block h-[1.1em] w-[1.1em]" />
+            <Image src="/icons/excel.png" alt="Excel" width={64} height={64} className="inline-block h-[1.1em] w-[1.1em]" />
+            <Image src="/icons/mobile.png" alt="Phone" width={64} height={64} className="inline-block h-[1.1em] w-[1.1em]" />
+          </span>{" "}
+          into fully automated operations - no new tools, no new hires. Reduce operational load today and unlock rapid growth tomorrow.
         </p>
 
         <div className="mt-10 flex justify-center">

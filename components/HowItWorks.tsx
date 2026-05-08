@@ -90,7 +90,7 @@ export default function HowItWorks() {
             </div> */}
 
             <div className="shrink-0 space-y-3 sm:space-y-4 lg:space-y-[clamp(0.4rem,1.15vmin,0.85rem)]">
-              <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.85rem,5.6vmin,4.35rem)] lg:leading-[1.04] dark:text-white">
+              <h2 className="mt-6 max-w-3xl text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.85rem,5.6vmin,4.35rem)] lg:leading-[1.04] dark:text-white">
                 We plug into your operations
                 <br />
                 no new tools, no migration.
@@ -112,7 +112,7 @@ export default function HowItWorks() {
                     {feature.icon}
                   </div>
                   <div className="min-w-0 flex-1 pt-0.5 lg:pt-0">
-                    <h3 className="text-lg font-semibold leading-snug text-neutral-950 lg:text-[clamp(1.0625rem,1.85vmin,1.1875rem)] lg:leading-snug dark:text-white">
+                    <h3 className="text-lg font-normal leading-snug text-neutral-950 lg:text-[clamp(1.0625rem,1.85vmin,1.1875rem)] lg:leading-snug dark:text-white">
                       {feature.title}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-neutral-600 sm:mt-2 lg:mt-1.5 lg:text-[clamp(0.9375rem,1.45vmin,1.0625rem)] lg:leading-relaxed dark:text-white/55">

@@ -76,7 +76,7 @@ export default function SimpleFlow({ variant = "cad" }: { variant?: FlowVariant 
               <span className="mb-2 text-2xl sm:text-3xl" aria-hidden>
                 {step.icon}
               </span>
-              <h3 className="font-semibold text-foreground">{step.title}</h3>
+              <h3 className="font-normal text-foreground">{step.title}</h3>
               <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
                 {step.description}
               </p>

@@ -22,7 +22,7 @@ export default function SecurityBand() {
             <p className="text-xs font-medium uppercase tracking-[0.25em] text-orange-300/80">
               Trust & control
             </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+            <h2 className="mt-3 text-3xl font-normal tracking-tight text-white sm:text-5xl">
               Your data. Your ERPs. Your rules.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/65">
@@ -35,7 +35,7 @@ export default function SecurityBand() {
           <div className="grid gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-2">
             {POINTS.map((p) => (
               <div key={p.k} className="bg-[#0a0a0a] p-6">
-                <h3 className="text-sm font-semibold text-white">{p.k}</h3>
+                <h3 className="text-sm font-normal text-white">{p.k}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/60">
                   {p.v}
                 </p>

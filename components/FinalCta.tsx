@@ -4,7 +4,7 @@ export default function FinalCta() {
   return (
     <section id="final-cta" className="relative overflow-hidden bg-background py-20 dark:bg-black sm:py-28">
       <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
-        <h2 className="mx-auto max-w-3xl text-[clamp(1.75rem,7vw+0.75rem,4.5rem)] font-semibold leading-[1.08] tracking-tight text-neutral-950 sm:text-6xl md:text-7xl dark:text-white">
+        <h2 className="mx-auto max-w-3xl text-[clamp(1.75rem,7vw+0.75rem,4.5rem)] font-normal leading-[1.08] tracking-tight text-neutral-950 sm:text-6xl md:text-7xl dark:text-white">
           Still running ops manually?
           <br />
           It&rsquo;s costing you growth.

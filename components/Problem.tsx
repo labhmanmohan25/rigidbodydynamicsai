@@ -170,7 +170,7 @@ export default function Problem() {
                     <span className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background/80 text-accent transition-colors group-hover:border-accent/30">
                       {item.icon}
                     </span>
-                    <h3 className="mt-4 font-semibold text-foreground">
+                    <h3 className="mt-4 font-normal text-foreground">
                       {item.title}
                     </h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
