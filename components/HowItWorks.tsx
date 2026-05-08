@@ -38,25 +38,25 @@ const FEATURE_ICONS = {
 const FEATURES = [
   {
     icon: FEATURE_ICONS.chat,
-    title: "Orders from the field",
+    title: "Orders in, instantly",
     description:
       "WhatsApp voice notes and mixed-language messages become confirmed orders — SKU-matched and logged without retyping.",
   },
   {
     icon: FEATURE_ICONS.box,
-    title: "Parsed and pushed into your stack",
+    title: "Matched, checked, confirmed",
     description:
       "Inventory checked, orders created, confirmations sent back on chat. Works with how your team already works.",
   },
   {
     icon: FEATURE_ICONS.pulse,
-    title: "Demand-aware procurement",
+    title: "Procurement that reads demand",
     description:
       "Agents spot pattern shifts early and draft purchase flows before shelves or lines go dry.",
   },
   {
     icon: FEATURE_ICONS.truck,
-    title: "Production and dispatch aligned",
+    title: "Production and dispatch, in sync",
     description:
       "Schedules and loads rebalance to meet spikes. Your ops team gets clear updates without chasing status.",
   },
@@ -69,47 +69,53 @@ export default function HowItWorks() {
       style={SECTION_STYLE}
       className="scroll-mt-[var(--how-header-clearance)] bg-background text-neutral-950 dark:bg-black dark:text-white"
     >
-      <div className="grid lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:min-h-[calc(100svh-var(--how-header-clearance))]">
-        <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:max-h-none lg:min-h-0 lg:aspect-auto">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_auto] lg:h-[calc(100svh-var(--how-header-clearance))] lg:min-h-0">
+        <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:aspect-auto lg:h-full lg:max-h-none lg:min-h-0 lg:min-w-0">
           <Image
             src="/fmcg.jpeg"
             alt="FMCG warehouse and distribution — stacked cartons and supply operations"
             fill
             className="object-cover object-center"
-            sizes="(max-width: 1024px) 100vw, 58vw"
+            sizes="(max-width: 1024px) 100vw, (max-width: 1536px) 45vw, 52vw"
             priority={false}
           />
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-900/35 via-transparent to-transparent dark:from-black/50 lg:bg-gradient-to-r lg:from-transparent lg:to-neutral-900/35 dark:lg:to-black/40" aria-hidden />
         </div>
 
-        <div className="flex min-w-0 flex-col justify-center bg-background px-4 py-8 sm:px-6 sm:py-10 dark:bg-black">
-          <div className="mx-auto w-full max-w-3xl lg:mx-0">
+        <div className="flex min-h-0 w-full min-w-0 flex-col justify-center bg-background px-4 py-6 sm:px-6 sm:py-8 lg:h-full lg:min-h-0 lg:w-[min(40rem,calc(100vw-2rem))] lg:min-w-[18rem] lg:justify-center lg:px-[clamp(0.875rem,3.25vw,2.25rem)] lg:py-[clamp(0.65rem,2vmin,1.5rem)] dark:bg-black">
+          <div className="mx-auto w-full max-w-3xl shrink-0 lg:mx-0 lg:flex lg:w-full lg:max-w-none lg:flex-col lg:gap-[clamp(1rem,3.2vmin,2.35rem)]">
             {/* <div className="flex w-fit items-center gap-2 rounded-md border border-neutral-300/90 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-600 dark:border-white/20 dark:text-white/70">
               <span className="inline-block h-1.5 w-1.5 shrink-0 bg-neutral-800 dark:bg-white" aria-hidden />
               How it works
             </div> */}
 
-            <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl dark:text-white">
-              We plug into what you already do —
-              <br />
-              no new tools, no migration.
-            </h2>
+            <div className="shrink-0 space-y-3 sm:space-y-4 lg:space-y-[clamp(0.4rem,1.15vmin,0.85rem)]">
+              <h2 className="mt-6 max-w-3xl text-3xl font-semibold leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.85rem,5.6vmin,4.35rem)] lg:leading-[1.04] dark:text-white">
+                We plug into your operations
+                <br />
+                no new tools, no migration.
+              </h2>
+              <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-600 sm:text-base lg:mt-0 lg:max-w-none lg:text-[clamp(0.875rem,1.55vmin,1.125rem)] lg:leading-relaxed dark:text-white/55">
+                Your team already sends orders on WhatsApp and tracks stock in
+                Excel. We wire into those channels directly — no retraining, no
+                new logins, no IT project.
+              </p>
+            </div>
 
-
-            <ul className="mt-10 space-y-0 sm:mt-12">
+            <ul className="mt-8 min-h-0 space-y-0 sm:mt-10 lg:mt-0">
               {FEATURES.map((feature, i) => (
                 <li
                   key={feature.title}
-                  className={`flex gap-4 py-6 sm:gap-5 sm:py-7 ${i > 0 ? "border-t border-neutral-200 dark:border-white/10" : ""}`}
+                  className={`flex items-start gap-4 py-4 sm:gap-5 sm:py-5 lg:gap-3.5 lg:py-[clamp(0.65rem,2vmin,1rem)] ${i > 0 ? "border-t border-neutral-200 dark:border-white/10" : ""}`}
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-300/80 bg-white text-neutral-800 dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-300/80 bg-white text-neutral-800 lg:size-[clamp(2.35rem,5.25vmin,2.85rem)] lg:[&_svg]:size-[clamp(1rem,2.35vmin,1.25rem)] dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
                     {feature.icon}
                   </div>
-                  <div className="min-w-0">
-                    <h3 className="text-lg font-semibold leading-snug text-neutral-950 dark:text-white">
+                  <div className="min-w-0 flex-1 pt-0.5 lg:pt-0">
+                    <h3 className="text-lg font-semibold leading-snug text-neutral-950 lg:text-[clamp(1.0625rem,1.85vmin,1.1875rem)] lg:leading-snug dark:text-white">
                       {feature.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">
+                    <p className="mt-1.5 text-sm leading-relaxed text-neutral-600 sm:mt-2 lg:mt-1.5 lg:text-[clamp(0.9375rem,1.45vmin,1.0625rem)] lg:leading-relaxed dark:text-white/55">
                       {feature.description}
                     </p>
                   </div>

@@ -33,9 +33,7 @@ export default function SupplyHero() {
         </h1>
 
         <p className="mx-auto mt-7 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
-        AI agents that turn your WhatsApp messages, Emails, Excel sheets, and Phone calls into fully automated operations — no new tools, no new hires. Order
-          processing, procurement, production, distribution, and credit -
-          handled, not tracked.
+        AI agents that turn your WhatsApp, Emails, Excel, and Phone calls into fully automated operations — no new tools, no new hires. Reduce operational load today and unlock rapid growth tomorrow.
         </p>
 
         <div className="mt-10 flex justify-center">
