@@ -8,34 +8,53 @@ import PlatformShowcase from "@/components/PlatformShowcase";
 import ProductSteps from "@/components/ProductSteps";
 import SectionDivider from "@/components/SectionDivider";
 import SupplyHero from "@/components/SupplyHero";
+import TrackedHomeSection from "@/components/TrackedHomeSection";
 
 export default function Home() {
   return (
     <div className="bg-background dark:bg-black">
       <div className="mx-3 border-x border-neutral-300/90 dark:border-white/15 sm:mx-6 lg:mx-12">
-        <SupplyHero />
+        <TrackedHomeSection sectionId="hero">
+          <SupplyHero />
+        </TrackedHomeSection>
         <SectionDivider />
-        <OutcomesStrip />
+        <TrackedHomeSection sectionId="outcomes">
+          <OutcomesStrip />
+        </TrackedHomeSection>
         <SectionDivider />
         <div className="py-3 sm:py-4">
           <SectionDivider />
         </div>
-        <HowItWorks />
+        <TrackedHomeSection sectionId="how_it_works">
+          <HowItWorks />
+        </TrackedHomeSection>
         <SectionDivider />
         <div className="py-3 sm:py-4">
           <SectionDivider />
         </div>
-        <ProductSteps />
+        <TrackedHomeSection sectionId="product_steps">
+          <ProductSteps />
+        </TrackedHomeSection>
         <SectionDivider />
-        <PlatformShowcase />
+        <TrackedHomeSection sectionId="platform">
+          <PlatformShowcase />
+        </TrackedHomeSection>
         <SectionDivider />
-        <CapabilityCards />
+        <TrackedHomeSection sectionId="capabilities">
+          <CapabilityCards />
+        </TrackedHomeSection>
         <SectionDivider />
-        <AgentsGrid />
+        <TrackedHomeSection sectionId="agents">
+          <AgentsGrid />
+        </TrackedHomeSection>
         <SectionDivider />
-        <FinalCta />
+        <TrackedHomeSection sectionId="cta">
+          <FinalCta />
+        </TrackedHomeSection>
       </div>
-      <HomeDarkFooter />
+      <TrackedHomeSection sectionId="footer">
+        <HomeDarkFooter />
+      </TrackedHomeSection>
     </div>
   );
 }

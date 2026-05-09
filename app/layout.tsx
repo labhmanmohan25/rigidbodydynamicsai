@@ -7,6 +7,7 @@ import {
   HomeAppearanceProvider,
   HomeThemeBootScript,
 } from "@/components/HomeAppearance";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans bg-background text-foreground`}
       >
+        <GoogleAnalytics />
         <a
           href="#main"
           className="sr-only focus-visible:not-sr-only focus-visible:absolute focus-visible:left-4 focus-visible:top-4 focus-visible:z-50 focus-visible:rounded focus-visible:bg-accent focus-visible:px-4 focus-visible:py-2 focus-visible:text-accent-foreground"
