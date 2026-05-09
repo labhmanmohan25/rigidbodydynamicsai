@@ -1,6 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import TrackedFocusRegion from "@/components/TrackedFocusRegion";
+import { analyticsSlugFromLabel } from "@/lib/analyticsIds";
 
 type Card = {
   label: string;
@@ -371,20 +373,26 @@ export default function CapabilityCards() {
                   className="sticky mb-4 overflow-hidden rounded-xl border border-neutral-200 bg-white dark:border-white/10 dark:bg-[#0a0a0a]"
                   style={{ top: `${stickyTop}px`, zIndex: 20 + i }}
                 >
-                  <div className="border-b border-neutral-200/90 bg-white px-4 py-3 dark:border-white/10 dark:bg-[#0a0a0a] sm:px-5">
-                    <h3
-                      id={`cap-mobile-${i}`}
-                      className="text-[13px] font-medium uppercase tracking-[0.12em] text-neutral-900 dark:text-white"
-                    >
-                      {c.label}
-                    </h3>
-                  </div>
-                  <CapabilityCardPanel
-                    card={c}
-                    visualKey={`m-${i}`}
-                    showIndexChip={false}
-                    layout="stack"
-                  />
+                  <TrackedFocusRegion
+                    focusRegion="capabilities"
+                    focusItemId={analyticsSlugFromLabel(c.label)}
+                    focusItemLabel={c.label}
+                  >
+                    <div className="border-b border-neutral-200/90 bg-white px-4 py-3 dark:border-white/10 dark:bg-[#0a0a0a] sm:px-5">
+                      <h3
+                        id={`cap-mobile-${i}`}
+                        className="text-[13px] font-medium uppercase tracking-[0.12em] text-neutral-900 dark:text-white"
+                      >
+                        {c.label}
+                      </h3>
+                    </div>
+                    <CapabilityCardPanel
+                      card={c}
+                      visualKey={`m-${i}`}
+                      showIndexChip={false}
+                      layout="stack"
+                    />
+                  </TrackedFocusRegion>
                 </article>
               );
             })}
@@ -455,12 +463,18 @@ export default function CapabilityCards() {
                   data-idx={i}
                   className="overflow-hidden rounded-xl border border-neutral-200/90 bg-background dark:border-white/10 dark:bg-[#0a0a0a]"
                 >
-                  <CapabilityCardPanel
-                    card={c}
-                    visualKey={String(i + 1).padStart(2, "0")}
-                    showIndexChip
-                    layout="split"
-                  />
+                  <TrackedFocusRegion
+                    focusRegion="capabilities"
+                    focusItemId={analyticsSlugFromLabel(c.label)}
+                    focusItemLabel={c.label}
+                  >
+                    <CapabilityCardPanel
+                      card={c}
+                      visualKey={String(i + 1).padStart(2, "0")}
+                      showIndexChip
+                      layout="split"
+                    />
+                  </TrackedFocusRegion>
                 </article>
               ))}
             </div>

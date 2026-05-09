@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import TrackedFocusRegion from "@/components/TrackedFocusRegion";
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Scroll-triggered product walkthrough — LaneSurf-inspired.
@@ -2209,22 +2210,28 @@ export default function ProductSteps() {
                           }`}
                           style={{ top: `${stickyTop}px`, zIndex: 20 + si }}
                         >
-                          <button onClick={() => scrollToPanel(gi)} className="block w-full text-left">
-                            <div className="mb-3 flex items-center gap-3">
-                              <StepNumber num={si + 1} progress={stepProgress[gi] ?? 0} />
-                              <p className="min-w-0 text-[17px] font-semibold leading-snug text-neutral-900 dark:text-white">
-                                {step.title}
-                              </p>
-                            </div>
-                            <p className="text-[13px] leading-relaxed text-neutral-600 dark:text-white/55">{step.description}</p>
-                            <div className="mt-4 h-[320px] overflow-hidden rounded-xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50">
-                              <div className="flex h-full w-full items-start justify-center pt-2">
-                                <div className="origin-top scale-[0.58]">
-                                  <Visual />
+                          <TrackedFocusRegion
+                            focusRegion="product_steps"
+                            focusItemId={`${phase.id}_${si}`}
+                            focusItemLabel={step.title}
+                          >
+                            <button onClick={() => scrollToPanel(gi)} className="block w-full text-left">
+                              <div className="mb-3 flex items-center gap-3">
+                                <StepNumber num={si + 1} progress={stepProgress[gi] ?? 0} />
+                                <p className="min-w-0 text-[17px] font-semibold leading-snug text-neutral-900 dark:text-white">
+                                  {step.title}
+                                </p>
+                              </div>
+                              <p className="text-[13px] leading-relaxed text-neutral-600 dark:text-white/55">{step.description}</p>
+                              <div className="mt-4 h-[320px] overflow-hidden rounded-xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50">
+                                <div className="flex h-full w-full items-start justify-center pt-2">
+                                  <div className="origin-top scale-[0.58]">
+                                    <Visual />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </button>
+                            </button>
+                          </TrackedFocusRegion>
                         </div>
                       );
                     })}
@@ -2246,9 +2253,15 @@ export default function ProductSteps() {
                       data-idx={idx}
                       className="flex flex-col py-10"
                     >
-                      <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50 lg:flex lg:h-[660px] lg:items-center lg:justify-center">
-                        <Visual />
-                      </div>
+                      <TrackedFocusRegion
+                        focusRegion="product_steps"
+                        focusItemId={`${phase.id}_${si}`}
+                        focusItemLabel={step.title}
+                      >
+                        <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50 lg:flex lg:h-[660px] lg:items-center lg:justify-center">
+                          <Visual />
+                        </div>
+                      </TrackedFocusRegion>
                     </div>
                   );
                 }),

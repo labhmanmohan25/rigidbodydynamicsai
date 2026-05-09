@@ -1,3 +1,6 @@
+import TrackedFocusRegion from "@/components/TrackedFocusRegion";
+import { analyticsSlugFromLabel } from "@/lib/analyticsIds";
+
 const AGENTS = [
   {
     name: "Procurement Agent",
@@ -54,25 +57,28 @@ export default function AgentsGrid() {
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-xl border border-neutral-200/90 bg-neutral-200/60 dark:border-white/10 dark:bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
           {AGENTS.map((a, i) => (
-            <div
+            <TrackedFocusRegion
               key={a.name}
-              className="bg-background p-5 transition-colors hover:bg-card dark:bg-[#0a0a0a] dark:hover:bg-[#0f0f0f] sm:p-7"
+              focusRegion="agents"
+              focusItemId={analyticsSlugFromLabel(a.name)}
+              focusItemLabel={a.name}
             >
-              <div className="flex items-center justify-between">
-                <span className="font-mono text-xs text-neutral-500 dark:text-white/40">
-                  /{(i + 1).toString().padStart(2, "0")}
-                </span>
-                <span className="inline-flex items-center gap-1.5 rounded border border-neutral-300/90 bg-neutral-100/90 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
-                  <span
-                    aria-hidden
-                    className="heartbeat-wrap h-1.5 w-1.5 text-green-600 dark:text-green-400"
-                  >
-                    <span className="heartbeat-halo" />
-                    <span className="heartbeat-dot h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400" />
+              <div className="bg-background p-5 transition-colors hover:bg-card dark:bg-[#0a0a0a] dark:hover:bg-[#0f0f0f] sm:p-7">
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-xs text-neutral-500 dark:text-white/40">
+                    /{(i + 1).toString().padStart(2, "0")}
                   </span>
-                  active
-                </span>
-              </div>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-neutral-300/90 bg-neutral-100/90 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
+                    <span
+                      aria-hidden
+                      className="heartbeat-wrap h-1.5 w-1.5 text-green-600 dark:text-green-400"
+                    >
+                      <span className="heartbeat-halo" />
+                      <span className="heartbeat-dot h-1.5 w-1.5 rounded-full bg-green-600 dark:bg-green-400" />
+                    </span>
+                    active
+                  </span>
+                </div>
               <h3 className="mt-5 text-lg font-normal text-neutral-950 dark:text-white">
                 {a.name}
               </h3>
@@ -89,7 +95,8 @@ export default function AgentsGrid() {
                   </span>
                 ))}
               </div>
-            </div>
+              </div>
+            </TrackedFocusRegion>
           ))}
         </div>
       </div>
