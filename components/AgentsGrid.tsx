@@ -63,7 +63,7 @@ export default function AgentsGrid() {
               focusItemId={analyticsSlugFromLabel(a.name)}
               focusItemLabel={a.name}
             >
-              <div className="bg-background p-5 transition-colors hover:bg-card dark:bg-[#0a0a0a] dark:hover:bg-[#0f0f0f] sm:p-7">
+              <div className="h-full bg-background p-5 transition-colors hover:bg-card dark:bg-[#0a0a0a] dark:hover:bg-[#0f0f0f] sm:p-7">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs text-neutral-500 dark:text-white/40">
                     /{(i + 1).toString().padStart(2, "0")}
@@ -79,22 +79,22 @@ export default function AgentsGrid() {
                     active
                   </span>
                 </div>
-              <h3 className="mt-5 text-lg font-normal text-neutral-950 dark:text-white">
-                {a.name}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">
-                {a.purpose}
-              </p>
-              <div className="mt-5 flex flex-wrap gap-1.5">
-                {a.chips.map((c) => (
-                  <span
-                    key={c}
-                    className="rounded border border-neutral-200 bg-white px-2 py-1 text-[11px] text-neutral-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/70"
-                  >
-                    {c}
-                  </span>
-                ))}
-              </div>
+                <h3 className="mt-5 text-lg font-normal text-neutral-950 dark:text-white">
+                  {a.name}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-white/55">
+                  {a.purpose}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-1.5">
+                  {a.chips.map((c) => (
+                    <span
+                      key={c}
+                      className="rounded border border-neutral-200 bg-white px-2 py-1 text-[11px] text-neutral-700 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/70"
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
               </div>
             </TrackedFocusRegion>
           ))}

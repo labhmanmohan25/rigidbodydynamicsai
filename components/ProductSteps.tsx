@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import TrackedFocusRegion from "@/components/TrackedFocusRegion";
@@ -171,13 +172,56 @@ function StepNumber({ num, progress }: { num: number; progress: number }) {
   );
 }
 
-function LogoBadge({ size = "md" }: { size?: "sm" | "md" }) {
-  const s = size === "sm" ? "h-7 w-7 text-[9px]" : "h-9 w-9 text-[10px]";
+/** RBD mark on dark chips (light UI) / white chips (dark UI). */
+function RbdMark({ sizePx, className = "" }: { sizePx: number; className?: string }) {
   return (
-    <div className={`flex items-center justify-center rounded-full bg-neutral-900 dark:bg-white ${s}`}>
-      <span className="font-bold tracking-tight text-white dark:text-neutral-900">R</span>
+    <span
+      className={`relative inline-flex shrink-0 items-center justify-center ${className}`}
+      style={{ width: sizePx, height: sizePx }}
+    >
+      <Image src="/logowhite.png" alt="" width={sizePx} height={sizePx} className="h-full w-full object-contain p-[15%] dark:hidden" />
+      <Image src="/logo.png" alt="" width={sizePx} height={sizePx} className="hidden h-full w-full object-contain p-[15%] dark:block" />
+    </span>
+  );
+}
+
+/** RBD mark on light chips (light UI) / dark chips (dark UI). */
+function RbdMarkInverted({ sizePx, className = "" }: { sizePx: number; className?: string }) {
+  return (
+    <span
+      className={`relative inline-flex shrink-0 items-center justify-center ${className}`}
+      style={{ width: sizePx, height: sizePx }}
+    >
+      <Image src="/logo.png" alt="" width={sizePx} height={sizePx} className="h-full w-full object-contain p-[15%] dark:hidden" />
+      <Image src="/logowhite.png" alt="" width={sizePx} height={sizePx} className="hidden h-full w-full object-contain p-[15%] dark:block" />
+    </span>
+  );
+}
+
+function LogoBadge({ size = "md", animated = false }: { size?: "sm" | "md"; animated?: boolean }) {
+  const reduceMotion = useReducedMotion();
+  const dim = size === "sm" ? 28 : 36;
+  const shell = (
+    <div
+      className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-900 dark:bg-white ${
+        size === "sm" ? "h-7 w-7" : "h-9 w-9"
+      }`}
+    >
+      <RbdMark sizePx={dim} />
     </div>
   );
+  if (animated && !reduceMotion) {
+    return (
+      <motion.div
+        className="inline-flex shrink-0"
+        animate={{ scale: [1, 1.06, 1] }}
+        transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+      >
+        {shell}
+      </motion.div>
+    );
+  }
+  return shell;
 }
 
 /* ── Right-side visuals — realistic app UIs ────────────────────────────── */
@@ -195,8 +239,8 @@ function ConnectorPill({
 
   const content = (
     <div className={`inline-flex items-center gap-2 rounded-full border ${borderClassName} bg-neutral-50 px-3.5 py-1.5 dark:bg-white/5`}>
-      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-neutral-900 dark:bg-white">
-        <span className="text-[7px] font-bold text-white dark:text-neutral-900">R</span>
+      <div className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-900 dark:bg-white">
+        <RbdMark sizePx={20} />
       </div>
       <span className="text-[10px] font-semibold tracking-wide text-neutral-600 dark:text-white/70">{children}</span>
     </div>
@@ -259,202 +303,368 @@ function Waveform({ active = true }: { active?: boolean }) {
   );
 }
 
-/* ── CAPTURE VISUAL 1 — Real WhatsApp + Call + Email UIs ──────────────── */
-function CaptureVisual1() {
-  const reduceMotion = useReducedMotion();
-  const [waStage, setWaStage] = useState<"typingText" | "text" | "typingAudio" | "audio">("typingText");
+/* ── CAPTURE VISUAL 1 — Real WhatsApp + Call + Email + Excel UIs ──────── */
+function ChannelPill({ label, tone = "neutral" }: { label: string; tone?: "wa" | "voice" | "email" | "excel" | "neutral" }) {
+  const palette =
+    tone === "wa"
+      ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300"
+      : tone === "voice"
+        ? "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-300"
+        : tone === "email"
+          ? "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-500/30 dark:bg-sky-500/10 dark:text-sky-300"
+          : tone === "excel"
+            ? "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-500/40 dark:bg-emerald-500/10 dark:text-emerald-200"
+            : "border-neutral-200 bg-white text-neutral-600 dark:border-white/15 dark:bg-white/5 dark:text-white/70";
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[8px] font-semibold uppercase tracking-[0.08em] ${palette}`}>
+      <span className="h-1 w-1 rounded-full bg-current opacity-70" />
+      {label}
+    </span>
+  );
+}
+
+/* ── Per-channel cards (constant height each) ─────────────────────────── */
+const CARD_DURATION_MS = 5200;
+
+function WhatsAppChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
+  const [stage, setStage] = useState<0 | 1 | 2 | 3>(reduceMotion ? 3 : 0);
 
   useEffect(() => {
-    if (reduceMotion) {
-      setWaStage("audio");
-      return;
-    }
-
+    if (reduceMotion) return;
     let cancelled = false;
-    (async () => {
-      while (!cancelled) {
-        setWaStage("typingText");
-        await wait(1200);
-        if (cancelled) break;
-
-        setWaStage("text");
-        await wait(1800);
-        if (cancelled) break;
-
-        setWaStage("typingAudio");
-        await wait(1100);
-        if (cancelled) break;
-
-        setWaStage("audio");
-        await wait(2200);
-      }
-    })();
-
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    timers.push(setTimeout(() => !cancelled && setStage(1), 600));
+    timers.push(setTimeout(() => !cancelled && setStage(2), 1800));
+    timers.push(setTimeout(() => !cancelled && setStage(3), 2900));
     return () => {
       cancelled = true;
+      timers.forEach((t) => clearTimeout(t));
     };
   }, [reduceMotion]);
 
-  const showText = waStage === "text" || waStage === "typingAudio" || waStage === "audio";
-  const showAudio = waStage === "audio";
+  return (
+    <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 shadow-[0_14px_36px_rgba(0,0,0,0.10)] dark:shadow-[0_14px_36px_rgba(0,0,0,0.35)]">
+      <div className="bg-[#075E54] px-3 py-2 flex items-center gap-2.5">
+        <svg viewBox="0 0 16 16" fill="white" className="h-3 w-3 opacity-80"><path d="M10 3L6 8l4 5" strokeWidth="1.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        <div className="h-7 w-7 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold text-white">MD</div>
+        <div className="flex-1">
+          <p className="text-[12px] font-semibold text-white leading-tight">Mumbai Distributor</p>
+          <p className="text-[9px] text-white/60 leading-tight">online</p>
+        </div>
+        <svg viewBox="0 0 20 20" fill="white" className="h-3.5 w-3.5 opacity-60"><path d="M15 3H5c-1.1 0-2 .9-2 2v14l4-4h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+      </div>
+      <div className="bg-[#ECE5DD] dark:bg-[#0B141A] px-3 py-3 h-[200px] overflow-hidden flex flex-col justify-end gap-2">
+        {stage === 0 && (
+          <div className="flex justify-start">
+            <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 shadow-sm">
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:180ms]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:360ms]" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {stage >= 1 && (
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28 }}
+            className="flex justify-start"
+          >
+            <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[88%] shadow-sm">
+              <p className="text-[13px] text-neutral-800 dark:text-white/90 leading-relaxed">Bhai 50 carton Glucose-D bhejo aur 20 carton Mango Bite kal tak chahiye</p>
+              <p className="text-[10px] text-neutral-400 text-right mt-1 tabular-nums">10:32 AM</p>
+            </div>
+          </motion.div>
+        )}
+
+        {stage === 2 && (
+          <div className="flex justify-start">
+            <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 shadow-sm">
+              <div className="flex items-center gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:180ms]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:360ms]" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {stage === 3 && (
+          <motion.div
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28 }}
+            className="flex justify-start"
+          >
+            <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[82%] shadow-sm">
+              <div className="flex items-center gap-2">
+                <div className="h-8 w-8 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center shrink-0">
+                  <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4"><polygon points="8,5 19,12 8,19" fill="#22c55e"/></svg>
+                </div>
+                <div className="flex items-center gap-[1px] flex-1">
+                  {WAVE_HEIGHTS.slice(0, 22).map((h, i) => (
+                    <div key={i} className="w-[2.5px] rounded-full bg-[#22c55e]/60" style={{ height: `${h * 0.8}px` }} />
+                  ))}
+                </div>
+                <span className="text-[10px] text-neutral-400 tabular-nums shrink-0">0:12</span>
+              </div>
+              <p className="text-[10px] text-neutral-400 text-right mt-1 tabular-nums">10:33 AM</p>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
+  return (
+    <div className="rounded-[22px] overflow-hidden border border-neutral-200/90 dark:border-white/10 bg-[#f6f6f6] dark:bg-neutral-900 shadow-[0_16px_34px_rgba(0,0,0,0.12)] dark:shadow-[0_16px_34px_rgba(0,0,0,0.38)]">
+      <div className="px-4 pt-3 pb-2">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-full overflow-hidden bg-neutral-200 dark:bg-white/10 flex items-center justify-center text-[12px] font-bold text-neutral-700 dark:text-white">PW</div>
+            <div>
+              <p className="text-[14px] font-semibold text-neutral-800 dark:text-white leading-tight">Pune Wholesaler</p>
+              <p className="text-[10px] text-neutral-500 dark:text-white/60 tabular-nums leading-tight mt-0.5">00:24</p>
+            </div>
+          </div>
+          <div className="rounded-full bg-emerald-500/90 px-2.5 py-1 shadow-[0_0_18px_rgba(34,197,94,0.45)]">
+            <div className="flex items-center gap-1">
+              <span className="h-1 w-1 rounded-full bg-lime-200 animate-pulse" />
+              <span className="text-[9px] tracking-[0.22em] font-semibold text-white">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="px-4 pb-4 flex items-center gap-3">
+        <div className="h-9 w-9 shrink-0 rounded-full bg-[#cf1111] flex items-center justify-center shadow-[0_6px_14px_rgba(207,17,17,0.4)]">
+          <svg viewBox="0 0 20 20" fill="white" className="h-4 w-4"><path d="M3.5 8.5c2-3.5 11-3.5 13 0l.5 2.5-3.5 1.5L12 10.5H8l-1.5 2L3 11l.5-2.5z"/></svg>
+        </div>
+
+        <div className="h-9 w-9 shrink-0 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center border border-neutral-300/60 dark:border-white/15">
+          <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4"><path d="M7 4v12M13 4v12" stroke="currentColor" className="text-neutral-700 dark:text-white" strokeWidth="2" strokeLinecap="round"/></svg>
+        </div>
+
+        <div className="flex-1 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200/80 dark:border-white/10 px-3 py-2 overflow-hidden">
+          <div className="flex items-center gap-[4px]">
+            {WAVE_HEIGHTS.slice(0, 26).map((h, i) => (
+              <motion.div
+                key={i}
+                className={`w-[2px] rounded-full ${i < 13 ? "bg-emerald-600/80" : "bg-neutral-500/40 dark:bg-white/25"}`}
+                style={{ height: `${Math.max(4, h * 0.78)}px`, transformOrigin: "50% 100%" }}
+                animate={reduceMotion ? undefined : { scaleY: [0.55, 1.05, 0.65, 1] }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        duration: 0.95 + (i % 5) * 0.12,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: (i % 7) * 0.08,
+                      }
+                }
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function EmailChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
+  const rows = [
+    { initials: "NV", name: "Nashik Vendor", subject: "May Orders - 48 SKUs · orders_may.xlsx", time: "10:42" },
+    { initials: "AT", name: "Akola Trader", subject: "RE: Reorder request — Glucose-D + Mango Bite", time: "10:38" },
+    { initials: "SS", name: "Solapur Stockist", subject: "PO #2287 attached — please confirm", time: "10:21" },
+  ];
+  const [count, setCount] = useState(reduceMotion ? rows.length : 0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    let cancelled = false;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    rows.forEach((_, i) => {
+      timers.push(setTimeout(() => !cancelled && setCount(i + 1), 350 + i * 520));
+    });
+    return () => {
+      cancelled = true;
+      timers.forEach((t) => clearTimeout(t));
+    };
+  }, [reduceMotion]);
+
+  return (
+    <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-[0_14px_32px_rgba(0,0,0,0.10)] dark:shadow-[0_14px_32px_rgba(0,0,0,0.36)]">
+      <div className="px-4 py-2.5 border-b border-neutral-100 dark:border-white/5 flex items-center gap-2">
+        <svg viewBox="0 0 20 20" fill="none" className="h-3.5 w-3.5"><path d="M3 5h14M3 10h14M3 15h7" stroke="#a3a3a3" strokeWidth="1.3" strokeLinecap="round"/></svg>
+        <span className="text-[11px] text-neutral-500 dark:text-white/60">Inbox</span>
+        <span className="ml-auto rounded-full bg-neutral-100 dark:bg-white/10 px-2 py-0.5 text-[10px] font-semibold text-neutral-600 dark:text-white/70 tabular-nums">{count}</span>
+      </div>
+      <div className="divide-y divide-neutral-100 dark:divide-white/5">
+        {rows.slice(0, count).map((r, i) => (
+          <motion.div
+            key={r.initials}
+            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+            className="px-4 py-2.5 flex items-center gap-2.5"
+          >
+            <div className="h-7 w-7 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center text-[9px] font-bold text-neutral-500 shrink-0">{r.initials}</div>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                {i === 0 && <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />}
+                <p className="text-[12px] font-semibold text-neutral-800 dark:text-white truncate leading-tight">{r.name}</p>
+              </div>
+              <p className="text-[10px] text-neutral-500 dark:text-white/55 truncate leading-tight mt-0.5">{r.subject}</p>
+            </div>
+            <span className="text-[10px] text-neutral-400 tabular-nums shrink-0">{r.time}</span>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ExcelChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
+  const rows = [
+    { i: 1, name: "Glucose-D 200ml", qty: "50", date: "May 8" },
+    { i: 2, name: "Mango Bite 5g", qty: "20", date: "May 8" },
+    { i: 3, name: "Parle-G 100g", qty: "120", date: "May 9" },
+    { i: 4, name: "Frooti 250ml", qty: "75", date: "May 9" },
+  ];
+  const [count, setCount] = useState(reduceMotion ? rows.length : 0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    let cancelled = false;
+    const timers: ReturnType<typeof setTimeout>[] = [];
+    rows.forEach((_, i) => {
+      timers.push(setTimeout(() => !cancelled && setCount(i + 1), 280 + i * 380));
+    });
+    return () => {
+      cancelled = true;
+      timers.forEach((t) => clearTimeout(t));
+    };
+  }, [reduceMotion]);
+
+  return (
+    <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-[0_14px_32px_rgba(0,0,0,0.10)] dark:shadow-[0_14px_32px_rgba(0,0,0,0.36)]">
+      <div className="flex items-center justify-between border-b border-neutral-100 dark:border-white/5 bg-[#107C41] px-3 py-2">
+        <div className="flex items-center gap-2">
+          <div className="flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-0.5">
+            <Image src="/icons/excel.png" alt="" width={20} height={20} className="h-full w-full object-contain" />
+          </div>
+          <span className="text-[11px] font-semibold text-white">orders_may.xlsx</span>
+        </div>
+        <span className="rounded bg-white/15 px-2 py-0.5 text-[9px] font-semibold text-white">Nagpur Retailer · 32 SKUs</span>
+      </div>
+      <div className="grid grid-cols-[28px_1fr_56px_56px] text-[9px] font-semibold uppercase tracking-wider text-neutral-400 border-b border-neutral-100 dark:border-white/5">
+        <span className="border-r border-neutral-100 bg-neutral-50/70 px-1 py-1 text-center dark:border-white/5 dark:bg-white/[0.03]">#</span>
+        <span className="border-r border-neutral-100 px-2 py-1 dark:border-white/5">SKU / Product</span>
+        <span className="border-r border-neutral-100 px-2 py-1 text-right dark:border-white/5">Qty</span>
+        <span className="px-2 py-1 text-right">Date</span>
+      </div>
+      {rows.slice(0, count).map((r) => (
+        <motion.div
+          key={r.i}
+          initial={reduceMotion ? false : { opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="grid grid-cols-[28px_1fr_56px_56px] border-b border-neutral-100 text-[11px] text-neutral-700 last:border-b-0 dark:border-white/5 dark:text-white/80"
+        >
+          <span className="border-r border-neutral-100 bg-neutral-50/70 px-1 py-1.5 text-center font-mono text-neutral-400 dark:border-white/5 dark:bg-white/[0.03]">{r.i}</span>
+          <span className="border-r border-neutral-100 px-2 py-1.5 dark:border-white/5">{r.name}</span>
+          <span className="border-r border-neutral-100 px-2 py-1.5 text-right tabular-nums dark:border-white/5">{r.qty}</span>
+          <span className="px-2 py-1.5 text-right tabular-nums text-neutral-500 dark:text-white/60">{r.date}</span>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+function CaptureVisual1() {
+  const reduceMotion = useReducedMotion();
+  const channels = useMemo(
+    () => [
+      { key: "wa", tone: "wa" as const, label: "Incoming WhatsApp Order", Card: WhatsAppChannelCard },
+      { key: "voice", tone: "voice" as const, label: "Incoming Voice Order", Card: VoiceChannelCard },
+      { key: "email", tone: "email" as const, label: "Incoming Email Order", Card: EmailChannelCard },
+      { key: "excel", tone: "excel" as const, label: "Incoming Excel Sheet Order", Card: ExcelChannelCard },
+    ],
+    [],
+  );
+  const [idx, setIdx] = useState(0);
+  const [cycle, setCycle] = useState(0);
+
+  useEffect(() => {
+    if (reduceMotion) return;
+    const id = setInterval(() => {
+      setIdx((i) => {
+        const next = (i + 1) % channels.length;
+        if (next === 0) setCycle((c) => c + 1);
+        return next;
+      });
+    }, CARD_DURATION_MS);
+    return () => clearInterval(id);
+  }, [reduceMotion, channels.length]);
+
+  const active = channels[idx];
+  const ActiveCard = active.Card;
 
   return (
     <div className="flex h-full w-full items-center justify-center px-6 sm:px-10">
-      <div className="w-full max-w-[460px] space-y-3">
-        {/* WhatsApp */}
-        <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 shadow-sm">
-          <div className="bg-[#075E54] px-4 py-2.5 flex items-center gap-3">
-            <svg viewBox="0 0 16 16" fill="white" className="h-3.5 w-3.5 opacity-80"><path d="M10 3L6 8l4 5" strokeWidth="1.5" stroke="white" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-[10px] font-bold text-white">RP</div>
-            <div className="flex-1">
-              <p className="text-[13px] font-semibold text-white">Rajesh Patil</p>
-              <p className="text-[10px] text-white/60">online</p>
-            </div>
-            <svg viewBox="0 0 20 20" fill="white" className="h-4 w-4 opacity-60"><path d="M15 3H5c-1.1 0-2 .9-2 2v14l4-4h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
-          </div>
-          <div className="bg-[#ECE5DD] dark:bg-[#0B141A] px-3 py-3 h-[116px] overflow-hidden flex flex-col justify-end gap-1.5">
-            {waStage === "typingText" && (
-              <div className="flex justify-start">
-                <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[45%] shadow-sm">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:180ms]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:360ms]" />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {showText && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.28 }}
-                className="flex justify-start"
-              >
-                <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[85%] shadow-sm">
-                  <p className="text-[13px] text-neutral-800 dark:text-white/90 leading-relaxed">Bhai 50 carton Glucose-D bhejo aur 20 carton Mango Bite kal tak chahiye</p>
-                  <p className="text-[10px] text-neutral-400 text-right mt-1 tabular-nums">10:32 AM</p>
-                </div>
-              </motion.div>
-            )}
-
-            {waStage === "typingAudio" && (
-              <div className="flex justify-start">
-                <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[40%] shadow-sm">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:180ms]" />
-                    <span className="h-1.5 w-1.5 rounded-full bg-neutral-400/80 animate-pulse [animation-delay:360ms]" />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {showAudio && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.28 }}
-                className="flex justify-start"
-              >
-                <div className="relative bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 max-w-[80%] shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <div className="h-8 w-8 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center shrink-0">
-                      <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4"><polygon points="8,5 19,12 8,19" fill="#22c55e"/></svg>
-                    </div>
-                    <div className="flex items-center gap-[1px] flex-1">
-                      {WAVE_HEIGHTS.slice(0, 22).map((h, i) => (
-                        <div key={i} className="w-[2.5px] rounded-full bg-[#22c55e]/60" style={{ height: `${h * 0.8}px` }} />
-                      ))}
-                    </div>
-                    <span className="text-[10px] text-neutral-400 tabular-nums shrink-0">0:12</span>
-                  </div>
-                  <p className="text-[10px] text-neutral-400 text-right mt-1 tabular-nums">10:33 AM</p>
-                </div>
-              </motion.div>
-            )}
-          </div>
+      <div className="w-full max-w-[460px]">
+        <div className="mb-4">
+          <h4 className="mt-1.5 text-[18px] font-medium leading-snug text-neutral-900 dark:text-white">
+            Captures inbound from all sources
+          </h4>
         </div>
 
-        {/* Call */}
-        <div className="rounded-[28px] overflow-hidden border border-neutral-200/90 dark:border-white/10 bg-[#f6f6f6] dark:bg-neutral-900 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
-          <div className="px-4 pt-3 pb-2.5">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="h-11 w-11 rounded-full overflow-hidden bg-neutral-200 dark:bg-white/10 flex items-center justify-center text-[12px] font-bold text-neutral-700 dark:text-white">SF</div>
-                <div>
-                  <p className="text-[13px] font-semibold text-neutral-800 dark:text-white">MH Distributor</p>
-                  <p className="text-[10px] text-neutral-500 dark:text-white/60 tabular-nums mt-0.5">00:24</p>
-                </div>
+        <div className="mb-3 flex items-center gap-1.5">
+          {channels.map((c, i) => {
+            const isActive = i === idx;
+            const isPast = i < idx;
+            return (
+              <div
+                key={c.key}
+                className="relative h-1 flex-1 overflow-hidden rounded-full bg-neutral-200/80 dark:bg-white/10"
+              >
+                <motion.div
+                  key={`${c.key}-${cycle}`}
+                  className="absolute inset-y-0 left-0 rounded-full bg-neutral-800 dark:bg-white"
+                  initial={{ width: "0%" }}
+                  animate={{ width: isActive || isPast ? "100%" : "0%" }}
+                  transition={{
+                    duration: isActive && !reduceMotion ? CARD_DURATION_MS / 1000 : 0,
+                    ease: "linear",
+                  }}
+                />
               </div>
-              <div className="rounded-full bg-emerald-500/90 px-3 py-1.5 shadow-[0_0_18px_rgba(34,197,94,0.45)]">
-                <div className="flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-lime-200 animate-pulse" />
-                  <span className="text-[9px] tracking-[0.22em] font-semibold text-white">ACTIVE</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="px-4 pb-4 flex items-end gap-3">
-            <div className="h-11 w-11 rounded-full bg-[#cf1111] flex items-center justify-center shadow-[0_6px_14px_rgba(207,17,17,0.4)]">
-              <svg viewBox="0 0 20 20" fill="white" className="h-4 w-4"><path d="M3.5 8.5c2-3.5 11-3.5 13 0l.5 2.5-3.5 1.5L12 10.5H8l-1.5 2L3 11l.5-2.5z"/></svg>
-            </div>
-
-            <div className="h-11 w-11 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center border border-neutral-300/60 dark:border-white/15">
-              <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4"><path d="M7 4v12M13 4v12" stroke="currentColor" className="text-neutral-700 dark:text-white" strokeWidth="2" strokeLinecap="round"/></svg>
-            </div>
-
-            <div className="flex-1 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200/80 dark:border-white/10 px-3 py-2 overflow-hidden">
-              <div className="flex items-center gap-[4px]">
-                {WAVE_HEIGHTS.slice(0, 24).map((h, i) => (
-                  <motion.div
-                    key={i}
-                    className={`w-[2px] rounded-full ${i < 12 ? "bg-emerald-600/80" : "bg-neutral-500/40 dark:bg-white/25"}`}
-                    style={{ height: `${Math.max(3, h * 0.62)}px`, transformOrigin: "50% 100%" }}
-                    animate={
-                      reduceMotion
-                        ? undefined
-                        : { scaleY: [0.55, 1.05, 0.65, 1] }
-                    }
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            duration: 0.95 + (i % 5) * 0.12,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                            delay: (i % 7) * 0.08,
-                          }
-                    }
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
 
-        {/* Email */}
-        <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-sm">
-          <div className="px-4 py-2.5 border-b border-neutral-100 dark:border-white/5 flex items-center gap-2">
-            <svg viewBox="0 0 20 20" fill="none" className="h-3.5 w-3.5"><path d="M3 5h14M3 10h14M3 15h7" stroke="#a3a3a3" strokeWidth="1.3" strokeLinecap="round"/></svg>
-            <span className="text-[11px] text-neutral-400">Inbox</span>
-            <span className="ml-auto rounded-full bg-neutral-100 dark:bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold text-neutral-500">3</span>
-          </div>
-          <div className="px-3 py-2 flex items-start gap-2 bg-neutral-50/50 dark:bg-white/[0.02]">
-            <div className="h-7 w-7 rounded-full bg-neutral-200 dark:bg-white/10 flex items-center justify-center text-[8px] font-bold text-neutral-500 shrink-0">AD</div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-                <p className="text-[11px] font-semibold text-neutral-800 dark:text-white truncate">Ankit Desai</p>
+        <div className="relative h-[268px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active.key}
+              initial={reduceMotion ? { opacity: 1 } : { opacity: 0, y: 24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -18, scale: 0.98 }}
+              transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute inset-x-0 top-0 space-y-2"
+            >
+              <div className="flex justify-start">
+                <ChannelPill tone={active.tone} label={active.label} />
               </div>
-              <p className="text-[10px] font-semibold text-neutral-600 dark:text-white/70 truncate">May Orders - 48 SKUs</p>
-            </div>
-          </div>
-          <div className="px-3 py-1.5 flex items-center gap-1.5 border-t border-neutral-100 dark:border-white/5">
-            <span className="text-[9px] text-neutral-400 truncate">orders_may.xlsx</span>
-          </div>
+              <ActiveCard reduceMotion={!!reduceMotion} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </div>
@@ -500,8 +710,8 @@ function CaptureVisual2() {
         {/* Raw input — WhatsApp message snippet */}
         <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10">
           <div className="bg-[#075E54] px-4 py-2 flex items-center gap-2">
-            <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center text-[8px] font-bold text-white">RP</div>
-            <p className="text-[11px] font-semibold text-white">Rajesh Patil</p>
+            <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center text-[8px] font-bold text-white">MD</div>
+            <p className="text-[11px] font-semibold text-white">Mumbai distributor</p>
           </div>
           <div className="bg-[#ECE5DD] dark:bg-[#0B141A] px-3 py-2.5">
             <div className="bg-white dark:bg-[#202C33] rounded-lg rounded-tl-none px-3 py-2 shadow-sm max-w-[90%]">
@@ -522,7 +732,7 @@ function CaptureVisual2() {
           {/* Dashboard header */}
           <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/5 flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <LogoBadge size="sm" />
+              <LogoBadge size="sm" animated />
               <div>
                 <p className="text-[12px] font-semibold text-neutral-800 dark:text-white">Order Parser</p>
                 <p className="text-[10px] text-neutral-400">Auto-extracted from WhatsApp</p>
@@ -700,12 +910,50 @@ function ProcessVisual1() {
 
   return (
     <div className="flex h-full w-full items-center justify-center px-6 sm:px-10">
-      <div className="w-full max-w-[440px]">
-        <div className="relative pb-7">
-          <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900">
+      <div className="relative w-full max-w-[440px]">
+        {/* Excel source data — sits behind, peeking from top-right with partial overlap */}
+        <div className="pointer-events-none absolute -right-8 -top-16 z-0 w-[230px] opacity-90 dark:opacity-70">
+          <div className="rounded-xl border border-neutral-200/80 bg-white shadow-[0_18px_40px_-18px_rgba(0,0,0,0.30)] dark:border-white/10 dark:bg-neutral-900">
+            <div className="flex items-center justify-between rounded-t-xl bg-[#107C41] px-2.5 py-1.5">
+              <div className="flex items-center gap-1.5">
+                <div className="flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded bg-white p-[1px]">
+                  <Image src="/icons/excel.png" alt="" width={16} height={16} className="h-full w-full object-contain" />
+                </div>
+                <span className="text-[9px] font-semibold text-white">distributor_orders.xlsx</span>
+              </div>
+              <span className="text-[7px] font-semibold uppercase tracking-wider text-white/80">Source</span>
+            </div>
+            <div className="grid grid-cols-[20px_1fr_36px_30px] text-[7px] font-semibold uppercase tracking-wider text-neutral-400 border-b border-neutral-100 dark:border-white/5">
+              <span className="border-r border-neutral-100 bg-neutral-50/70 px-1 py-0.5 text-center dark:border-white/5 dark:bg-white/[0.03]">#</span>
+              <span className="border-r border-neutral-100 px-1 py-0.5 dark:border-white/5">Item</span>
+              <span className="border-r border-neutral-100 px-1 py-0.5 text-right dark:border-white/5">Qty</span>
+              <span className="px-1 py-0.5 text-right">Unit</span>
+            </div>
+            {[
+              { i: 1, name: "Glucose-D 200ml", qty: "50", u: "ctn" },
+              { i: 2, name: "Mango Bite", qty: "20", u: "ctn" },
+              { i: 3, name: "Lassi 200ml", qty: "40", u: "ctn" },
+              { i: 4, name: "Nimbu Pani 250ml", qty: "36", u: "ctn" },
+              { i: 5, name: "Rose Syrup 750ml", qty: "14", u: "ctn" },
+            ].map((r) => (
+              <div key={r.i} className="grid grid-cols-[20px_1fr_36px_30px] border-b border-neutral-100 text-[8px] text-neutral-700 last:border-b-0 dark:border-white/5 dark:text-white/70">
+                <span className="border-r border-neutral-100 bg-neutral-50/70 px-1 py-0.5 text-center font-mono text-neutral-400 dark:border-white/5 dark:bg-white/[0.03]">{r.i}</span>
+                <span className="border-r border-neutral-100 px-1 py-0.5 dark:border-white/5 truncate">{r.name}</span>
+                <span className="border-r border-neutral-100 px-1 py-0.5 text-right tabular-nums dark:border-white/5">{r.qty}</span>
+                <span className="px-1 py-0.5 text-right tabular-nums text-neutral-500 dark:text-white/55">{r.u}</span>
+              </div>
+            ))}
+          </div>
+          <span className="mt-1.5 ml-auto block w-fit rounded-full border border-neutral-200/70 bg-white/90 px-2 py-0.5 text-[7px] font-semibold uppercase tracking-[0.14em] text-neutral-500 shadow-sm dark:border-white/10 dark:bg-neutral-900/80 dark:text-white/55">
+            From your Excel
+          </span>
+        </div>
+
+        <div className="relative">
+          <div className="relative z-10 rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
             <div className="px-4 py-2.5 border-b border-neutral-100 dark:border-white/5 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <LogoBadge size="sm" />
+                <LogoBadge size="sm" animated />
                 <p className="text-[12px] font-semibold text-neutral-800 dark:text-white">SKU Match Engine</p>
               </div>
               <div className="flex items-center gap-1.5 rounded-full border border-neutral-200 dark:border-white/10 bg-neutral-50 dark:bg-white/5 px-2.5 py-1">
@@ -731,7 +979,7 @@ function ProcessVisual1() {
                   const isG = row.tag === "glucose";
                   const isM = row.tag === "mango";
                   const hilite = (isG && focus === "glucose") || (isM && focus === "mango");
-                  const ok = (isG && tickGlu) || (isM && tickMan);
+                  const resolved = (isG && tickGlu) || (isM && tickMan);
                   const stockOk = row.stock >= row.ord;
                   return (
                     <div
@@ -745,8 +993,18 @@ function ProcessVisual1() {
                       <span className="text-right text-neutral-700 dark:text-white/80 tabular-nums pr-1">{row.ord}</span>
                       <span className={`text-right tabular-nums pr-1 ${stockOk ? "text-neutral-600 dark:text-white/60" : "text-red-500"}`}>{row.stock}</span>
                       <span className="flex justify-center">
-                        {ok ? (
-                          <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none"><circle cx="6" cy="6" r="6" fill="#22c55e"/><path d="M3.5 6L5 7.5 8.5 4" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                        {resolved ? (
+                          stockOk ? (
+                            <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" aria-hidden>
+                              <circle cx="6" cy="6" r="6" fill="#22c55e" />
+                              <path d="M3.5 6L5 7.5 8.5 4" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          ) : (
+                            <svg viewBox="0 0 12 12" className="h-3 w-3" fill="none" aria-hidden>
+                              <circle cx="6" cy="6" r="6" fill="#ef4444" />
+                              <path d="M4 4l4 4M8 4l-4 4" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+                            </svg>
+                          )
                         ) : (
                           <span className="h-1.5 w-1.5 rounded-full bg-neutral-200 dark:bg-white/15" />
                         )}
@@ -756,17 +1014,6 @@ function ProcessVisual1() {
                 })}
               </motion.div>
             </div>
-          </div>
-
-          <div className="pointer-events-none absolute bottom-0 left-1/2 z-10 flex w-[104%] max-w-none -translate-x-1/2 translate-y-1/2 flex-wrap items-center justify-center gap-2 px-2">
-            {["Partial matches flagged", "Live WH stock", "SKU-228 OK"].map((label) => (
-              <span
-                key={label}
-                className="rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-[9px] font-semibold text-neutral-600 shadow-sm dark:border-white/10 dark:bg-neutral-900 dark:text-white/70"
-              >
-                {label}
-              </span>
-            ))}
           </div>
         </div>
       </div>
@@ -851,7 +1098,7 @@ function ProcessVisual2() {
 
             <div className="flex items-center justify-between border-b border-neutral-100 px-3 py-2.5 dark:border-white/5">
               <div className="flex items-center gap-2">
-                <LogoBadge size="sm" />
+                <LogoBadge size="sm" animated={summary !== "done"} />
                 <p className="text-[12px] font-semibold text-neutral-800 dark:text-white">Order validation</p>
               </div>
               {summary === "done" ? (
@@ -869,10 +1116,10 @@ function ProcessVisual2() {
             <div className="p-3">
               <div className="mb-3 flex items-center gap-2.5">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-neutral-200 bg-neutral-50 text-[12px] font-bold text-neutral-500 dark:border-white/10 dark:bg-white/5">
-                  RP
+                  MD
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-semibold text-neutral-800 dark:text-white">Rajesh Patil</p>
+                  <p className="text-[13px] font-semibold text-neutral-800 dark:text-white">Mumbai distributor</p>
                   <p className="text-[10px] text-neutral-400">ORD-4821 · Pune West</p>
                 </div>
               </div>
@@ -911,260 +1158,311 @@ function ProcessVisual2() {
   );
 }
 
-/* ── EXECUTE VISUAL 1 — Negotiate + supplier list + Order placed pill ─── */
+/* ── EXECUTE VISUAL 1 — Vendor metrics cards with status + channels ────── */
 function ExecuteVisual1() {
   const reduceMotion = useReducedMotion();
-  const channels = [
+
+  const vendors = [
     {
-      label: "Calling",
-      iconSrc: "/icons/mobile.png",
-      outcome: "Missed",
-      ringClass: "border-amber-400/70",
-      chipClass: "text-amber-600 dark:text-amber-300",
+      vendor: "Shree Ganesh Sugar Co.",
+      badge: "SG",
+      rating: 4.6,
+      orders: 142,
+      pricePerUnit: "₹38.20 / kg",
+      delivery: "36 hrs",
+      onTime: "94%",
+      status: "In negotiation",
+      statusTone: "amber" as const,
+      channels: ["wa", "call"] as const,
     },
     {
-      label: "Email",
-      iconSrc: "/icons/gmail.png",
-      outcome: "Confirmed",
-      ringClass: "border-emerald-400/70",
-      chipClass: "text-emerald-600 dark:text-emerald-300",
-    },
-    {
-      label: "WhatsApp",
-      iconSrc: "/icons/whatsapp.png",
-      outcome: "Quote: Rs 42/kg",
-      ringClass: "border-sky-400/70",
-      chipClass: "text-sky-600 dark:text-sky-300",
+      vendor: "Metro Raw Materials",
+      badge: "MR",
+      rating: 4.8,
+      orders: 218,
+      pricePerUnit: "₹37.50 / kg",
+      delivery: "28 hrs",
+      onTime: "97%",
+      status: "Final quote",
+      statusTone: "emerald" as const,
+      channels: ["email", "wa"] as const,
     },
   ];
-  const carriers = [
-    { vendor: "Shree Ganesh Distributors", mc: "#990223", status: "In progress", tone: "neutral" as const, badge: "SG" },
-    { vendor: "Patel Wholesale Traders", mc: "#990223", status: "Non verified", tone: "danger" as const, badge: "PT" },
-    { vendor: "Metro Kirana Distributors", mc: "#990223", status: "Verified", tone: "success" as const, badge: "MK" },
-  ];
+
+  function ChannelIcon({ kind }: { kind: "wa" | "call" | "email" }) {
+    const cls = "flex h-7 w-7 items-center justify-center rounded-full border border-neutral-200 bg-white dark:border-white/15 dark:bg-white/5";
+    if (kind === "wa") {
+      return (
+        <span className={cls} aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="#22c55e"><path d="M20.5 3.5A11 11 0 0 0 3.4 17.7L2 22l4.4-1.4A11 11 0 1 0 20.5 3.5Zm-8.5 17a9 9 0 0 1-4.6-1.3l-.3-.2-2.6.8.9-2.5-.2-.3A9 9 0 1 1 12 20.5Zm5-6.7c-.3-.2-1.6-.8-1.9-.9-.2-.1-.4-.2-.6.1l-.8 1c-.2.2-.3.3-.6.1a7.4 7.4 0 0 1-3.6-3.2c-.3-.5.3-.5.7-1.5.1-.2 0-.4 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2c0 1.3.9 2.6 1 2.7.2.2 1.8 2.7 4.4 3.8 1.6.6 2.3.7 3.1.6.5 0 1.6-.7 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.2-.3-.3-.6-.4Z"/></svg>
+        </span>
+      );
+    }
+    if (kind === "call") {
+      return (
+        <span className={cls} aria-label="Call">
+          <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        </span>
+      );
+    }
+    return (
+      <span className={cls} aria-label="Email">
+        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      </span>
+    );
+  }
 
   return (
     <div className="flex h-full w-full items-center justify-center px-6 sm:px-10">
-      <div className="w-full max-w-[560px] space-y-3">
+      <div className="w-full max-w-[460px] space-y-3">
         <p className="text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-neutral-400">Negotiates with all suppliers</p>
-        <div className="flex gap-3">
-          <div className="flex w-[84px] shrink-0 flex-col items-center gap-3 pt-1">
-            <div className="h-full w-px flex-1 border-l border-dashed border-neutral-200 dark:border-white/10" />
-            {channels.map((channel, idx) => (
-              <motion.div
-                key={channel.label}
-                className="relative w-full py-1 text-center"
-                aria-label={channel.label}
-                title={channel.label}
-                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                animate={reduceMotion ? undefined : { opacity: 1, y: [0, -2, 0] }}
-                transition={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        opacity: { duration: 0.35, delay: idx * 0.08 },
-                        y: { duration: 2.2, delay: idx * 0.15, repeat: Infinity, ease: "easeInOut" },
-                      }
-                }
-              >
-                <div className="relative mx-auto h-9 w-9">
-                  <motion.span
-                    className={`absolute inset-0 rounded-full border ${channel.ringClass}`}
-                    animate={reduceMotion ? undefined : { scale: [1, 1.6], opacity: [0.55, 0] }}
-                    transition={
-                      reduceMotion
-                        ? undefined
-                        : { duration: 1.6, delay: idx * 0.25, repeat: Infinity, ease: "easeOut" }
-                    }
-                  />
-                  <motion.img
-                    src={channel.iconSrc}
-                    alt={channel.label}
-                    className="relative z-10 mx-auto h-9 w-9 object-contain"
-                    animate={reduceMotion ? undefined : { scale: [1, 1.06, 1] }}
-                    transition={reduceMotion ? undefined : { duration: 1.8, delay: idx * 0.12, repeat: Infinity, ease: "easeInOut" }}
-                  />
-                </div>
-                <motion.span
-                  className={`mt-1 block text-[8px] font-semibold uppercase tracking-[0.08em] ${channel.chipClass}`}
-                  animate={reduceMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
-                  transition={reduceMotion ? undefined : { duration: 1.4, delay: idx * 0.18, repeat: Infinity, ease: "easeInOut" }}
-                >
-                  {channel.outcome}
-                </motion.span>
-              </motion.div>
-            ))}
-            <div className="h-full w-px flex-1 border-l border-dashed border-neutral-200 dark:border-white/10" />
-          </div>
 
-          <div className="min-w-0 flex-1 space-y-3">
-            {carriers.map((carrier) => {
-              const tone =
-                carrier.tone === "success"
-                  ? {
-                      card: "border-emerald-300/70 bg-white dark:border-emerald-500/40 dark:bg-neutral-900",
-                      chip: "border-emerald-300 bg-emerald-500 text-white shadow-[0_0_16px_rgba(34,197,94,0.55)] dark:border-emerald-500/60",
-                    }
-                  : carrier.tone === "danger"
-                    ? {
-                        card: "border-rose-200 bg-rose-50/80 dark:border-rose-500/40 dark:bg-rose-500/10",
-                        chip: "border-rose-300 bg-rose-100 text-rose-700 dark:border-rose-500/50 dark:bg-rose-500/20 dark:text-rose-300",
-                      }
-                    : {
-                        card: "border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900",
-                        chip: "border-neutral-300 bg-neutral-100 text-neutral-600 dark:border-white/15 dark:bg-white/10 dark:text-white/70",
-                      };
+        {vendors.map((v, idx) => {
+          const isFinal = v.statusTone === "emerald";
+          const cardCls = isFinal
+            ? "border-emerald-300/70 bg-white dark:border-emerald-500/40 dark:bg-neutral-900"
+            : "border-amber-300/70 bg-white dark:border-amber-500/40 dark:bg-neutral-900";
+          const statusCls = isFinal
+            ? "border-emerald-300 bg-emerald-500 text-white shadow-[0_0_14px_rgba(34,197,94,0.45)] dark:border-emerald-500/60"
+            : "border-amber-300 bg-amber-100 text-amber-800 dark:border-amber-500/40 dark:bg-amber-500/15 dark:text-amber-200";
 
-              return (
-                <motion.div
-                  key={`${carrier.vendor}-${carrier.status}`}
-                  className={`rounded-[26px] border px-4 py-3 ${tone.card}`}
-                  initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                  animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  transition={reduceMotion ? undefined : { duration: 0.35, ease: "easeOut" }}
-                  whileHover={reduceMotion ? undefined : { y: -2, scale: 1.01 }}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-2.5">
-                      <div
-                        className={`flex h-11 w-11 items-center justify-center rounded-full text-[11px] font-bold tracking-wide ${
-                          carrier.tone === "success"
-                            ? "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/25 dark:text-emerald-300 dark:ring-emerald-500/40"
-                            : carrier.tone === "danger"
-                              ? "bg-rose-100 text-rose-700 ring-1 ring-rose-200 dark:bg-rose-500/20 dark:text-rose-300 dark:ring-rose-500/40"
-                              : "bg-neutral-200 text-neutral-700 ring-1 ring-neutral-300 dark:bg-neutral-700 dark:text-neutral-100 dark:ring-neutral-600"
-                        }`}
-                      >
-                        {carrier.badge}
-                      </div>
-                      <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-neutral-400">
-                        <p>MC no:</p>
-                        <p className="mt-0.5 text-[14px] tracking-normal text-neutral-500 dark:text-white/70">{carrier.mc}</p>
-                      </div>
-                    </div>
-                    <motion.span
-                      className={`rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${tone.chip}`}
-                      animate={reduceMotion || carrier.tone !== "success" ? undefined : { scale: [1, 1.04, 1] }}
-                      transition={reduceMotion || carrier.tone !== "success" ? undefined : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                      {carrier.status}
-                    </motion.span>
-                  </div>
-                  <div className="mt-2.5 flex items-center justify-between gap-2">
-                    <p className="truncate text-[15px] font-semibold text-neutral-900 dark:text-white">{carrier.vendor}</p>
-                    <div className="flex items-center gap-2 text-neutral-700 dark:text-white/80">
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-current/30 text-[13px]">☎</span>
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-current/30 text-[13px]">@</span>
-                      <span className="flex h-8 w-8 items-center justify-center rounded-full border border-current/30 text-[13px]">ⓘ</span>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-
+          return (
             <motion.div
-              className="rounded-full border border-emerald-300 bg-emerald-500/90 px-4 py-2 text-center text-[12px] font-semibold text-white shadow-[0_0_24px_rgba(34,197,94,0.55)]"
-              animate={reduceMotion ? undefined : { boxShadow: ["0 0 10px rgba(34,197,94,0.2)", "0 0 24px rgba(34,197,94,0.55)", "0 0 10px rgba(34,197,94,0.2)"] }}
-              transition={reduceMotion ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              key={v.vendor}
+              className={`rounded-2xl border px-4 py-3.5 ${cardCls}`}
+              initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+              animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={reduceMotion ? undefined : { duration: 0.35, delay: idx * 0.08, ease: "easeOut" }}
             >
-              Order placed via call + email + WhatsApp
+              {/* Top: vendor + comm channels (top-right) */}
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${
+                    isFinal
+                      ? "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:ring-emerald-500/40"
+                      : "bg-amber-100 text-amber-700 ring-1 ring-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:ring-amber-500/40"
+                  }`}>
+                    {v.badge}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="truncate text-[14px] font-semibold text-neutral-900 dark:text-white">{v.vendor}</p>
+                    <div className="mt-0.5 flex items-center gap-2 text-[10px] text-neutral-500 dark:text-white/55">
+                      <span className="inline-flex items-center gap-0.5">
+                        <svg viewBox="0 0 12 12" className="h-2.5 w-2.5 text-amber-500" fill="currentColor"><path d="M6 1l1.5 3.2 3.5.4-2.6 2.4.7 3.4L6 8.8 2.9 10.4l.7-3.4L1 4.6l3.5-.4z"/></svg>
+                        <span className="font-semibold tabular-nums text-neutral-700 dark:text-white/75">{v.rating}</span>
+                      </span>
+                      <span className="text-neutral-300 dark:text-white/20">·</span>
+                      <span className="tabular-nums">{v.orders} past orders</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  {v.channels.map((c) => <ChannelIcon key={c} kind={c} />)}
+                </div>
+              </div>
+
+              {/* Vendor metrics grid */}
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                <div className="rounded-lg border border-neutral-100 bg-neutral-50/70 px-2 py-1.5 dark:border-white/5 dark:bg-white/[0.03]">
+                  <p className="text-[8px] font-semibold uppercase tracking-wider text-neutral-400">Price / unit</p>
+                  <p className="mt-0.5 text-[11px] font-semibold tabular-nums text-neutral-900 dark:text-white">{v.pricePerUnit}</p>
+                </div>
+                <div className="rounded-lg border border-neutral-100 bg-neutral-50/70 px-2 py-1.5 dark:border-white/5 dark:bg-white/[0.03]">
+                  <p className="text-[8px] font-semibold uppercase tracking-wider text-neutral-400">Delivery</p>
+                  <p className="mt-0.5 text-[11px] font-semibold tabular-nums text-neutral-900 dark:text-white">{v.delivery}</p>
+                </div>
+                <div className="rounded-lg border border-neutral-100 bg-neutral-50/70 px-2 py-1.5 dark:border-white/5 dark:bg-white/[0.03]">
+                  <p className="text-[8px] font-semibold uppercase tracking-wider text-neutral-400">On-time</p>
+                  <p className="mt-0.5 text-[11px] font-semibold tabular-nums text-neutral-900 dark:text-white">{v.onTime}</p>
+                </div>
+              </div>
+
+              {/* Status pill */}
+              <div className="mt-3 flex items-center justify-end">
+                <motion.span
+                  className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ${statusCls}`}
+                  animate={reduceMotion || !isFinal ? undefined : { scale: [1, 1.04, 1] }}
+                  transition={reduceMotion || !isFinal ? undefined : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <span className={`h-1.5 w-1.5 rounded-full ${isFinal ? "bg-white" : "bg-amber-500"}`} />
+                  {v.status}
+                </motion.span>
+              </div>
             </motion.div>
-          </div>
-        </div>
+          );
+        })}
+
+        <motion.div
+          className="rounded-full border border-emerald-300 bg-emerald-500/90 px-4 py-2 text-center text-[12px] font-semibold text-white shadow-[0_0_24px_rgba(34,197,94,0.55)]"
+          animate={reduceMotion ? undefined : { boxShadow: ["0 0 10px rgba(34,197,94,0.2)", "0 0 24px rgba(34,197,94,0.55)", "0 0 10px rgba(34,197,94,0.2)"] }}
+          transition={reduceMotion ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          PO sent to Metro Raw Materials · ₹37.50/kg
+        </motion.div>
       </div>
     </div>
   );
 }
 
-/* ── EXECUTE VISUAL 2 — Order confirm → stock → manufacturing ─────────── */
+/* ── EXECUTE VISUAL 2 — Distributor + Manufacturer rebalance variants ──── */
+function PlantSyncCard({
+  variant,
+  steps,
+  totalSteps,
+  activeStep,
+  showNextSlot,
+}: {
+  variant: "distributor" | "manufacturer";
+  steps: { title: string; sub: string; channelIcons?: boolean }[];
+  totalSteps: number;
+  activeStep: number;
+  showNextSlot: boolean;
+}) {
+  const plannedPct = Math.round((Math.min(activeStep, totalSteps - 1) / (totalSteps - 1)) * 50);
+  const tagLabel = variant === "distributor" ? "Distributor / Wholesaler" : "Manufacturer";
+  const tagCls =
+    variant === "distributor"
+      ? "bg-sky-500/[0.09] text-sky-950/88 dark:bg-sky-400/[0.12] dark:text-sky-100/88"
+      : "bg-violet-500/[0.09] text-violet-950/88 dark:bg-violet-400/[0.12] dark:text-violet-100/88";
+  return (
+    <div className="relative rounded-2xl border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900">
+      {/* Category chip — half outside / half on card top edge */}
+      <span
+        className={`pointer-events-none absolute left-4 top-0 z-30 max-w-[calc(100%-8.5rem)] -translate-y-1/2 truncate rounded-md px-1.5 py-0.5 text-[10px] font-medium leading-snug shadow-sm ring-1 ring-black/[0.04] dark:ring-white/10 ${tagCls}`}
+      >
+        {tagLabel}
+      </span>
+      {/* Status chip — same half-overlap on top-right */}
+      <span className="pointer-events-none absolute right-4 top-0 z-30 -translate-y-1/2 whitespace-nowrap rounded-md bg-neutral-100 px-1.5 py-0.5 text-[10px] font-medium text-neutral-500 shadow-sm ring-1 ring-black/[0.04] dark:bg-white/[0.06] dark:text-white/55 dark:ring-white/10">
+        <span className="inline-flex items-center gap-1">
+          <span className="h-1 w-1 rounded-sm bg-emerald-500/90" />
+          Synced
+        </span>
+      </span>
+      <div className="border-b border-neutral-100 px-4 pt-4 pb-2.5 dark:border-white/5">
+        <div className="flex items-start gap-2 pr-14">
+          <LogoBadge size="sm" animated />
+          <div className="min-w-0">
+            <p className="text-[11px] font-semibold text-neutral-800 dark:text-white">
+              Order → {variant === "distributor" ? "warehouse" : "plant"} sync
+            </p>
+            <p className="text-[9px] text-neutral-400">Live runbook</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="p-3.5">
+        <div className="flex flex-col">
+          {steps.map((s, i) => (
+            <div key={`${s.title}-${i}`} className="flex gap-3">
+              <div className="flex w-4 shrink-0 flex-col items-center self-stretch pt-[3px]">
+                <div
+                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+                    i <= activeStep
+                      ? "scale-100 border-emerald-500 bg-emerald-500"
+                      : "scale-95 border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
+                  } ${i === activeStep ? "shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" : ""}`}
+                >
+                  <svg
+                    viewBox="0 0 8 8"
+                    className={`h-2 w-2 transition-opacity duration-300 ${i <= activeStep ? "opacity-100" : "opacity-0"}`}
+                    fill="none"
+                  >
+                    <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+                {i < steps.length - 1 ? (
+                  <div
+                    className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full transition-colors duration-500 ${
+                      i < activeStep ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
+                    }`}
+                  />
+                ) : null}
+              </div>
+              <div className={`min-w-0 flex-1 leading-snug ${i < steps.length - 1 ? "pb-2.5" : ""}`}>
+                <p className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-neutral-900 dark:text-white">
+                  <span>{s.title}</span>
+                  {s.channelIcons ? (
+                    <span
+                      className="inline-flex items-center gap-0.5"
+                      aria-label="WhatsApp, phone call, and email"
+                    >
+                      <img src="/icons/whatsapp.png" alt="" className="h-3.5 w-3.5 object-contain" />
+                      <img src="/icons/mobile.png" alt="" className="h-3.5 w-3.5 object-contain" />
+                      <img src="/icons/gmail.png" alt="" className="h-3.5 w-3.5 object-contain" />
+                    </span>
+                  ) : null}
+                </p>
+                <p className="mt-0.5 text-[9px] text-neutral-400">{s.sub}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {showNextSlot ? (
+          <div className="mt-3 rounded-lg border border-neutral-100 bg-neutral-50/80 p-2.5 dark:border-white/5 dark:bg-white/[0.03]">
+            <p className="text-[8px] font-semibold uppercase tracking-wider text-neutral-400">Next production slot</p>
+            <p className="mt-1 text-[10px] font-medium text-neutral-700 dark:text-white/80">Line A — Glucose-D 200ml · WO-9921</p>
+            <div className="mt-1.5 flex items-center gap-2">
+              <div className="h-1 flex-1 overflow-hidden rounded-full bg-neutral-200 dark:bg-white/10">
+                <div className="h-full rounded-full bg-neutral-900 transition-all duration-700 dark:bg-white" style={{ width: `${plannedPct}%` }} />
+              </div>
+              <span className="text-[9px] tabular-nums text-neutral-500">{plannedPct}% planned</span>
+            </div>
+          </div>
+        ) : (
+          <div className="mt-3 rounded-lg border border-neutral-100 bg-neutral-50/80 p-2.5 dark:border-white/5 dark:bg-white/[0.03]">
+            <p className="text-[8px] font-semibold uppercase tracking-wider text-neutral-400">Outbound dispatch</p>
+            <p className="mt-1 text-[10px] font-medium text-neutral-700 dark:text-white/80">WH-Pune → Mumbai Distributor · Tomorrow 8 AM</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function ExecuteVisual2() {
-  const steps = [
-    { title: "Order from buyer confirmed", sub: "ORD-4821 · Rajesh Patil" },
-    { title: "Confirmation sent", sub: "WhatsApp + email receipt" },
-    { title: "Stock adjusted", sub: "Glucose-D −50 ctns · Mango Bite −20" },
-    { title: "New manufacturing scheduled", sub: "Line A · Glucose-D batch starts May 9, 6 AM" },
+  const distributorSteps = [
+    { title: "Buyer order confirmed", sub: "ORD-4821 · Mumbai Distributor" },
+    { title: "Confirmation sent", sub: "WhatsApp, call & email receipt", channelIcons: true },
+    { title: "Stock adjusted in WMS", sub: "Glucose-D −50 ctns · Mango Bite −20" },
   ];
+  const manufacturerSteps = [
+    { title: "Buyer order confirmed", sub: "ORD-4821 · Mumbai Distributor" },
+    { title: "Confirmation sent", sub: "WhatsApp, call & email receipt", channelIcons: true },
+    { title: "Stock adjusted in WMS", sub: "Glucose-D −50 ctns · Mango Bite −20" },
+    { title: "Manufacturing rescheduled", sub: "Line A · Glucose-D batch starts May 9, 6 AM" },
+  ];
+
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     const interval = window.setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % steps.length);
+      setActiveStep((prev) => (prev + 1) % manufacturerSteps.length);
     }, 1200);
     return () => window.clearInterval(interval);
-  }, [steps.length]);
-
-  const plannedPct = Math.round((activeStep / (steps.length - 1)) * 50);
+  }, [manufacturerSteps.length]);
 
   return (
     <div className="flex h-full w-full items-center justify-center px-6 sm:px-10">
-      <div className="w-full max-w-[440px] rounded-2xl border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900">
-        <div className="flex items-center justify-between border-b border-neutral-100 px-4 py-3 dark:border-white/5">
-          <div className="flex items-center gap-2">
-            <LogoBadge size="sm" />
-            <div>
-              <p className="text-[12px] font-semibold text-neutral-800 dark:text-white">Order → plant sync</p>
-              <p className="text-[10px] text-neutral-400">Live runbook</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-1.5 rounded-full border border-neutral-200 bg-neutral-50 px-2.5 py-1 dark:border-white/10 dark:bg-white/5">
-            <div className="h-1.5 w-1.5 rounded-full bg-neutral-400 dark:bg-white/40" />
-            <span className="text-[9px] font-semibold text-neutral-500">Synced</span>
-          </div>
+      <div className="relative w-full max-w-[460px] pb-14 pt-6">
+        <div className="relative z-10 w-[min(100%,93%)] -translate-x-3 sm:-translate-x-5">
+          <PlantSyncCard
+            variant="distributor"
+            steps={distributorSteps}
+            totalSteps={distributorSteps.length}
+            activeStep={Math.min(activeStep, distributorSteps.length - 1)}
+            showNextSlot={false}
+          />
         </div>
-
-        <div className="p-4">
-          <div className="flex gap-3">
-            <div className="flex flex-col items-center pt-0.5">
-              {steps.map((_, i) => (
-                <div key={i} className="flex flex-col items-center">
-                  <div
-                    className={`flex h-4 w-4 items-center justify-center rounded-full border transition-all duration-500 ${
-                      i <= activeStep
-                        ? "scale-100 border-emerald-500 bg-emerald-500"
-                        : "scale-95 border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
-                    } ${i === activeStep ? "shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" : ""}`}
-                  >
-                    <svg
-                      viewBox="0 0 8 8"
-                      className={`h-2 w-2 transition-opacity duration-300 ${i <= activeStep ? "opacity-100" : "opacity-0"}`}
-                      fill="none"
-                    >
-                      <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                  {i < steps.length - 1 && (
-                    <div
-                      className={`my-0.5 h-10 w-px transition-colors duration-500 ${
-                        i < activeStep ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
-                      }`}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-            <div className="min-w-0 flex-1 space-y-4">
-              {steps.map((s) => (
-                <div key={s.title}>
-                  <p className="text-[12px] font-semibold text-neutral-900 dark:text-white">{s.title}</p>
-                  <p className="text-[10px] text-neutral-400">{s.sub}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="mt-4 rounded-lg border border-neutral-100 bg-neutral-50/80 p-3 dark:border-white/5 dark:bg-white/[0.03]">
-            <p className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400">Next slot</p>
-            <p className="mt-1 text-[11px] font-medium text-neutral-700 dark:text-white/80">Line A — Glucose-D 200ml · WO-9921</p>
-            <div className="mt-2 flex items-center gap-2">
-              <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-neutral-200 dark:bg-white/10">
-                <div
-                  className="h-full rounded-full bg-neutral-900 transition-all duration-700 dark:bg-white"
-                  style={{ width: `${plannedPct}%` }}
-                />
-              </div>
-              <span className="text-[10px] tabular-nums text-neutral-500">{plannedPct}% planned</span>
-            </div>
-          </div>
+        <div className="relative z-20 -mt-14 ml-auto w-[min(100%,84%)] translate-x-2 sm:w-[min(100%,82%)] sm:translate-x-4 shadow-[0_14px_44px_-10px_rgba(0,0,0,0.14)] dark:shadow-[0_14px_44px_-10px_rgba(0,0,0,0.5)]">
+          <PlantSyncCard
+            variant="manufacturer"
+            steps={manufacturerSteps}
+            totalSteps={manufacturerSteps.length}
+            activeStep={activeStep}
+            showNextSlot
+          />
         </div>
       </div>
     </div>
@@ -1204,23 +1502,80 @@ function ExecuteVisual3() {
         <div className="rounded-2xl border border-neutral-200 bg-white p-4 dark:border-white/10 dark:bg-neutral-900">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <LogoBadge size="sm" />
+              <LogoBadge size="sm" animated={!detailsReady} />
               <span className="text-[11px] font-semibold tracking-tight text-neutral-800 dark:text-white">RBD Logistics</span>
             </div>
             <span className="rounded-full bg-neutral-800 px-2.5 py-1 text-[10px] font-medium tabular-nums text-white dark:bg-neutral-700">00:24</span>
           </div>
-          <p className="mt-3 text-[11px] text-neutral-400">When and where will you be empty?</p>
-          <div className="mt-2 flex gap-2">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-neutral-200 dark:bg-white/10">
-              <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4 text-neutral-500 dark:text-white/70">
+          <p className="mt-3 text-[11px] text-neutral-400">Negotiating with Sharma Logistics · Pune → Mumbai</p>
+          <div className="mt-2 flex flex-row-reverse gap-2">
+            <motion.div
+              className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-900 dark:bg-white"
+              animate={
+                !reduceMotion && !detailsReady ? { scale: [1, 1.07, 1] } : { scale: 1 }
+              }
+              transition={
+                !reduceMotion && !detailsReady
+                  ? { duration: 1.15, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 0.2 }
+              }
+            >
+              <RbdMark sizePx={26} />
+            </motion.div>
+            <div className="min-w-0 rounded-2xl bg-neutral-100 px-3 py-1.5 dark:bg-white/5">
+              <p className="text-[11px] font-medium leading-snug text-neutral-800 dark:text-white/90">
+                Hi Sharma — need a 32ft from{" "}
+                <span className="rounded-md bg-white px-1.5 py-0.5 font-semibold dark:bg-neutral-800">Pune WH-A</span>{" "}
+                to Mumbai Thu morning, 70 ctns. What&apos;s your rate?
+              </p>
+            </div>
+          </div>
+          <div className="mt-1.5 flex gap-2">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-200 dark:bg-white/10">
+              <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5 text-neutral-500 dark:text-white/70">
                 <circle cx="8" cy="5.2" r="2.3" fill="currentColor" />
                 <path d="M3.2 13.6c.5-2.2 2.3-3.4 4.8-3.4s4.3 1.2 4.8 3.4" fill="currentColor" />
               </svg>
             </div>
-            <div className="min-w-0 rounded-2xl bg-neutral-100 px-3 py-2 dark:bg-white/5">
+            <div className="min-w-0 rounded-2xl bg-neutral-100 px-3 py-1.5 dark:bg-white/5">
               <p className="text-[11px] font-medium leading-snug text-neutral-800 dark:text-white/90">
-                I&apos;ll be empty Thursday around 10 AM in{" "}
-                <span className="rounded-md bg-white px-1.5 py-0.5 font-semibold dark:bg-neutral-800">Pune WH-A</span>.
+                Thu 10 AM works.{" "}
+                <span className="rounded-md bg-white px-1.5 py-0.5 font-semibold dark:bg-neutral-800">₹15,200</span>{" "}
+                — diesel rates are up this week.
+              </p>
+            </div>
+          </div>
+          <div className="mt-1.5 flex flex-row-reverse gap-2">
+            <motion.div
+              className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-neutral-900 dark:bg-white"
+              animate={
+                !reduceMotion && !detailsReady ? { scale: [1, 1.07, 1] } : { scale: 1 }
+              }
+              transition={
+                !reduceMotion && !detailsReady
+                  ? { duration: 1.15, repeat: Infinity, ease: "easeInOut" }
+                  : { duration: 0.2 }
+              }
+            >
+              <RbdMark sizePx={26} />
+            </motion.div>
+            <div className="min-w-0 rounded-2xl bg-neutral-100 px-3 py-1.5 dark:bg-white/5">
+              <p className="text-[11px] font-medium leading-snug text-neutral-800 dark:text-white/90">
+                Last run was ₹14,500. Can we close at{" "}
+                <span className="rounded-md bg-white px-1.5 py-0.5 font-semibold dark:bg-neutral-800">₹14,800</span>?
+              </p>
+            </div>
+          </div>
+          <div className="mt-1.5 flex gap-2">
+            <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-neutral-200 dark:bg-white/10">
+              <svg viewBox="0 0 16 16" fill="none" className="h-3.5 w-3.5 text-neutral-500 dark:text-white/70">
+                <circle cx="8" cy="5.2" r="2.3" fill="currentColor" />
+                <path d="M3.2 13.6c.5-2.2 2.3-3.4 4.8-3.4s4.3 1.2 4.8 3.4" fill="currentColor" />
+              </svg>
+            </div>
+            <div className="min-w-0 rounded-2xl bg-emerald-50 px-3 py-1.5 dark:bg-emerald-500/10">
+              <p className="text-[11px] font-medium leading-snug text-neutral-800 dark:text-white/90">
+                Done at ₹14,800. Pickup Thu 10:45 AM — sending vehicle details.
               </p>
             </div>
           </div>
@@ -1239,9 +1594,17 @@ function ExecuteVisual3() {
 
         <div className="flex flex-col items-center py-1">
           <div className="h-5 w-0 border-l-2 border-dashed border-neutral-300 dark:border-white/20" />
-          <div className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900">
-            <span className="text-[10px] font-bold text-neutral-400">R</span>
-          </div>
+          <motion.div
+            className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900"
+            animate={!reduceMotion && !detailsReady ? { y: [0, -3, 0] } : { y: 0 }}
+            transition={
+              !reduceMotion && !detailsReady
+                ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" }
+                : { duration: 0.25 }
+            }
+          >
+            <RbdMarkInverted sizePx={28} />
+          </motion.div>
           <div className="h-5 w-0 border-l-2 border-dashed border-neutral-300 dark:border-white/20" />
         </div>
 
@@ -1305,6 +1668,8 @@ function ExecuteVisual3() {
 
 /* ── Analytics helpers (PlatformShowcase-style dashboard, monochrome only) ─ */
 const ANALYTICS_LOOP_GAP_S = 0.45;
+/** Forecast + actual line use the same pathLength timing so draw cycles stay in phase. */
+const ANALYTICS_DEMAND_LINE_DRAW_S = 1.35;
 
 function AnalyticsSparkline({
   values,
@@ -1359,20 +1724,57 @@ function AnalyticsSparkline({
   );
 }
 
-function analyticsLinePath(values: number[], w: number, h: number, pad: number, minV: number, maxV: number) {
+function analyticsChartPoints(
+  values: number[],
+  w: number,
+  h: number,
+  pad: number,
+  minV: number,
+  maxV: number
+): [number, number][] {
   const range = maxV - minV || 1;
   const stepX = (w - pad * 2) / (values.length - 1);
-  return values
-    .map((v, i) => {
-      const x = pad + i * stepX;
-      const y = pad + (h - pad * 2) * (1 - (v - minV) / range);
-      return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
-    })
-    .join(" ");
+  return values.map((v, i) => [
+    pad + i * stepX,
+    pad + (h - pad * 2) * (1 - (v - minV) / range),
+  ]);
 }
 
-const ANALYTICS_FORECAST_SERIES = [82, 84, 86, 88, 90, 91, 92, 93, 94, 96, 98];
-const ANALYTICS_ACTUAL_SERIES = [80, 83, 85, 87, 91, 95, 99, 104, 110, 118, 124];
+/** Cubic Béziers through knots (Catmull-Rom-style tangents) — smooth, not polyline corners. */
+function smoothPathThrough(points: [number, number][]): string {
+  if (points.length === 0) return "";
+  const [x0, y0] = points[0]!;
+  if (points.length === 1) return `M ${x0.toFixed(2)} ${y0.toFixed(2)}`;
+  if (points.length === 2) {
+    const [x1, y1] = points[1]!;
+    return `M ${x0.toFixed(2)} ${y0.toFixed(2)} L ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  }
+  let d = `M ${x0.toFixed(2)} ${y0.toFixed(2)}`;
+  const n = points.length;
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = points[i === 0 ? 0 : i - 1]!;
+    const p1 = points[i]!;
+    const p2 = points[i + 1]!;
+    const p3 = points[i + 2 >= n ? n - 1 : i + 2]!;
+    const cx1 = p1[0] + (p2[0] - p0[0]) / 6;
+    const cy1 = p1[1] + (p2[1] - p0[1]) / 6;
+    const cx2 = p2[0] - (p3[0] - p1[0]) / 6;
+    const cy2 = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${cx1.toFixed(2)} ${cy1.toFixed(2)}, ${cx2.toFixed(2)} ${cy2.toFixed(2)}, ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
+  }
+  return d;
+}
+
+function analyticsSmoothLinePath(values: number[], w: number, h: number, pad: number, minV: number, maxV: number) {
+  return smoothPathThrough(analyticsChartPoints(values, w, h, pad, minV, maxV));
+}
+
+/** Wavy forecast (model revisions / seasonality), actual hugs it with small misses. Y zoom 88–102 for readable ripple. */
+const ANALYTICS_FORECAST_SERIES = [93, 95, 94, 96, 95, 97, 96, 99, 97, 100, 99];
+const ANALYTICS_ACTUAL_SERIES = [92, 94, 94, 96, 95, 98, 95, 99, 98, 99, 100];
+
+const ANALYTICS_DEMAND_CHART_Y_MIN = 88;
+const ANALYTICS_DEMAND_CHART_Y_MAX = 102;
 
 function AnalyticsDemandChart() {
   const reduceMotion = useReducedMotion();
@@ -1380,15 +1782,31 @@ function AnalyticsDemandChart() {
   const w = 400;
   const h = 168;
   const pad = 8;
-  const minV = 70;
-  const maxV = 130;
-  const forecastPath = analyticsLinePath(ANALYTICS_FORECAST_SERIES, w, h, pad, minV, maxV);
-  const actualPath = analyticsLinePath(ANALYTICS_ACTUAL_SERIES, w, h, pad, minV, maxV);
+  const minV = ANALYTICS_DEMAND_CHART_Y_MIN;
+  const maxV = ANALYTICS_DEMAND_CHART_Y_MAX;
+  const forecastPath = analyticsSmoothLinePath(ANALYTICS_FORECAST_SERIES, w, h, pad, minV, maxV);
+  const actualPath = analyticsSmoothLinePath(ANALYTICS_ACTUAL_SERIES, w, h, pad, minV, maxV);
   const areaPath = `${actualPath} L ${w - pad} ${h - pad} L ${pad} ${h - pad} Z`;
-  const divergeIdx = 6;
-  const divergeX = pad + ((w - pad * 2) / (ANALYTICS_ACTUAL_SERIES.length - 1)) * divergeIdx;
+  const calloutIdx = 5;
+  const divergeX = pad + ((w - pad * 2) / (ANALYTICS_ACTUAL_SERIES.length - 1)) * calloutIdx;
   const divergeY =
-    pad + (h - pad * 2) * (1 - (ANALYTICS_ACTUAL_SERIES[divergeIdx]! - minV) / (maxV - minV));
+    pad + (h - pad * 2) * (1 - (ANALYTICS_ACTUAL_SERIES[calloutIdx]! - minV) / (maxV - minV));
+
+  const linePathTransition = reduceMotion
+    ? { duration: 0 }
+    : {
+        pathLength: {
+          duration: ANALYTICS_DEMAND_LINE_DRAW_S,
+          repeat: Infinity,
+          repeatType: "reverse" as const,
+          repeatDelay: ANALYTICS_LOOP_GAP_S,
+          /** Linear so both lines advance at the same rate in time (matched duration + easing). */
+          ease: "linear",
+        },
+      };
+
+  const linePathInitial = reduceMotion ? false : { pathLength: 0 };
+  const linePathAnimate = reduceMotion ? { pathLength: 1 } : { pathLength: [0, 1] };
 
   const chartBody = (
     <>
@@ -1441,28 +1859,12 @@ function AnalyticsDemandChart() {
         fill="none"
         className="stroke-neutral-500/55 dark:stroke-white/40"
         strokeWidth={1.2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
         strokeDasharray="3 3"
-        initial={reduceMotion ? false : { pathLength: 0, opacity: 0.75 }}
-        animate={
-          reduceMotion
-            ? { pathLength: 1, strokeDashoffset: 0, opacity: 1 }
-            : { pathLength: [0, 1], opacity: 1, strokeDashoffset: [0, -12] }
-        }
-        transition={
-          reduceMotion
-            ? { duration: 0 }
-            : {
-                pathLength: {
-                  duration: 1.15,
-                  repeat: Infinity,
-                  repeatType: "reverse",
-                  repeatDelay: ANALYTICS_LOOP_GAP_S,
-                  ease: [0.42, 0, 0.58, 1],
-                },
-                opacity: { duration: 0.25 },
-                strokeDashoffset: { duration: 2.2, repeat: Infinity, ease: "linear" },
-              }
-        }
+        initial={linePathInitial}
+        animate={linePathAnimate}
+        transition={linePathTransition}
       />
       <motion.path
         d={actualPath}
@@ -1472,19 +1874,9 @@ function AnalyticsDemandChart() {
         strokeWidth={1.75}
         strokeLinejoin="round"
         strokeLinecap="round"
-        initial={reduceMotion ? false : { pathLength: 0 }}
-        animate={reduceMotion ? { pathLength: 1 } : { pathLength: [0, 1] }}
-        transition={
-          reduceMotion
-            ? { duration: 0 }
-            : {
-                duration: 1.65,
-                repeat: Infinity,
-                repeatType: "reverse",
-                repeatDelay: ANALYTICS_LOOP_GAP_S,
-                ease: [0.42, 0, 0.58, 1],
-              }
-        }
+        initial={linePathInitial}
+        animate={linePathAnimate}
+        transition={linePathTransition}
       />
       <motion.circle
         cx={divergeX}
@@ -1561,7 +1953,7 @@ function AnalyticsDemandChart() {
             : { duration: 1.95, repeat: Infinity, ease: "easeInOut", repeatDelay: ANALYTICS_LOOP_GAP_S }
         }
       >
-        Divergence → RM PO drafted
+        Demand edges above forecast (mid-window)
       </motion.div>
     </div>
   );
@@ -1602,8 +1994,8 @@ function AnalyticsVisual1() {
           <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-neutral-500 dark:text-white/45">
             ops.rigidbody.ai · operations
           </span>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded border border-neutral-200/90 bg-white px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-neutral-600 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
-            <span className="h-1.5 w-1.5 rounded-full bg-neutral-800 animate-pulse dark:bg-white" />
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
             live
           </span>
         </motion.div>
@@ -1623,24 +2015,7 @@ function AnalyticsVisual1() {
             >
               {t}
               {i === 0 ? (
-                <motion.span
-                  layoutId="analytics-tab-indicator-v1"
-                  className="absolute inset-x-1 -bottom-px h-px bg-neutral-900 dark:bg-white"
-                  initial={reduceMotion ? false : { scaleX: 0 }}
-                  animate={reduceMotion ? { scaleX: 1 } : { scaleX: [0, 1] }}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 1.25,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          repeatDelay: ANALYTICS_LOOP_GAP_S,
-                          ease: [0.42, 0, 0.58, 1],
-                        }
-                  }
-                  style={{ originX: 0 }}
-                />
+                <span className="absolute inset-x-1 -bottom-px h-px bg-neutral-900 dark:bg-white" />
               ) : null}
             </span>
           ))}
@@ -1725,7 +2100,7 @@ function AnalyticsVisual2() {
           animate={{ opacity: 1, x: 0 }}
           transition={reduceMotion ? { duration: 0 } : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         >
-          <LogoBadge size="sm" />
+          <LogoBadge size="sm" animated />
           <span className="font-mono text-[10px] text-neutral-500 dark:text-white/45">ops.rigidbody.ai</span>
         </motion.div>
 
@@ -1789,7 +2164,7 @@ function AnalyticsVisual3() {
   const metrics = [
     { label: "Next 7d · SKU-228", qty: "1,240 ctns" },
     { label: "Next 7d · Mango", qty: "860 ctns" },
-    { label: "Model confidence", qty: "91%" },
+    { label: "Model confidence", qty: "90%" },
   ] as const;
 
   return (
@@ -1817,45 +2192,15 @@ function AnalyticsVisual3() {
               transition={reduceMotion ? { duration: 0 } : { duration: 0.42, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
             >
               <span className="inline-flex items-center gap-1.5">
-                <motion.span
-                  className="inline-block h-0.5 w-3 origin-left bg-neutral-900 dark:bg-white"
-                  initial={reduceMotion ? false : { scaleX: 0 }}
-                  animate={reduceMotion ? { scaleX: 1 } : { scaleX: [0, 1] }}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 1.2,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          repeatDelay: ANALYTICS_LOOP_GAP_S,
-                          ease: [0.42, 0, 0.58, 1],
-                          delay: 0.06,
-                        }
-                  }
-                />
+                <span className="inline-block h-0.5 w-3 shrink-0 bg-neutral-900 dark:bg-white" />
                 Actual
               </span>
               <span className="inline-flex items-center gap-1.5 text-neutral-500 dark:text-white/45">
-                <motion.span
-                  className="inline-block h-0.5 w-3 origin-left"
+                <span
+                  className="inline-block h-0.5 w-3 shrink-0"
                   style={{
                     backgroundImage: "repeating-linear-gradient(90deg, currentColor 0 2px, transparent 2px 4px)",
                   }}
-                  initial={reduceMotion ? false : { scaleX: 0 }}
-                  animate={reduceMotion ? { scaleX: 1 } : { scaleX: [0, 1] }}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0 }
-                      : {
-                          duration: 1.2,
-                          repeat: Infinity,
-                          repeatType: "reverse",
-                          repeatDelay: ANALYTICS_LOOP_GAP_S,
-                          ease: [0.42, 0, 0.58, 1],
-                          delay: 0.14,
-                        }
-                  }
                 />
                 Forecast
               </span>
@@ -1904,7 +2249,7 @@ function AnalyticsVisual3() {
             animate={{ opacity: 1 }}
             transition={reduceMotion ? { duration: 0 } : { delay: 0.95, duration: 0.35 }}
           >
-            <span>Forecast accuracy · 91.2%</span>
+            <span>Forecast accuracy · 91%</span>
             <span>Auto-corrections · 4</span>
           </motion.div>
         </div>
@@ -2223,7 +2568,7 @@ export default function ProductSteps() {
                                 </p>
                               </div>
                               <p className="text-[13px] leading-relaxed text-neutral-600 dark:text-white/55">{step.description}</p>
-                              <div className="mt-4 h-[320px] overflow-hidden rounded-xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50">
+                              <div className="mt-4 h-[320px] select-none overflow-hidden rounded-xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50">
                                 <div className="flex h-full w-full items-start justify-center pt-2">
                                   <div className="origin-top scale-[0.58]">
                                     <Visual />
@@ -2258,7 +2603,7 @@ export default function ProductSteps() {
                         focusItemId={`${phase.id}_${si}`}
                         focusItemLabel={step.title}
                       >
-                        <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50 lg:flex lg:h-[660px] lg:items-center lg:justify-center">
+                        <div className="select-none overflow-hidden rounded-2xl border border-neutral-200 bg-[#fafaf9] dark:border-white/10 dark:bg-neutral-900/50 lg:flex lg:h-[660px] lg:items-center lg:justify-center">
                           <Visual />
                         </div>
                       </TrackedFocusRegion>

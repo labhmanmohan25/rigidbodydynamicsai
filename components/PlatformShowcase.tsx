@@ -13,39 +13,73 @@ import {
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Demand vs Forecast — last 14 days, Maharashtra · SKU-228 (200ml glucose)
- *  The single most useful chart for an FMCG ops head: where reality diverged
- *  from the forecast, and what the platform did about it.
+ *  Forecast is intentionally wavy (typical rolling model output); actual tracks close.
+ *  Y-axis zooms to ~88–102 so small ripples read clearly (common in forecast vs actual UI).
  * ──────────────────────────────────────────────────────────────────────────── */
-const FORECAST = [82, 84, 86, 88, 90, 91, 92, 93, 94, 96, 98, 100, 102, 104];
-const ACTUAL =   [80, 83, 85, 87, 91, 95, 99, 104, 110, 118, 124, 122, 119, 121];
+const FORECAST = [92, 94, 93, 95, 94, 96, 95, 97, 96, 98, 97, 99, 100, 99];
+const ACTUAL = [91, 93, 94, 95, 94, 97, 95, 97, 96, 98, 97, 99, 100, 100];
+const DEMAND_CHART_Y_MIN = 88;
+const DEMAND_CHART_Y_MAX = 102;
 const X_LABELS = ["M", "T", "W", "T", "F", "S", "S", "M", "T", "W", "T", "F", "S", "S"];
 
-function pathFor(values: number[], w: number, h: number, pad = 8) {
-  const min = 70;
-  const max = 130;
+function demandChartPoints(
+  values: number[],
+  w: number,
+  h: number,
+  pad: number,
+  vmin = DEMAND_CHART_Y_MIN,
+  vmax = DEMAND_CHART_Y_MAX
+): [number, number][] {
   const stepX = (w - pad * 2) / (values.length - 1);
-  return values
-    .map((v, i) => {
-      const x = pad + i * stepX;
-      const y = pad + (h - pad * 2) * (1 - (v - min) / (max - min));
-      return `${i === 0 ? "M" : "L"} ${x.toFixed(1)} ${y.toFixed(1)}`;
-    })
-    .join(" ");
+  const range = vmax - vmin || 1;
+  return values.map((v, i) => [
+    pad + i * stepX,
+    pad + (h - pad * 2) * (1 - (v - vmin) / range),
+  ]);
+}
+
+function smoothPathThrough(points: [number, number][]): string {
+  if (points.length === 0) return "";
+  const [x0, y0] = points[0]!;
+  if (points.length === 1) return `M ${x0.toFixed(2)} ${y0.toFixed(2)}`;
+  if (points.length === 2) {
+    const [x1, y1] = points[1]!;
+    return `M ${x0.toFixed(2)} ${y0.toFixed(2)} L ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+  }
+  let d = `M ${x0.toFixed(2)} ${y0.toFixed(2)}`;
+  const n = points.length;
+  for (let i = 0; i < n - 1; i++) {
+    const p0 = points[i === 0 ? 0 : i - 1]!;
+    const p1 = points[i]!;
+    const p2 = points[i + 1]!;
+    const p3 = points[i + 2 >= n ? n - 1 : i + 2]!;
+    const cx1 = p1[0] + (p2[0] - p0[0]) / 6;
+    const cy1 = p1[1] + (p2[1] - p0[1]) / 6;
+    const cx2 = p2[0] - (p3[0] - p1[0]) / 6;
+    const cy2 = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${cx1.toFixed(2)} ${cy1.toFixed(2)}, ${cx2.toFixed(2)} ${cy2.toFixed(2)}, ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
+  }
+  return d;
+}
+
+function smoothPathFor(values: number[], w: number, h: number, pad = 8) {
+  return smoothPathThrough(demandChartPoints(values, w, h, pad));
 }
 
 function DemandChart() {
   const w = 540;
   const h = 200;
   const pad = 8;
-  const forecastPath = pathFor(FORECAST, w, h, pad);
-  const actualPath = pathFor(ACTUAL, w, h, pad);
+  const forecastPath = smoothPathFor(FORECAST, w, h, pad);
+  const actualPath = smoothPathFor(ACTUAL, w, h, pad);
   const areaPath = `${actualPath} L ${w - pad} ${h - pad} L ${pad} ${h - pad} Z`;
 
-  // mark divergence point — day 7 (where actual breaks above forecast)
-  const divergeIdx = 6;
+  // marker where demand runs above forecast for a day
+  const divergeIdx = 5;
   const divergeX = pad + ((w - pad * 2) / (ACTUAL.length - 1)) * divergeIdx;
+  const rangeY = DEMAND_CHART_Y_MAX - DEMAND_CHART_Y_MIN;
   const divergeY =
-    pad + (h - pad * 2) * (1 - (ACTUAL[divergeIdx] - 70) / 60);
+    pad + (h - pad * 2) * (1 - (ACTUAL[divergeIdx] - DEMAND_CHART_Y_MIN) / rangeY);
 
   return (
     <div className="relative">
@@ -96,7 +130,7 @@ function DemandChart() {
           strokeLinecap="round"
         />
 
-        {/* divergence callout */}
+        {/* mid-window callout (demand crosses above forecast) */}
         <circle cx={divergeX} cy={divergeY} r={3.5} fill="var(--demand-marker-fill)" />
         <circle
           cx={divergeX}
@@ -133,7 +167,7 @@ function DemandChart() {
         ))}
       </div>
 
-      {/* divergence annotation — below chart on narrow screens to avoid clipping */}
+      {/* callout label — positioned above the marker point */}
       <div
         className="absolute -translate-x-1/2 -translate-y-full rounded border border-white/20 bg-black px-2 py-1 font-mono text-[10px] text-white/85"
         style={{
@@ -141,7 +175,7 @@ function DemandChart() {
           top: `${(divergeY / h) * 100 - 4}%`,
         }}
       >
-        +18% vs forecast -&gt; RM PO auto-triggered to vendor
+        +1% above forecast · within ±15% tolerance, no replenishment triggered
       </div>
     </div>
   );
@@ -356,7 +390,7 @@ export default function PlatformShowcase() {
             <motion.div
               ref={dashboardRef}
               style={shouldAnimateDashboard ? { y: entranceY, scale: entranceScale } : undefined}
-              className="relative flex h-[760px] flex-col overflow-hidden rounded-xl border border-neutral-200/90 bg-[#fffefb] shadow-sm ring-1 ring-black/[0.04] [--demand-fill-end:rgba(0,0,0,0)] [--demand-fill-start:rgba(23,23,23,0.13)] [--demand-grid:rgba(0,0,0,0.06)] [--demand-forecast-stroke:rgba(0,0,0,0.36)] [--demand-actual-stroke:#171717] [--demand-marker-fill:#171717] [--demand-marker-ring:rgba(0,0,0,0.2)] [--demand-callout-line:rgba(0,0,0,0.2)] [--forecast-legend-dash:rgba(0,0,0,0.42)] dark:border-white/10 dark:bg-[#0a0a0a] dark:shadow-none dark:ring-0 dark:[--demand-fill-end:rgba(255,255,255,0)] dark:[--demand-fill-start:rgba(255,255,255,0.18)] dark:[--demand-grid:rgba(255,255,255,0.06)] dark:[--demand-forecast-stroke:rgba(255,255,255,0.35)] dark:[--demand-actual-stroke:#ffffff] dark:[--demand-marker-fill:#ffffff] dark:[--demand-marker-ring:rgba(255,255,255,0.4)] dark:[--demand-callout-line:rgba(255,255,255,0.25)] dark:[--forecast-legend-dash:rgba(255,255,255,0.5)]"
+              className="relative flex h-[760px] select-none flex-col overflow-hidden rounded-xl border border-neutral-200/90 bg-[#fffefb] shadow-sm ring-1 ring-black/[0.04] [--demand-fill-end:rgba(0,0,0,0)] [--demand-fill-start:rgba(23,23,23,0.13)] [--demand-grid:rgba(0,0,0,0.06)] [--demand-forecast-stroke:rgba(0,0,0,0.36)] [--demand-actual-stroke:#171717] [--demand-marker-fill:#171717] [--demand-marker-ring:rgba(0,0,0,0.2)] [--demand-callout-line:rgba(0,0,0,0.2)] [--forecast-legend-dash:rgba(0,0,0,0.42)] dark:border-white/10 dark:bg-[#0a0a0a] dark:shadow-none dark:ring-0 dark:[--demand-fill-end:rgba(255,255,255,0)] dark:[--demand-fill-start:rgba(255,255,255,0.18)] dark:[--demand-grid:rgba(255,255,255,0.06)] dark:[--demand-forecast-stroke:rgba(255,255,255,0.35)] dark:[--demand-actual-stroke:#ffffff] dark:[--demand-marker-fill:#ffffff] dark:[--demand-marker-ring:rgba(255,255,255,0.4)] dark:[--demand-callout-line:rgba(255,255,255,0.25)] dark:[--forecast-legend-dash:rgba(255,255,255,0.5)]"
             >
           {/* Chrome */}
           <div className="flex min-h-[2.75rem] flex-wrap items-center gap-x-2 gap-y-2 border-b border-neutral-200/80 bg-neutral-100/55 px-4 py-3 dark:border-white/10 dark:bg-white/[0.02]">
@@ -465,7 +499,7 @@ export default function PlatformShowcase() {
                 <DemandChart />
               </div>
               <div className="mt-4 flex flex-row items-center justify-between gap-0 border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
-                <span>Forecast accuracy · 91.2%</span>
+                <span>Forecast accuracy · 91%</span>
                 <span>Auto-corrections this week · 4</span>
               </div>
             </div>

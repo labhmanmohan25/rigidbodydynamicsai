@@ -209,8 +209,8 @@ function CapabilityCardPanel({
           key={`visual-${visualKey}`}
           className={
             stack
-              ? "relative h-56 w-full overflow-hidden sm:h-64"
-              : "relative h-72 w-full overflow-hidden md:h-full md:min-h-[460px]"
+              ? "relative h-56 w-full select-none overflow-hidden sm:h-64"
+              : "relative h-72 w-full select-none overflow-hidden md:h-full md:min-h-[460px]"
           }
           style={{ background: card.gradient }}
         >

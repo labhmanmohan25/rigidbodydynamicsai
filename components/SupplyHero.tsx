@@ -18,10 +18,22 @@ export default function SupplyHero() {
 
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center text-neutral-950 sm:px-6 dark:text-white">
         <h1 className="mx-auto max-w-5xl text-[clamp(1.875rem,5vw+0.9rem,3.9rem)] font-normal leading-[1.08] tracking-tight sm:text-6xl md:text-[60px]">
-          AI agents for operations, 
+          AI agents for operations:  
           <br className="hidden md:block" />
-          built for brand owners,
-          manufacturers and distributors
+          built for{" "}
+          <span className="inline">
+            <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
+              brand owners
+            </span>
+            ,{" "}
+            <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
+              manufacturers
+            </span>
+            {" "}and{" "}
+            <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
+              distributors
+            </span>
+          </span>
         </h1>
 
         <p className="mx-auto mt-7 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
