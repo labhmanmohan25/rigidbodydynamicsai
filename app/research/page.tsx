@@ -81,7 +81,7 @@ const articles: ListItem[] = [...mainArticles, ...subReportItems].sort(
 );
 
 export const metadata = {
-  title: "Research — Rigid Body Dynamics",
+  title: "Research  -  Rigid Body Dynamics",
   description: "Research publications and articles from Rigid Body Dynamics.",
 };
 
@@ -92,7 +92,7 @@ export default function ResearchPage() {
         <Breadcrumb items={[{ label: "Home", href: "/" }, { label: "Research" }]} />
 
         <div className="mt-12">
-          {/* Featured section — Specialized agents vs. general LLMs */}
+          {/* Featured section  -  Specialized agents vs. general LLMs */}
           <section className="mb-14">
             <h2 className="mb-6 text-xs font-medium uppercase tracking-widest text-neutral-400">Featured</h2>
             <Link

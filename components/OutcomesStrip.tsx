@@ -4,7 +4,7 @@ const OUTCOMES = [
   {
     metric: "Zero lost orders",
     subtitle:
-      "Every WhatsApp message, every Excel sheet — captured and confirmed automatically.",
+      "Every WhatsApp message, every Excel sheet  -  captured and confirmed automatically.",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -21,7 +21,7 @@ const OUTCOMES = [
   },
   {
     metric: "80% less admin time",
-    subtitle: "Agents handle order entry, follow-ups, and coordination — your team focuses on decisions.",
+    subtitle: "Agents handle order entry, follow-ups, and coordination  -  your team focuses on decisions.",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -39,7 +39,7 @@ const OUTCOMES = [
   },
   {
     metric: "4-week deployment",
-    subtitle: "Live on your existing WhatsApp & Excel — no IT involvement needed",
+    subtitle: "Live on your existing WhatsApp & Excel  -  no IT involvement needed",
     icon: (
       <svg
         viewBox="0 0 24 24"

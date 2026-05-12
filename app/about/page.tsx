@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
 export const metadata = {
-  title: "About Us — Rigid Body Dynamics",
+  title: "About Us  -  Rigid Body Dynamics",
   description: "About Rigid Body Dynamics and the people behind it.",
 };
 

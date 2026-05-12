@@ -43,12 +43,12 @@ const SECTIONS = [
         <p>We process two broad categories of personal information:</p>
         <ul>
           <li>
-            <span className="font-medium text-foreground">Visitor data</span> —
+            <span className="font-medium text-foreground">Visitor data</span>  - 
             information about people who visit our website, request a demo, or
             contact us. We act as the data fiduciary for this information.
           </li>
           <li>
-            <span className="font-medium text-foreground">Customer operational data</span> —
+            <span className="font-medium text-foreground">Customer operational data</span>  - 
             information our agents process inside a customer&rsquo;s operations
             (orders, vendor messages, distributor exchanges, dispatch plans,
             invoices, etc.). For this data, our customer is the data fiduciary
@@ -69,7 +69,7 @@ const SECTIONS = [
           <li>Contact details you submit (name, work email, phone number, company name, role).</li>
           <li>Meeting scheduling data when you book a demo through our calendar link.</li>
           <li>
-            Device, log, and analytics data — IP address, browser type, pages
+            Device, log, and analytics data  -  IP address, browser type, pages
             visited, referrer, and approximate location derived from IP.
           </li>
           <li>Cookies and similar technologies (see Section 9).</li>
@@ -95,7 +95,7 @@ const SECTIONS = [
         </ul>
         <p>
           Operational data may include personal information of your employees,
-          field staff, vendors, distributors, and their representatives — for
+          field staff, vendors, distributors, and their representatives  -  for
           example names, phone numbers, voice recordings, and photos. You are
           responsible for ensuring you have the legal basis and notices in place
           to share this data with us under applicable laws, including the Digital
@@ -156,10 +156,10 @@ const SECTIONS = [
       <>
         <p>Where Indian law applies, we rely on the following bases under the DPDP Act and applicable contract:</p>
         <ul>
-          <li><span className="font-medium text-foreground">Consent</span> — for marketing communications and optional features.</li>
-          <li><span className="font-medium text-foreground">Performance of contract</span> — to deliver the platform to a customer and to interact with prospects who request a demo.</li>
-          <li><span className="font-medium text-foreground">Legitimate uses</span> — for security, fraud prevention, debugging, and improving the platform.</li>
-          <li><span className="font-medium text-foreground">Legal obligation</span> — to comply with tax, accounting, and regulatory requirements.</li>
+          <li><span className="font-medium text-foreground">Consent</span>  -  for marketing communications and optional features.</li>
+          <li><span className="font-medium text-foreground">Performance of contract</span>  -  to deliver the platform to a customer and to interact with prospects who request a demo.</li>
+          <li><span className="font-medium text-foreground">Legitimate uses</span>  -  for security, fraud prevention, debugging, and improving the platform.</li>
+          <li><span className="font-medium text-foreground">Legal obligation</span>  -  to comply with tax, accounting, and regulatory requirements.</li>
         </ul>
       </>
     ),
@@ -172,28 +172,28 @@ const SECTIONS = [
         <p>We do not sell personal information. We share it only as described below:</p>
         <ul>
           <li>
-            <span className="font-medium text-foreground">Subprocessors and infrastructure providers</span> —
+            <span className="font-medium text-foreground">Subprocessors and infrastructure providers</span>  - 
             cloud hosting, LLM and speech providers, messaging gateways, email
             and analytics tools, payment processors. Each is bound by contract
             to use the data only to provide their service to us.
           </li>
           <li>
-            <span className="font-medium text-foreground">Customer&rsquo;s own systems</span> —
+            <span className="font-medium text-foreground">Customer&rsquo;s own systems</span>  - 
             we write back to ERPs, accounting software, and dashboards you
             connect.
           </li>
           <li>
-            <span className="font-medium text-foreground">Authorized users in the customer&rsquo;s organization</span> —
+            <span className="font-medium text-foreground">Authorized users in the customer&rsquo;s organization</span>  - 
             agents send WhatsApp summaries, alerts, and reports to the people
             you add as recipients.
           </li>
           <li>
-            <span className="font-medium text-foreground">Legal and safety</span> —
+            <span className="font-medium text-foreground">Legal and safety</span>  - 
             to comply with law, valid legal process, or to protect our rights,
             property, or safety, or that of our customers or the public.
           </li>
           <li>
-            <span className="font-medium text-foreground">Business transfers</span> —
+            <span className="font-medium text-foreground">Business transfers</span>  - 
             in connection with a merger, acquisition, or sale of assets, with
             the same protections in place.
           </li>
@@ -243,10 +243,10 @@ const SECTIONS = [
     body: (
       <>
         <ul>
-          <li>Visitor and prospect data — retained for up to 24 months after the last interaction, then deleted or anonymized.</li>
-          <li>Customer account and configuration data — retained for the duration of the contract and up to 90 days after termination.</li>
-          <li>Operational data processed by agents — retained for the period agreed in the customer contract, with the default being 12 months on hot storage and longer on cold storage where required for audit or legal reasons.</li>
-          <li>Backups — overwritten on a rolling cycle of up to 90 days.</li>
+          <li>Visitor and prospect data  -  retained for up to 24 months after the last interaction, then deleted or anonymized.</li>
+          <li>Customer account and configuration data  -  retained for the duration of the contract and up to 90 days after termination.</li>
+          <li>Operational data processed by agents  -  retained for the period agreed in the customer contract, with the default being 12 months on hot storage and longer on cold storage where required for audit or legal reasons.</li>
+          <li>Backups  -  overwritten on a rolling cycle of up to 90 days.</li>
         </ul>
       </>
     ),
@@ -291,7 +291,7 @@ const SECTIONS = [
         <p>
           If your data was provided to us by one of our customers (for example,
           you are a distributor or field staff member of a brand we work with),
-          please reach out to that customer first — we will support them in
+          please reach out to that customer first  -  we will support them in
           responding to your request.
         </p>
       </>

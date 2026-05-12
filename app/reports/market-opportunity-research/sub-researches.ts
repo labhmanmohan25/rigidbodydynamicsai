@@ -1,7 +1,7 @@
 /**
  * Sub-researches under AI Market Opportunity Research.
  * Each entry corresponds to a report .md file in the results folder.
- * Published dates: organic mix — 1 on most days, 2 on some (latest Feb 24, back to Feb 1).
+ * Published dates: organic mix  -  1 on most days, 2 on some (latest Feb 24, back to Feb 1).
  */
 export const MARKET_OPPORTUNITY_SUB_RESEARCHES = [
   { slug: "hc_01_physician_documentation_burden", title: "Physician Documentation Burden", date: "Feb 24, 2026", description: "Physicians spend 2–3 hours per day on EHR and paperwork instead of patients, driving burnout. Estimated cost to the US healthcare system: $150–250B/yr; current spend on documentation tools and scribes is $15–20B.", href: "/reports/market-opportunity-research/hc_01_physician_documentation_burden" },

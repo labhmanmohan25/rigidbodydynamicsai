@@ -11,7 +11,7 @@ function getContent(): string {
 }
 
 export const metadata = {
-  title: "AI Agent Communication Channel Research — RBD AI Reports",
+  title: "AI Agent Communication Channel Research  -  RBD AI Reports",
   description:
     "Analyzing the shift from human-centric messaging to machine-to-machine agentic communication. Architecture, throughput, and the case for new agent communication channels.",
 };

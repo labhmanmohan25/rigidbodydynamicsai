@@ -6,7 +6,7 @@ import { MARKET_OPPORTUNITY_SUB_RESEARCHES } from "./sub-researches";
 import { ReportMarkdown } from "./ReportMarkdown";
 
 export const metadata = {
-  title: "AI Market Opportunity Research — RBD AI Reports",
+  title: "AI Market Opportunity Research  -  RBD AI Reports",
   description:
     "20 problems across Healthcare, Manufacturing, and Hospitality. Combined economic burden in the trillions; gap ratios from 1.6x to 140x.",
 };

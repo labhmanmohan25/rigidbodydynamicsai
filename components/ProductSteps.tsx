@@ -32,7 +32,7 @@ function useVisibleInViewport(ref: React.RefObject<HTMLElement | null>) {
 }
 
 /* ────────────────────────────────────────────────────────────────────────────
- *  Scroll-triggered product walkthrough — LaneSurf-inspired.
+ *  Scroll-triggered product walkthrough  -  LaneSurf-inspired.
  *  • Progress ring linked to scroll position of corresponding right-side card
  *  • Outline cards (no shadows) for right-side visuals
  *  • Polished UI-mockup illustrations
@@ -61,12 +61,12 @@ const PHASES: Phase[] = [
       {
         title: "Captures inbound from all sources",
         description:
-          "Your buyers and field teams keep ordering the way they always have — WhatsApp messages, Excel sheets, emails, even phone calls. Nothing changes for them. We capture everything automatically.",
+          "Your buyers and field teams keep ordering the way they always have  -  WhatsApp messages, Excel sheets, emails, even phone calls. Nothing changes for them. We capture everything automatically.",
       },
       {
         title: "AI reads every format and language",
         description:
-          "Hindi, Marathi, Gujarati, English — mixed in one message or email. Our agents parse it into structured order lines: SKU, quantity, delivery window — before anything hits the plant schedule.",
+          "Hindi, Marathi, Gujarati, English  -  mixed in one message or email. Our agents parse it into structured order lines: SKU, quantity, delivery window  -  before anything hits the plant schedule.",
       },
     ],
   },
@@ -90,7 +90,7 @@ const PHASES: Phase[] = [
       {
         title: "Credit & pricing validation",
         description:
-          "Buyer credit limits, territory pricing, and scheme eligibility — all verified before the order is accepted.",
+          "Buyer credit limits, territory pricing, and scheme eligibility  -  all verified before the order is accepted.",
       },
     ],
   },
@@ -119,7 +119,7 @@ const PHASES: Phase[] = [
       {
         title: "Delivery scheduled",
         description:
-          "Plant dispatch and primary freight timelines align with what buyers were promised — pickup windows, lanes, and negotiated rates stay in one thread so the yard and customer service see the same truth.",
+          "Plant dispatch and primary freight timelines align with what buyers were promised  -  pickup windows, lanes, and negotiated rates stay in one thread so the yard and customer service see the same truth.",
       },
     ],
   },
@@ -146,7 +146,7 @@ function StepNumber({ num, progress }: { num: number; progress: number }) {
         <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1"
           className="text-neutral-200 dark:text-white/10" />
       </svg>
-      {/* Progress ring — directly driven by scroll */}
+      {/* Progress ring  -  directly driven by scroll */}
       <svg viewBox="0 0 40 40" className="absolute inset-0 h-full w-full" fill="none">
         <circle cx="20" cy="20" r="18" stroke="currentColor" strokeWidth="1.5"
           strokeDasharray={CIRCUMFERENCE}
@@ -218,7 +218,7 @@ function LogoBadge({ size = "md", animated = false }: { size?: "sm" | "md"; anim
   return shell;
 }
 
-/* ── Right-side visuals — realistic app UIs ────────────────────────────── */
+/* ── Right-side visuals  -  realistic app UIs ────────────────────────────── */
 
 function ConnectorPill({
   children,
@@ -283,7 +283,7 @@ function MiniSpinner({ className = "" }: { className?: string }) {
   );
 }
 
-/* Waveform bars — seeded so they don't re-render */
+/* Waveform bars  -  seeded so they don't re-render */
 const WAVE_HEIGHTS = [4,12,6,15,8,11,5,14,9,7,13,6,10,15,4,12,8,11,6,14,9,7,5,13,10,8,12,6];
 
 function Waveform({ active = true }: { active?: boolean }) {
@@ -297,10 +297,10 @@ function Waveform({ active = true }: { active?: boolean }) {
   );
 }
 
-/* ── CAPTURE VISUAL 1 — WhatsApp + voice + email + Excel UIs ───────────── */
+/* ── CAPTURE VISUAL 1  -  WhatsApp + voice + email + Excel UIs ───────────── */
 /* ── Per-channel cards (constant height each) ─────────────────────────── */
 /** Time each channel pill stays active; drives the horizontal progress fill. */
-const CARD_DURATION_MS = Math.round(6200 / 1.2); // ~5167 — 1.2× faster segment / progress bar
+const CARD_DURATION_MS = Math.round(6200 / 1.2); // ~5167  -  1.2× faster segment / progress bar
 
 function WhatsAppChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
   const [stage, setStage] = useState<0 | 1 | 2 | 3>(reduceMotion ? 3 : 0);
@@ -404,7 +404,7 @@ function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
         "rounded-[var(--ds-radius-xl)] dark:bg-neutral-900",
       )}
     >
-      {/* Header — lane label + timer */}
+      {/* Header  -  lane label + timer */}
       <div className="flex items-center justify-between gap-3 border-b border-[color:var(--ds-card-border)] px-4 py-3.5">
         <div className="flex min-w-0 items-center gap-2.5">
           <div
@@ -425,7 +425,7 @@ function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
         </span>
       </div>
 
-      {/* Body — prompt, sender row, transcript + slot pills */}
+      {/* Body  -  prompt, sender row, transcript + slot pills */}
       <div className="space-y-3 px-4 pb-4 pt-4">
         <p className={cn(ds.text.bodySmall, "text-neutral-500 dark:text-white/50")}>
           What quantities and delivery window should we lock for this Nestlé pull?
@@ -442,7 +442,7 @@ function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
           </div>
         </div>
         <p className="text-left text-[15px] font-semibold leading-snug text-neutral-900 dark:text-white">
-          Eighty cartons Nescafe Sunrise, one-twenty Maggi noodles — need both{" "}
+          Eighty cartons Nescafe Sunrise, one-twenty Maggi noodles  -  need both{" "}
           <span className="inline-block rounded-full bg-neutral-200/95 px-2 py-0.5 align-baseline text-[14px] font-semibold text-neutral-900 dark:bg-white/15 dark:text-white">
             Thursday 6 AM
           </span>{" "}
@@ -454,7 +454,7 @@ function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
         </p>
       </div>
 
-      {/* Footer — controls + single-row waveform */}
+      {/* Footer  -  controls + single-row waveform */}
       <div className="flex items-center gap-3 border-t border-[color:var(--ds-card-border)] px-4 py-3">
         <div className="flex shrink-0 items-center gap-2.5">
           <button
@@ -516,8 +516,8 @@ function VoiceChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
 function EmailChannelCard({ reduceMotion }: { reduceMotion: boolean }) {
   const rows = [
     { initials: "NV", name: "Nashik Vendor", subject: "May Orders - 48 SKUs · orders_may.xlsx", time: "10:42" },
-    { initials: "AT", name: "Akola Trader", subject: "RE: Reorder request — Nescafe Sunrise + Maggi", time: "10:38" },
-    { initials: "SS", name: "Solapur Stockist", subject: "PO #2287 attached — please confirm", time: "10:21" },
+    { initials: "AT", name: "Akola Trader", subject: "RE: Reorder request  -  Nescafe Sunrise + Maggi", time: "10:38" },
+    { initials: "SS", name: "Solapur Stockist", subject: "PO #2287 attached  -  please confirm", time: "10:21" },
   ];
   const [count, setCount] = useState(reduceMotion ? rows.length : 0);
 
@@ -790,7 +790,7 @@ function CaptureVisual1() {
   );
 }
 
-/* ── CAPTURE VISUAL 2 — AI parsing (our dashboard UI) ─────────────────── */
+/* ── CAPTURE VISUAL 2  -  AI parsing (our dashboard UI) ─────────────────── */
 function CaptureVisual2() {
   const reduceMotion = useReducedMotion();
   const visRef = useRef<HTMLDivElement>(null);
@@ -829,7 +829,7 @@ function CaptureVisual2() {
   return (
     <div ref={visRef} className="flex h-full w-full items-center justify-center px-6 sm:px-10">
       <div className="w-full max-w-[460px] space-y-2.5">
-        {/* Raw input — WhatsApp message snippet */}
+        {/* Raw input  -  WhatsApp message snippet */}
         <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10">
           <div className="bg-[#075E54] px-4 py-2 flex items-center gap-2">
             <div className="h-6 w-6 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">PW</div>
@@ -849,7 +849,7 @@ function CaptureVisual2() {
 
         <ConnectorPill animatedBorder borderClassName="border-amber-400 dark:border-amber-300">RBD extracts order requirements</ConnectorPill>
 
-        {/* Parsed output — our platform dashboard style */}
+        {/* Parsed output  -  our platform dashboard style */}
         <div className="rounded-2xl overflow-hidden border border-neutral-200 dark:border-white/10 bg-white dark:bg-neutral-900">
           {/* Dashboard header */}
           <div className="px-4 py-3 border-b border-neutral-100 dark:border-white/5 flex items-center justify-between">
@@ -960,7 +960,7 @@ function CaptureVisual2() {
   );
 }
 
-/* ── PROCESS VISUAL 1 — SKU grid + zoom loop + overlapping pills ──────── */
+/* ── PROCESS VISUAL 1  -  SKU grid + zoom loop + overlapping pills ──────── */
 const SKU_TABLE_ROWS: { sku: string; name: string; ord: number; stock: number; shelf: string; tag?: "sunrise" | "maggi" }[] =
   NESTLE_PRODUCTS.map((p) => ({
     sku: p.sku,
@@ -1038,7 +1038,7 @@ function ProcessVisual1() {
   return (
     <div ref={visRef} className="flex h-full w-full items-center justify-center px-6 sm:px-10">
       <div className="relative w-full max-w-[440px]">
-        {/* Excel source data — sits behind, peeking from top-right with partial overlap */}
+        {/* Excel source data  -  sits behind, peeking from top-right with partial overlap */}
         <div className="pointer-events-none absolute -right-8 -top-16 z-0 w-[230px] opacity-90 dark:opacity-70">
           <div className="rounded-xl border border-neutral-200/80 bg-white shadow-[0_18px_40px_-18px_rgba(0,0,0,0.30)] dark:border-white/10 dark:bg-neutral-900">
             <div className="flex items-center justify-between rounded-t-xl bg-[#107C41] px-2.5 py-1.5">
@@ -1163,11 +1163,11 @@ type RowStatus = "pending" | "loading" | "done";
 
 const CREDIT_ROWS = [
   { label: "Credit limit check", detail: "₹50,900 is within ₹6,58,000 available balance" },
-  { label: "Territory pricing applied", detail: "West Maharashtra rate card — verified" },
-  { label: "Scheme eligibility", detail: "Summer push active — 2% extra margin applied" },
+  { label: "Territory pricing applied", detail: "West Maharashtra rate card  -  verified" },
+  { label: "Scheme eligibility", detail: "Summer push active  -  2% extra margin applied" },
 ];
 
-/* ── PROCESS VISUAL 2 — ERP-style corner + staggered validation ───────── */
+/* ── PROCESS VISUAL 2  -  ERP-style corner + staggered validation ───────── */
 function ProcessVisual2() {
   const reduceMotion = useReducedMotion();
   const visRef = useRef<HTMLDivElement>(null);
@@ -1277,7 +1277,7 @@ function ProcessVisual2() {
                 <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-white/10">
                   <div className="h-full rounded-full bg-neutral-900 dark:bg-white" style={{ width: "56%" }} />
                 </div>
-                <p className={`mt-2 ${ds.text.caption} text-neutral-600 dark:text-white/55`}>Order value ₹50,900 — 56% of available limit</p>
+                <p className={`mt-2 ${ds.text.caption} text-neutral-600 dark:text-white/55`}>Order value ₹50,900  -  56% of available limit</p>
               </div>
 
               <div className="space-y-1.5">
@@ -1301,7 +1301,7 @@ function ProcessVisual2() {
   );
 }
 
-/* ── EXECUTE VISUAL 1 — Vendor metrics cards with status + channels ────── */
+/* ── EXECUTE VISUAL 1  -  Vendor metrics cards with status + channels ────── */
 
 function BetterMark() {
   return (
@@ -1312,7 +1312,7 @@ function BetterMark() {
   );
 }
 
-/** Price / metric cell — two stacked rows: struck original (always present, invisible until
+/** Price / metric cell  -  two stacked rows: struck original (always present, invisible until
  *  price differs) + current value.  Height never changes so the card never shifts. */
 function NegotiationMetricValueCell({
   displayValue,
@@ -1350,7 +1350,7 @@ function NegotiationMetricValueCell({
           </motion.span>
         )}
       </div>
-      {/* Struck row below — always in DOM when struckValue provided, transparent until price changes */}
+      {/* Struck row below  -  always in DOM when struckValue provided, transparent until price changes */}
       {struckValue != null && (
         <span
           className={`${ds.text.bodySmall} block font-semibold tabular-nums line-through transition-all duration-500 ${
@@ -1673,18 +1673,18 @@ function ExecuteVisual1() {
   );
 }
 
-/* ── EXECUTE VISUAL 2 — Manufacturer production pipeline ──── */
+/* ── EXECUTE VISUAL 2  -  Manufacturer production pipeline ──── */
 function ExecuteVisual2() {
   const visRef = useRef<HTMLDivElement>(null);
   const isVisible = useVisibleInViewport(visRef);
   const manufacturerSteps = [
     { title: "Order received", sub: "ORD-4821 · Pune wholesaler · Nescafe + Maggi lines" },
     { title: "Low-stock signal raised", sub: "Nescafe Sunrise (SKU-302) below safety cover for 80 ctns" },
-    { title: "Procurement order placed", sub: "Soluble coffee base from CCL Products India — ties to SKU-302 gap" },
+    { title: "Procurement order placed", sub: "Soluble coffee base from CCL Products India  -  ties to SKU-302 gap" },
     { title: "Inventory reservation posted", sub: "Sunrise −80 ctns · Maggi Noodles −120 ctns allocated" },
     { title: "Manufacturing scheduled", sub: "Line A · Nescafe Sunrise WO-9921 · May 9, 6 AM slot" },
     { title: "Logistics scheduled", sub: "Pune WH-A → Pune wholesaler · Thu 10:45 AM pickup" },
-    { title: "ETA calculated", sub: "Arrive Thu 1:20 PM — synced to plant dispatch board" },
+    { title: "ETA calculated", sub: "Arrive Thu 1:20 PM  -  synced to plant dispatch board" },
     { title: "Confirmation sent", sub: "WhatsApp & email to buyer with committed window", channelIcons: true },
   ];
 
@@ -1780,7 +1780,7 @@ function ExecuteVisual2() {
   );
 }
 
-/* ── EXECUTE VISUAL 3 — Dispatch summary card (staged reveal) ── */
+/* ── EXECUTE VISUAL 3  -  Dispatch summary card (staged reveal) ── */
 function ExecuteVisual3() {
   const reduceMotion = useReducedMotion();
   const visRef = useRef<HTMLDivElement>(null);
@@ -2083,7 +2083,7 @@ export default function ProductSteps() {
   const activePhaseIdx = ALL_STEPS[activeGlobal]?.phaseIdx ?? 0;
   const activeStepIdx = ALL_STEPS[activeGlobal]?.stepIdx ?? 0;
 
-  /* When the phase (tab) changes — from scroll or tab click — scroll the left
+  /* When the phase (tab) changes  -  from scroll or tab click  -  scroll the left
      steps column to the top so the new phase reads as a fresh block, in sync
      with the right panel moving to that phase’s first card. */
   useEffect(() => {
@@ -2157,7 +2157,7 @@ export default function ProductSteps() {
                 ))}
               </div>
 
-              {/* Heading + steps: vertical slide — forward steps enter from bottom; back tab enters from top */}
+              {/* Heading + steps: vertical slide  -  forward steps enter from bottom; back tab enters from top */}
               <div ref={leftStepsScrollRef} className="relative min-h-0 flex-1 overflow-hidden">
                 <AnimatePresence mode="wait" initial={false} custom={phaseSlideDirection}>
                   <motion.div
@@ -2237,7 +2237,7 @@ export default function ProductSteps() {
                 </AnimatePresence>
               </div>
 
-              {/* Book a Demo — pinned at bottom of sticky panel */}
+              {/* Book a Demo  -  pinned at bottom of sticky panel */}
               <div className="mt-auto pb-10">
                 <p className="mb-3 text-[13px] text-neutral-600 dark:text-white/60">
                   To customize according to your needs

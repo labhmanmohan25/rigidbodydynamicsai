@@ -42,7 +42,7 @@ export default function Hero() {
             variants={item}
             className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl"
           >
-            We research what&apos;s next in AI and make it accessible — one
+            We research what&apos;s next in AI and make it accessible  -  one
             problem at a time.
           </motion.p>
           <motion.div

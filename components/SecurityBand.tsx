@@ -1,8 +1,8 @@
 const POINTS = [
-  { k: "On-prem option", v: "Run inside your VPC or on your servers — your data never leaves your perimeter." },
+  { k: "On-prem option", v: "Run inside your VPC or on your servers  -  your data never leaves your perimeter." },
   { k: "Audit trail", v: "Every agent action is logged and reversible. Approvals on by default for high-risk steps." },
-  { k: "ERP-agnostic", v: "Works with SAP, Oracle, Tally, Odoo, Excel — and the WhatsApp groups you actually use." },
-  { k: "Indian context", v: "GST, e-way bills, distributor schemes, credit notes — modeled out of the box." },
+  { k: "ERP-agnostic", v: "Works with SAP, Oracle, Tally, Odoo, Excel  -  and the WhatsApp groups you actually use." },
+  { k: "Indian context", v: "GST, e-way bills, distributor schemes, credit notes  -  modeled out of the box." },
 ];
 
 export default function SecurityBand() {
@@ -26,8 +26,8 @@ export default function SecurityBand() {
               Your data. Your ERPs. Your rules.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-white/65">
-              Designed for the way Indian manufacturers run — across SAP,
-              Tally, distributor portals and WhatsApp — with the controls
+              Designed for the way Indian manufacturers run  -  across SAP,
+              Tally, distributor portals and WhatsApp  -  with the controls
               your CFO and IT team need to sign off.
             </p>
           </div>

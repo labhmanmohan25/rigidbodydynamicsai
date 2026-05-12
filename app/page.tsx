@@ -2,6 +2,7 @@ import AgentsGrid from "@/components/AgentsGrid";
 import FinalCta from "@/components/FinalCta";
 import HomeDarkFooter from "@/components/HomeDarkFooter";
 import HowItWorks from "@/components/HowItWorks";
+import LeadersCarousel from "@/components/LeadersCarousel";
 import OutcomesStrip from "@/components/OutcomesStrip";
 import PlatformShowcase from "@/components/PlatformShowcase";
 import ProductSteps from "@/components/ProductSteps";
@@ -53,6 +54,12 @@ export default function Home() {
         <TrackedHomeSection sectionId="cta">
           <FinalCta />
         </TrackedHomeSection>
+        <TrackedHomeSection sectionId="leaders_carousel">
+          <LeadersCarousel />
+        </TrackedHomeSection>
+        <div className="py-12 sm:pt-32 sm:pb-16">   
+          <SectionDivider />
+        </div>
       </div>
       <TrackedHomeSection sectionId="footer">
         <HomeDarkFooter />

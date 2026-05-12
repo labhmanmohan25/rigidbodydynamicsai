@@ -38,7 +38,7 @@ export default function VisionCta() {
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          We&apos;re building the layer that turns automation into intuition —
+          We&apos;re building the layer that turns automation into intuition  - 
           one problem at a time.
         </motion.p>
         <motion.div

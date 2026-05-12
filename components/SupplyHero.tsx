@@ -29,7 +29,7 @@ export default function SupplyHero() {
           )}
         >
           Turn your back-office into fully automated operations with 5x more
-          efficiency — no new tools, no new hires. Built for{" "}
+          efficiency  -  no new tools, no new hires. Built for{" "}
           <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
             brand owners
           </span>{" "}

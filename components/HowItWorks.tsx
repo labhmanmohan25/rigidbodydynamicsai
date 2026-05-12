@@ -29,7 +29,7 @@ function InlineChannelLogo({ file, alt }: { file: string; alt: string }) {
   );
 }
 
-/** Visual cluster: WhatsApp, Gmail, phone — paired with sr-only text where used */
+/** Visual cluster: WhatsApp, Gmail, phone  -  paired with sr-only text where used */
 function InlineOrderChannels() {
   return (
     <>
@@ -43,7 +43,7 @@ function InlineOrderChannels() {
   );
 }
 
-/** Clears fixed `LandingHeader` (top offset + bar + inset) — keep in sync with header layout */
+/** Clears fixed `LandingHeader` (top offset + bar + inset)  -  keep in sync with header layout */
 const SECTION_STYLE = {
   ["--how-header-clearance" as string]: "max(6rem, calc(env(safe-area-inset-top, 0px) + 5.25rem))",
 } as React.CSSProperties;
@@ -104,7 +104,7 @@ const FEATURES: { icon: ReactNode; title: string; description: ReactNode }[] = [
     icon: FEATURE_ICONS.truck,
     title: "Production and dispatch, in sync",
     description:
-      "When demand spikes, production schedules and dispatch plans adjust automatically. Your team sees what changed and why — no status calls needed.",
+      "When demand spikes, production schedules and dispatch plans adjust automatically. Your team sees what changed and why  -  no status calls needed.",
   },
 ];
 
@@ -119,7 +119,7 @@ export default function HowItWorks() {
         <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:aspect-auto lg:h-full lg:min-h-0 lg:min-w-0 lg:max-h-none">
           <Image
             src="/fmcg.jpeg"
-            alt="FMCG warehouse and distribution — stacked cartons and supply operations"
+            alt="FMCG warehouse and distribution  -  stacked cartons and supply operations"
             fill
             className="object-cover object-center"
             sizes="(max-width: 1024px) 100vw, (max-width: 1536px) 45vw, 52vw"
@@ -144,13 +144,7 @@ export default function HowItWorks() {
               <p
                 className={`${ds.text.sectionDesc} mt-4 max-w-xl text-lg leading-relaxed text-neutral-800 sm:text-xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.0625rem,1.85vmin,1.3125rem)] lg:leading-relaxed dark:text-white/85`}
               >
-                Your team already sends orders on <InlineOrderChannels />
-                and tracks stock in{" "}
-                <span className="sr-only">Excel </span>
-                <span className="inline-block align-middle" aria-hidden>
-                  <InlineChannelLogo file="excel.png" alt="" />
-                </span>
-                . We wire into those channels directly — no migration downtime, no retraining.
+                Your team already uses some tools to handle your supply chain. We wire into those systems directly  -  no migration downtime, no retraining.
               </p>
             </div>
 

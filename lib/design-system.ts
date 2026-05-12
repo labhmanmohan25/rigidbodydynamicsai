@@ -1,5 +1,5 @@
 /**
- * Design System — Rigid Body Dynamics (Notion-like, minimal)
+ * Design System  -  Rigid Body Dynamics (Notion-like, minimal)
  *
  * Import the token bundle and compose class names:
  *   import { ds, cn } from '@/lib/design-system';
@@ -47,7 +47,7 @@ export const ds = {
     subHeading:
       "text-xl sm:text-2xl font-semibold leading-snug text-neutral-950 dark:text-white",
 
-    /** Section description — directly below a heading. */
+    /** Section description  -  directly below a heading. */
     sectionDesc:
       "text-base sm:text-lg leading-relaxed text-neutral-700 dark:text-white/70",
 
@@ -55,26 +55,26 @@ export const ds = {
     body:
       "text-[15px] sm:text-base leading-relaxed text-neutral-700 dark:text-white/70",
 
-    /** Smaller body for compact areas — minimum for readability. */
+    /** Smaller body for compact areas  -  minimum for readability. */
     bodySmall:
       "text-sm leading-relaxed text-neutral-700 dark:text-white/70",
 
-    /** Caption / metadata — timestamps, secondary info. */
+    /** Caption / metadata  -  timestamps, secondary info. */
     caption:
       "text-xs text-neutral-500 dark:text-white/50",
 
-    /** Illustration text — the minimum readable size inside mockup UIs. */
+    /** Illustration text  -  the minimum readable size inside mockup UIs. */
     illus:
       "text-xs text-neutral-700 dark:text-white/75",
 
     /**
-     * Illustration UI minimum — ties to `--ds-illus-min-font` in globals.css.
+     * Illustration UI minimum  -  ties to `--ds-illus-min-font` in globals.css.
      * Prefer this over ad-hoc `text-[10px]` inside mockups.
      */
     illustrationMin:
       "text-[var(--ds-illus-min-font)] leading-snug text-[color:var(--ds-text-on-card)]",
 
-    /** Illustration label — headings inside illustration panels. */
+    /** Illustration label  -  headings inside illustration panels. */
     illusHeading:
       "text-[13px] font-semibold text-neutral-800 dark:text-white/85",
 
@@ -82,7 +82,7 @@ export const ds = {
     illusSecondary:
       "text-xs text-neutral-500 dark:text-white/55",
 
-    /** Semantic text on any surface — uses CSS vars (see `.dark` in globals.css). */
+    /** Semantic text on any surface  -  uses CSS vars (see `.dark` in globals.css). */
     tone: {
       primary: "text-[color:var(--ds-text-primary)]",
       muted: "text-[color:var(--ds-text-muted-semantic)]",
@@ -93,11 +93,11 @@ export const ds = {
     mono:
       "font-mono text-xs tabular-nums text-neutral-500 dark:text-white/45",
 
-    /** Mono label — prominent (active step numbers, selected indices). */
+    /** Mono label  -  prominent (active step numbers, selected indices). */
     monoActive:
       "font-mono text-[13px] font-medium tabular-nums text-neutral-900 dark:text-white",
 
-    /** Uppercase label — used for tags, badges, status indicators. */
+    /** Uppercase label  -  used for tags, badges, status indicators. */
     label:
       "text-[11px] font-semibold uppercase tracking-[0.12em] text-neutral-600 dark:text-white/65",
 
@@ -105,14 +105,14 @@ export const ds = {
     metric:
       "text-[18px] sm:text-[21px] font-semibold leading-tight tracking-tight text-neutral-900 dark:text-neutral-100",
 
-    /** Metric subtitle — explains what the metric means. */
+    /** Metric subtitle  -  explains what the metric means. */
     metricDesc:
       "text-xs leading-snug text-neutral-500 dark:text-white/50",
   },
 
   /* ── Cards ───────────────────────────────────────────────────────────── */
   card: {
-    /** Granular chrome — compose with `cn()` or use presets below. */
+    /** Granular chrome  -  compose with `cn()` or use presets below. */
     chrome: {
       radius: "rounded-[var(--ds-radius-xl)]",
       radiusLg: "rounded-[var(--ds-radius-lg)]",
@@ -131,21 +131,21 @@ export const ds = {
       "bg-background dark:bg-[#0a0a0a]",
     ].join(" "),
 
-    /** Interactive card — adds hover state. */
+    /** Interactive card  -  adds hover state. */
     interactive: [
       "rounded-[var(--ds-radius-xl)] border border-[color:var(--ds-card-border)]",
       "bg-background dark:bg-[#0a0a0a]",
       "transition-colors hover:bg-card dark:hover:bg-[#0f0f0f]",
     ].join(" "),
 
-    /** Raised surface — off-white / dark card fill + subtle shadow. */
+    /** Raised surface  -  off-white / dark card fill + subtle shadow. */
     elevated: [
       "rounded-[var(--ds-radius-xl)] border border-[color:var(--ds-card-border)]",
       "bg-[color:var(--ds-card-bg)]",
       "shadow-[var(--ds-shadow-card)] dark:shadow-[var(--ds-shadow-card-dark)]",
     ].join(" "),
 
-    /** Card padding — standard. */
+    /** Card padding  -  standard. */
     padding: "p-5 sm:p-6",
 
     /** Illustration panel inside a step. Clean, flat. */
@@ -155,7 +155,7 @@ export const ds = {
       "overflow-hidden",
     ].join(" "),
 
-    /** Illustration panel — with subtle shadow (floating elements only). */
+    /** Illustration panel  -  with subtle shadow (floating elements only). */
     illusFloat: [
       "rounded-[var(--ds-radius-lg)] border border-neutral-200 dark:border-white/10",
       "bg-white dark:bg-neutral-900",
@@ -187,7 +187,7 @@ export const ds = {
       "cursor-pointer",
     ].join(" "),
 
-    /** Ghost — same as secondary (outline / minimal). */
+    /** Ghost  -  same as secondary (outline / minimal). */
     ghost: [
       "inline-flex h-10 items-center justify-center rounded-[var(--ds-radius-md)]",
       "border border-neutral-300 dark:border-white/15",
@@ -255,10 +255,10 @@ export const ds = {
 
   /* ── Borders ─────────────────────────────────────────────────────────── */
   border: {
-    /** Standard divider — horizontal or vertical. */
+    /** Standard divider  -  horizontal or vertical. */
     default: "border-neutral-200 dark:border-white/10",
 
-    /** Subtle divider — inside cards. */
+    /** Subtle divider  -  inside cards. */
     subtle: "border-neutral-100 dark:border-white/5",
 
     /** Standard outer border color. */
@@ -306,7 +306,7 @@ export const ds = {
     prose: "max-w-prose",
   },
 
-  /* ── Spacing — Tailwind presets + CSS var names (see `--ds-space-*`) ──── */
+  /* ── Spacing  -  Tailwind presets + CSS var names (see `--ds-space-*`) ──── */
   space: {
     gapTight: "gap-2",
     gap: "gap-3 sm:gap-4",
@@ -327,15 +327,15 @@ export const ds = {
     track:
       "h-2 w-full rounded-full bg-neutral-100 dark:bg-white/10 overflow-hidden",
 
-    /** Fill (foreground) — pair with inline style for width. */
+    /** Fill (foreground)  -  pair with inline style for width. */
     fill:
       "h-full rounded-full bg-neutral-900 dark:bg-white transition-all duration-500",
 
-    /** Fill — success variant. */
+    /** Fill  -  success variant. */
     fillSuccess:
       "h-full rounded-full bg-emerald-500 dark:bg-emerald-400 transition-all duration-500",
 
-    /** Fill — warning variant. */
+    /** Fill  -  warning variant. */
     fillWarning:
       "h-full rounded-full bg-amber-500 dark:bg-amber-400 transition-all duration-500",
   },
@@ -358,7 +358,7 @@ export const ds = {
       "border-b border-neutral-100 dark:border-white/5",
     ].join(" "),
 
-    /** Table body cell — numeric right-aligned. */
+    /** Table body cell  -  numeric right-aligned. */
     tdNum: [
       "text-xs tabular-nums text-neutral-700 dark:text-white/75",
       "px-3 py-2 text-right",
@@ -367,7 +367,7 @@ export const ds = {
   },
 } as const;
 
-/** Spacing in px — parallels `--ds-space-*` in `app/globals.css` for inline styles. */
+/** Spacing in px  -  parallels `--ds-space-*` in `app/globals.css` for inline styles. */
 export const spacingPx = {
   0: 0,
   xs: 4,
@@ -392,7 +392,7 @@ export type NestleProduct = {
   status: "ok" | "low" | "out";
 };
 
-/** Order tuned for Process visual 1: Maggi (SKU-104) row 3, low-stock Sunrise (SKU-302) row 4 — keeps zoom framing aligned. */
+/** Order tuned for Process visual 1: Maggi (SKU-104) row 3, low-stock Sunrise (SKU-302) row 4  -  keeps zoom framing aligned. */
 export const NESTLE_PRODUCTS: NestleProduct[] = [
   { sku: "SKU-118", name: "Nescafe Classic 50g",             shortName: "Nescafe Classic",   qty: 80,  stock: 310,  shelfLife: "18 mo", status: "ok" },
   { sku: "SKU-156", name: "KitKat 4-Finger 37.3g",          shortName: "KitKat",            qty: 200, stock: 860,  shelfLife: "12 mo", status: "ok" },

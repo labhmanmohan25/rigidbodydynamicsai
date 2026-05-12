@@ -1,7 +1,7 @@
 const FEATURES = [
   {
     title: "Predictive, not reactive",
-    body: "Models monitor every signal — supplier delays, demand spikes, raw-material shortages — and adjust your operations before disruptions cascade.",
+    body: "Models monitor every signal  -  supplier delays, demand spikes, raw-material shortages  -  and adjust your operations before disruptions cascade.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5" aria-hidden>
         <path d="M3 17l4-6 4 3 5-8 5 6" strokeLinecap="round" strokeLinejoin="round" />
@@ -11,7 +11,7 @@ const FEATURES = [
   },
   {
     title: "End-to-end agents",
-    body: "Purpose-built AI agents handle order processing, procurement, production planning, dispatch and credit — 24/7, with a human in the loop only for strategy.",
+    body: "Purpose-built AI agents handle order processing, procurement, production planning, dispatch and credit  -  24/7, with a human in the loop only for strategy.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5" aria-hidden>
         <rect x="4" y="4" width="6" height="6" rx="1.5" />
@@ -24,7 +24,7 @@ const FEATURES = [
   },
   {
     title: "Any input, any channel",
-    body: "WhatsApp, phone calls, Excel uploads, photos of handwritten tally sheets — we ingest every channel your distributors and salespeople actually use.",
+    body: "WhatsApp, phone calls, Excel uploads, photos of handwritten tally sheets  -  we ingest every channel your distributors and salespeople actually use.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5" aria-hidden>
         <path d="M4 6h16M4 12h10M4 18h16" strokeLinecap="round" />
@@ -34,7 +34,7 @@ const FEATURES = [
   },
   {
     title: "Scale without headcount",
-    body: "Go from ₹500cr to ₹2,000cr without adding back-office staff. New SKUs, new states, new distributors — the platform absorbs the load.",
+    body: "Go from ₹500cr to ₹2,000cr without adding back-office staff. New SKUs, new states, new distributors  -  the platform absorbs the load.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5" aria-hidden>
         <path d="M4 20V8M10 20V4M16 20v-8M22 20H2" strokeLinecap="round" />

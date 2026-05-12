@@ -82,7 +82,7 @@ export default function Differentiators() {
             <span className="text-muted-foreground">assistant</span>
           </h2>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            We build systems that <span className="text-foreground font-medium">do the work</span> — with persistent memory and
+            We build systems that <span className="text-foreground font-medium">do the work</span>  -  with persistent memory and
             multi-step execution.
           </p>
           <motion.div

@@ -412,13 +412,13 @@ function RbdBand() {
 export default function SupplyChainDiagram() {
   return (
     <figure
-      aria-label="FMCG supply chain — stages, the apps each role uses today, and the Rigid Body Dynamics dashboard that unifies them"
+      aria-label="FMCG supply chain  -  stages, the apps each role uses today, and the Rigid Body Dynamics dashboard that unifies them"
       className="mx-auto w-full max-w-6xl"
     >
       <style>{FLOW_KEYFRAMES}</style>
 
       <p className="mb-4 text-center text-[11px] font-medium uppercase tracking-[0.2em] text-white/45 sm:text-xs">
-        FMCG supply chain — how mid-sized brands actually run today
+        FMCG supply chain  -  how mid-sized brands actually run today
       </p>
 
       {/* Wide layout: horizontal flow */}

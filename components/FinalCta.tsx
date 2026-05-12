@@ -2,7 +2,10 @@ import Link from "next/link";
 
 export default function FinalCta() {
   return (
-    <section id="final-cta" className="relative overflow-hidden bg-background py-20 dark:bg-black sm:py-28">
+    <section
+      id="final-cta"
+      className="relative overflow-hidden bg-background pt-20 pb-12 dark:bg-black sm:pt-28 sm:pb-16"
+    >
       <div className="mx-auto max-w-5xl px-4 text-center sm:px-6">
         <h2 className="mx-auto max-w-3xl text-[clamp(1.75rem,7vw+0.75rem,4.5rem)] font-normal leading-[1.08] tracking-tight text-neutral-950 sm:text-6xl md:text-7xl dark:text-white">
           Still running ops manually?
@@ -10,7 +13,7 @@ export default function FinalCta() {
           It&rsquo;s costing you growth.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-neutral-700 sm:text-lg dark:text-white/70">
-          Every missed order, late dispatch, and unchecked credit limit is
+          Every missed order, late dispatch, and delayed procurement is
           margin you don&rsquo;t get back. The businesses moving ahead
           are the ones automating now.
         </p>

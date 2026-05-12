@@ -3,7 +3,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 import { ReportSummaryWithButton } from "./ReportSummaryWithButton";
 
 export const metadata = {
-  title: "The Paradigm Shift to Agent-First Organizations — RBD AI Reports",
+  title: "The Paradigm Shift to Agent-First Organizations  -  RBD AI Reports",
   description:
     "Evaluating the transition from monolithic models to orchestrated specialized AI. A comprehensive analysis of specialized fine-tuned SLMs vs. frontier LLMs.",
 };
@@ -39,7 +39,7 @@ export default function ReportPage() {
           <div className="mt-6 h-px bg-neutral-100" />
         </header>
 
-        {/* Report Summary — shown after clicking Summarize */}
+        {/* Report Summary  -  shown after clicking Summarize */}
         <ReportSummaryWithButton>
           <h2 className="mb-4 text-lg font-normal text-neutral-900">Report Summary</h2>
           <p className="mb-5 text-[0.9375rem] leading-relaxed text-neutral-600">
@@ -48,16 +48,16 @@ export default function ReportPage() {
           <p className="mb-5 text-sm font-medium text-neutral-700">Key findings:</p>
           <ol className="mb-6 list-decimal space-y-3 pl-5 text-[0.9375rem] leading-relaxed text-neutral-600">
             <li>
-              <strong className="text-neutral-800">Validation of the Specialized Agent Hypothesis</strong> — Specialized, fine-tuned SLMs outperform general-purpose LLMs for routine business tasks due to the "Generalist Tax" (latency, cost, context pathologies, instruction drift). Benchmarks show SLMs achieve higher accuracy, superior throughput (e.g., 17× faster), and far lower cost (e.g., 1/80th). The exception is creative writing and open-ended content, where frontier LLMs retain an advantage.
+              <strong className="text-neutral-800">Validation of the Specialized Agent Hypothesis</strong>  -  Specialized, fine-tuned SLMs outperform general-purpose LLMs for routine business tasks due to the "Generalist Tax" (latency, cost, context pathologies, instruction drift). Benchmarks show SLMs achieve higher accuracy, superior throughput (e.g., 17× faster), and far lower cost (e.g., 1/80th). The exception is creative writing and open-ended content, where frontier LLMs retain an advantage.
             </li>
             <li>
-              <strong className="text-neutral-800">The Necessity of Multi-Agent Orchestration</strong> — An Agentic Orchestration Layer is critical: Planner/Supervisor Agent, centralized state and context management, deterministic guardrails, and Human-in-the-Loop (HITL). The Model Context Protocol (MCP) standardizes tool discovery and execution.
+              <strong className="text-neutral-800">The Necessity of Multi-Agent Orchestration</strong>  -  An Agentic Orchestration Layer is critical: Planner/Supervisor Agent, centralized state and context management, deterministic guardrails, and Human-in-the-Loop (HITL). The Model Context Protocol (MCP) standardizes tool discovery and execution.
             </li>
             <li>
-              <strong className="text-neutral-800">Architecture of the Agent-First Enterprise</strong> — Data re-architecture for autonomous machine actors (EKG, event-driven streaming), modernized IAM with least-privilege agent identities, and human capital evolution toward strategic direction and governance (e.g., Orchestration Engineer, Workforce Planning Architect) in the "Frontier Firm."
+              <strong className="text-neutral-800">Architecture of the Agent-First Enterprise</strong>  -  Data re-architecture for autonomous machine actors (EKG, event-driven streaming), modernized IAM with least-privilege agent identities, and human capital evolution toward strategic direction and governance (e.g., Orchestration Engineer, Workforce Planning Architect) in the "Frontier Firm."
             </li>
             <li>
-              <strong className="text-neutral-800">Commercial Ecosystem: Agent-as-a-Service (AaaS)</strong> — Shift from SaaS to AaaS; agent marketplaces (Azure AI Foundry, AWS Marketplace, Google Agentspace); outcome-based pricing for measurable, verified results.
+              <strong className="text-neutral-800">Commercial Ecosystem: Agent-as-a-Service (AaaS)</strong>  -  Shift from SaaS to AaaS; agent marketplaces (Azure AI Foundry, AWS Marketplace, Google Agentspace); outcome-based pricing for measurable, verified results.
             </li>
           </ol>
           <div className="overflow-x-auto rounded-lg border border-neutral-200 bg-white">
@@ -113,7 +113,7 @@ export default function ReportPage() {
             <p>
               This transition has precipitated a critical hypothesis regarding artificial intelligence system
               design: the assertion that a highly specialized, fine-tuned Small Language Model (SLM) is
-              fundamentally superior—in terms of accuracy, reliability, latency, and cost—to an average or
+              fundamentally superior - in terms of accuracy, reliability, latency, and cost - to an average or
               frontier general-purpose LLM that relies purely on prompting and tool use for specific business
               tasks.
             </p>
@@ -140,8 +140,8 @@ export default function ReportPage() {
             <p>
               The assertion that a fine-tuned, specialized model outperforms a heavily prompted frontier
               LLM for narrow tasks is strongly supported by recent benchmarking data across multiple
-              industries. The current market dynamic reveals that relying on frontier models—such as
-              GPT-4o, Claude 3.5 Sonnet, or Gemini 1.5 Pro—for routine, highly specific enterprise tasks
+              industries. The current market dynamic reveals that relying on frontier models - such as
+              GPT-4o, Claude 3.5 Sonnet, or Gemini 1.5 Pro - for routine, highly specific enterprise tasks
               incurs significant operational, financial, and performance penalties.
             </p>
 
@@ -150,8 +150,8 @@ export default function ReportPage() {
                 To comprehend why specialized models outperform generalists in business applications, one
                 must deeply examine the economic and computational architecture of modern artificial
                 intelligence. Deploying a model containing hundreds of billions or over a trillion
-                parameters to execute a simple, structured task—such as parsing a JSON file, querying a
-                proprietary database, or classifying a regulatory document—represents a massive
+                parameters to execute a simple, structured task - such as parsing a JSON file, querying a
+                proprietary database, or classifying a regulatory document - represents a massive
                 misallocation of computational resources.
               </p>
               <p>
@@ -192,8 +192,8 @@ export default function ReportPage() {
                 </li>
               </ol>
               <p>
-                Conversely, Small Language Models (SLMs)—typically categorized as models with fewer than
-                10 billion parameters—can be highly specialized via supervised fine-tuning (SFT) and
+                Conversely, Small Language Models (SLMs) - typically categorized as models with fewer than
+                10 billion parameters - can be highly specialized via supervised fine-tuning (SFT) and
                 Low-Rank Adaptation (LoRA). A fine-tuned SLM relies on its structurally adjusted internal
                 weights rather than lengthy prompt instructions to understand the domain. This structural
                 advantage allows SLMs to be fast, remarkably inexpensive to serve, and ruthlessly effective
@@ -210,7 +210,7 @@ export default function ReportPage() {
               <p>
                 In the realm of <strong>low-code workflow generation</strong>, researchers analyzed the
                 generation of JSON-based enterprise workflows from textual requirements. Fine-tuning an
-                SLM—specifically the Mistral-Nemo-12B-Base model—improved overall software quality and
+                SLM - specifically the Mistral-Nemo-12B-Base model - improved overall software quality and
                 structural validity by an average of 10%. Generalist LLMs consistently struggled with the
                 implicit requirements of specific enterprise systems, whereas the fine-tuned SLM
                 successfully internalized the specific environmental syntax and looping rules,
@@ -240,8 +240,8 @@ export default function ReportPage() {
               </p>
               <p>
                 The <strong>scientific research domain</strong> further reinforces this paradigm. The
-                AstroSage-Llama-3.1-8B model—a domain-specialized AI assistant for astrophysics and
-                cosmology—scored 80.9% on the AstroMLab-1 benchmark, vastly outperforming all proprietary
+                AstroSage-Llama-3.1-8B model - a domain-specialized AI assistant for astrophysics and
+                cosmology - scored 80.9% on the AstroMLab-1 benchmark, vastly outperforming all proprietary
                 and open-weight models in its size class, and performing entirely on par with the
                 multi-trillion parameter GPT-4o.
               </p>
@@ -308,12 +308,12 @@ export default function ReportPage() {
                 and subtext that smaller, strictly fine-tuned models often lack. Fine-tuning is inherently
                 a process of constraint; it narrows a model's focus to execute perfectly within a boundary.
                 Creative writing, by definition, requires the model to pull from vast, disparate
-                concepts—a task where the massive parameter counts of frontier models provide a distinct
+                concepts - a task where the massive parameter counts of frontier models provide a distinct
                 advantage.
               </p>
               <p>
-                However, for structured marketing copy—such as SEO optimization, brand-aligned product
-                descriptions, and automated ad variations—fine-tuning remains superior. Fine-tuning embeds
+                However, for structured marketing copy - such as SEO optimization, brand-aligned product
+                descriptions, and automated ad variations - fine-tuning remains superior. Fine-tuning embeds
                 the specific brand voice directly into the model's weights, ensuring consistency across
                 thousands of assets without requiring users to append lengthy style instructions to every
                 prompt.
@@ -403,8 +403,8 @@ export default function ReportPage() {
                 </li>
                 <li>
                   <strong>Deterministic backstops and guardrails.</strong> The orchestration layer
-                  integrates deterministic, rule-based execution engines—similar to traditional Robotic
-                  Process Automation—to enforce hard boundaries, security policies, and strict compliance
+                  integrates deterministic, rule-based execution engines - similar to traditional Robotic
+                  Process Automation - to enforce hard boundaries, security policies, and strict compliance
                   constraints. This creates a framework of "controlled agency."
                 </li>
                 <li>
@@ -481,15 +481,15 @@ export default function ReportPage() {
                 foundational <em>"USB-C of AI."</em>
               </p>
               <p>
-                Historically, connecting AI agents to disparate enterprise tools—CRMs, ERPs, SQL databases,
-                GitHub, and Slack—required brittle, point-to-point custom integrations. Every new data
+                Historically, connecting AI agents to disparate enterprise tools - CRMs, ERPs, SQL databases,
+                GitHub, and Slack - required brittle, point-to-point custom integrations. Every new data
                 source required integration teams to write new "glue code," resulting in insurmountable
                 technical debt.
               </p>
               <p>
                 MCP solves this by providing a universal, open-standard client-server architecture. An MCP
-                server exposes specific capabilities—including executable tools, read-only data resources,
-                and prompt templates—in a highly secure and standardized JSON-RPC format. Any
+                server exposes specific capabilities - including executable tools, read-only data resources,
+                and prompt templates - in a highly secure and standardized JSON-RPC format. Any
                 MCP-compliant agent can then dynamically discover and execute these tools without requiring
                 custom integration code. This standardization drastically reduces the enterprise attack
                 surface, simplifies system observability, and allows organizations to securely govern
@@ -511,8 +511,8 @@ export default function ReportPage() {
 
             <Subsection id="data-systems" number="4.1" title="Re-architecting Enterprise Data Systems for Machine Consumption">
               <p>
-                For decades, enterprise data pipelines—ETL processes, data warehouses, and business
-                intelligence dashboards—were engineered with one unquestioned assumption: the ultimate
+                For decades, enterprise data pipelines - ETL processes, data warehouses, and business
+                intelligence dashboards - were engineered with one unquestioned assumption: the ultimate
                 consumer of the processed data would be a human being. Data was meticulously cleansed,
                 aggregated, and visualized specifically for human cognition and decision-making patterns.
               </p>
@@ -527,15 +527,15 @@ export default function ReportPage() {
                 and mature semantic layers that provide agents with a machine-readable understanding of
                 business entities, organizational policies, and relational data structures. Furthermore,
                 traditional batch processing is being replaced by event-driven architectures and data
-                streaming applications like Apache Kafka—ensuring agents make autonomous decisions based
+                streaming applications like Apache Kafka - ensuring agents make autonomous decisions based
                 on live context rather than stale, day-old reporting.
               </p>
             </Subsection>
 
             <Subsection id="iam" number="4.2" title="Identity and Access Management (IAM) for Autonomous Machine Actors">
               <p>
-                When AI agents begin executing actions autonomously—provisioning cloud servers, negotiating
-                procurement contracts, managing email outreach, or issuing customer refunds—traditional IAM
+                When AI agents begin executing actions autonomously - provisioning cloud servers, negotiating
+                procurement contracts, managing email outreach, or issuing customer refunds - traditional IAM
                 models completely break down. Static machine identities such as traditional service accounts
                 or API keys are fundamentally insufficient because they lack the capacity to account for
                 the dynamic, non-deterministic reasoning of AI agents.
@@ -551,7 +551,7 @@ export default function ReportPage() {
                 Agents are governed by a strict <strong>principle of least privilege</strong>. Rather than
                 persistent access, agents are granted temporary, time-bound, and scope-limited access
                 tokens based purely on the specific sub-task delegated to them by the orchestrator. For
-                highly sensitive operations, the agentic IAM system mandates out-of-band authentication—
+                highly sensitive operations, the agentic IAM system mandates out-of-band authentication - 
                 pausing the autonomous workflow and pushing a multi-factor authentication request directly
                 to the human sponsor's device.
               </p>
@@ -561,7 +561,7 @@ export default function ReportPage() {
               <p>
                 The integration of an autonomous digital workforce necessitates a radical shift in human
                 resource planning and organizational hierarchy. Microsoft researchers have formalized this
-                new organizational model as the <strong>"Frontier Firm"</strong>—an entity structured
+                new organizational model as the <strong>"Frontier Firm"</strong> - an entity structured
                 fundamentally around on-demand machine intelligence, powered by deeply integrated hybrid
                 teams of humans and agents.
               </p>
@@ -710,8 +710,8 @@ export default function ReportPage() {
           {/* ── 6. Conclusion ── */}
           <Section id="conclusion" number="6" title="Conclusion and Strategic Outlook">
             <p>
-              The hypothesis presented—that the optimal future state of enterprise AI relies on highly
-              specialized, fine-tuned SLMs rather than heavily prompted generalist LLMs—is strongly and
+              The hypothesis presented - that the optimal future state of enterprise AI relies on highly
+              specialized, fine-tuned SLMs rather than heavily prompted generalist LLMs - is strongly and
               unequivocally validated by current technological benchmarks and economic data. The profound
               burdens of the "Generalist Tax" render monolithic models inherently inefficient, costly, and
               unreliable for routine, structured operational tasks. Instead, hyper-specialized models,
@@ -722,8 +722,8 @@ export default function ReportPage() {
               However, recognizing the raw power and efficiency of specialized models is only the first
               foundational step. To extract actual, scalable business value from a digital workforce, an
               enterprise requires a robust, centralized orchestration framework. Multi-agent systems depend
-              entirely on sophisticated control layers—utilizing planners, memory buses, open standards
-              like the Model Context Protocol, and deterministic guardrails—to translate high-level human
+              entirely on sophisticated control layers - utilizing planners, memory buses, open standards
+              like the Model Context Protocol, and deterministic guardrails - to translate high-level human
               intent into coordinated, safe, and reliable execution across disparate systems.
             </p>
             <p>
@@ -830,34 +830,34 @@ function Subsection({
 /* ── Citations data ─────────────────────────────────────────────────────── */
 
 const citations: { num: number; text: string; url: string }[] = [
-  { num: 1, text: "Top 6 Agentic AI Companies 2026: Enterprise Vendor Analysis — Aisera", url: "https://aisera.com/blog/agentic-ai-companies-tools/" },
-  { num: 2, text: "How does agentic AI work? — Kore.ai", url: "https://www.kore.ai/blog/how-agentic-ai-works" },
-  { num: 3, text: "Performance Trade-offs of Optimizing Small Language Models for E-Commerce — arXiv", url: "https://arxiv.org/html/2510.21970v1" },
-  { num: 4, text: "Small Language Models are the Future of Agentic AI — arXiv", url: "https://arxiv.org/pdf/2506.02153" },
-  { num: 5, text: "The Case for Specialized Language Models in Enterprise AI — Launch Consulting", url: "https://www.launchconsulting.com/posts/specialized-language-models" },
-  { num: 6, text: "How Small Language Models Are Key to Scalable Agentic AI — NVIDIA Technical Blog", url: "https://developer.nvidia.com/blog/how-small-language-models-are-key-to-scalable-agentic-ai/" },
-  { num: 7, text: "Agent as a Service will eclipse Software as a Service — Stactize", url: "https://stactize.com/artikel/agent-as-a-service-to-eclipse-software-as-a-service/" },
-  { num: 8, text: "Agent as a Service (AaaS): A Comprehensive Guide — Aalpha Information Systems", url: "https://www.aalpha.net/blog/agent-as-a-service-aaas-comprehensive-guide/" },
-  { num: 9, text: "The Hidden Economics of AI Agents: Managing Token Costs and Latency Trade-offs — Stevens Online", url: "https://online.stevens.edu/blog/hidden-economics-ai-agents-token-costs-latency/" },
-  { num: 10, text: "Fine-tuning Small Language Models as Efficient Enterprise Search Relevance Labelers — arXiv", url: "https://arxiv.org/pdf/2601.03211" },
-  { num: 11, text: "Fine-Tuning vs Frontier Models: Making the Right AI Investment — Larridin", url: "https://larridin.com/blog/fine-tuning-vs-frontier-models-making-the-right-ai-investment" },
-  { num: 12, text: "When to Fine-Tune LLMs (and When Not To) — Reddit r/LocalLLaMA", url: "https://www.reddit.com/r/LocalLLaMA/comments/1kyeo4z/when_to_finetune_llms_and_when_not_to_a_practical/" },
-  { num: 13, text: "Fine-Tune an SLM or Prompt an LLM? The Case of Generating Low-Code Workflows — arXiv", url: "https://arxiv.org/abs/2505.24189" },
-  { num: 14, text: "Fine-Tune an SLM or Prompt an LLM? (HTML) — arXiv", url: "https://arxiv.org/html/2505.24189v1" },
-  { num: 17, text: "Study: specialised AI models' big advantage in precision tasks — Cambridge Judge Business School", url: "https://www.jbs.cam.ac.uk/2025/study-specialised-ai-models-big-advantage-in-precision-tasks/" },
-  { num: 18, text: "Benchmarking LLMs for cancer genetic variant classification — PMC", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12078457/" },
-  { num: 19, text: "Achieving GPT-4o level performance in astronomy with a specialized 8B-parameter LLM — PMC", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12012197/" },
-  { num: 22, text: "Digital Employees: Top 10 Platforms for 2026 — Noca AI", url: "https://noca.ai/digital-employees-top-10-platforms-for-2026/" },
-  { num: 25, text: "Best AI Copywriting Tools in 2026 — Sintra.ai", url: "https://sintra.ai/blog/the-best-ai-copywriting-tools" },
-  { num: 30, text: "Understanding Outcome-Based Pricing — Pragmatic Institute", url: "https://www.pragmaticinstitute.com/resources/articles/product/understanding-outcome-based-pricing/" },
-  { num: 31, text: "Top 5 Enterprise AI Agent Platforms in 2025 — SearchUnify", url: "https://www.searchunify.com/resource-center/blog/top-5-enterprise-ai-agent-platforms-in-2025/" },
-  { num: 33, text: "Why orchestration matters: Common challenges in deploying AI agents — UiPath", url: "https://www.uipath.com/blog/ai/common-challenges-deploying-ai-agents-and-solutions-why-orchestration" },
-  { num: 34, text: "AI agent orchestration: In-depth guide to coordinating autonomous systems — N-iX", url: "https://www.n-ix.com/ai-agent-orchestration/" },
-  { num: 44, text: "Best AI Agent Frameworks in 2026: CrewAI vs. AutoGen vs. LangGraph — Medium", url: "https://medium.com/@kia556867/best-ai-agent-frameworks-in-2026-crewai-vs-autogen-vs-langgraph-06d1fba2c220" },
-  { num: 50, text: "What Is MCP (Model Context Protocol) and Why It Matters for Enterprise AI — Unito", url: "https://unito.io/blog/mcp-definition/" },
-  { num: 55, text: "The Rise of Agent-First Data Architectures — Medium / Scrapegraphai", url: "https://medium.com/@scrapegraphai/the-rise-of-agent-first-data-architectures-how-ai-is-reshaping-enterprise-information-systems-312c6bf599c0" },
-  { num: 57, text: "IAM Best Practices for AI Agents — Ping Identity", url: "https://www.pingidentity.com/en/resources/identity-fundamentals/agentic-ai/iam-best-practices-ai-agents.html" },
-  { num: 59, text: "2025: The year the Frontier Firm is born — Microsoft WorkLab", url: "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born" },
-  { num: 60, text: "Agents of change: New organizational roles in the age of AI — KPMG", url: "https://kpmg.com/us/en/articles/2025/agents-change-new-organizational-roles-ai.html" },
-  { num: 66, text: "How AI Agents Are Transforming the Future of SaaS Products — Acemero Technologies", url: "https://www.acemero.com/how-ai-agents-are-transforming-the-future-of-saas-products/" },
+  { num: 1, text: "Top 6 Agentic AI Companies 2026: Enterprise Vendor Analysis  -  Aisera", url: "https://aisera.com/blog/agentic-ai-companies-tools/" },
+  { num: 2, text: "How does agentic AI work?  -  Kore.ai", url: "https://www.kore.ai/blog/how-agentic-ai-works" },
+  { num: 3, text: "Performance Trade-offs of Optimizing Small Language Models for E-Commerce  -  arXiv", url: "https://arxiv.org/html/2510.21970v1" },
+  { num: 4, text: "Small Language Models are the Future of Agentic AI  -  arXiv", url: "https://arxiv.org/pdf/2506.02153" },
+  { num: 5, text: "The Case for Specialized Language Models in Enterprise AI  -  Launch Consulting", url: "https://www.launchconsulting.com/posts/specialized-language-models" },
+  { num: 6, text: "How Small Language Models Are Key to Scalable Agentic AI  -  NVIDIA Technical Blog", url: "https://developer.nvidia.com/blog/how-small-language-models-are-key-to-scalable-agentic-ai/" },
+  { num: 7, text: "Agent as a Service will eclipse Software as a Service  -  Stactize", url: "https://stactize.com/artikel/agent-as-a-service-to-eclipse-software-as-a-service/" },
+  { num: 8, text: "Agent as a Service (AaaS): A Comprehensive Guide  -  Aalpha Information Systems", url: "https://www.aalpha.net/blog/agent-as-a-service-aaas-comprehensive-guide/" },
+  { num: 9, text: "The Hidden Economics of AI Agents: Managing Token Costs and Latency Trade-offs  -  Stevens Online", url: "https://online.stevens.edu/blog/hidden-economics-ai-agents-token-costs-latency/" },
+  { num: 10, text: "Fine-tuning Small Language Models as Efficient Enterprise Search Relevance Labelers  -  arXiv", url: "https://arxiv.org/pdf/2601.03211" },
+  { num: 11, text: "Fine-Tuning vs Frontier Models: Making the Right AI Investment  -  Larridin", url: "https://larridin.com/blog/fine-tuning-vs-frontier-models-making-the-right-ai-investment" },
+  { num: 12, text: "When to Fine-Tune LLMs (and When Not To)  -  Reddit r/LocalLLaMA", url: "https://www.reddit.com/r/LocalLLaMA/comments/1kyeo4z/when_to_finetune_llms_and_when_not_to_a_practical/" },
+  { num: 13, text: "Fine-Tune an SLM or Prompt an LLM? The Case of Generating Low-Code Workflows  -  arXiv", url: "https://arxiv.org/abs/2505.24189" },
+  { num: 14, text: "Fine-Tune an SLM or Prompt an LLM? (HTML)  -  arXiv", url: "https://arxiv.org/html/2505.24189v1" },
+  { num: 17, text: "Study: specialised AI models' big advantage in precision tasks  -  Cambridge Judge Business School", url: "https://www.jbs.cam.ac.uk/2025/study-specialised-ai-models-big-advantage-in-precision-tasks/" },
+  { num: 18, text: "Benchmarking LLMs for cancer genetic variant classification  -  PMC", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12078457/" },
+  { num: 19, text: "Achieving GPT-4o level performance in astronomy with a specialized 8B-parameter LLM  -  PMC", url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC12012197/" },
+  { num: 22, text: "Digital Employees: Top 10 Platforms for 2026  -  Noca AI", url: "https://noca.ai/digital-employees-top-10-platforms-for-2026/" },
+  { num: 25, text: "Best AI Copywriting Tools in 2026  -  Sintra.ai", url: "https://sintra.ai/blog/the-best-ai-copywriting-tools" },
+  { num: 30, text: "Understanding Outcome-Based Pricing  -  Pragmatic Institute", url: "https://www.pragmaticinstitute.com/resources/articles/product/understanding-outcome-based-pricing/" },
+  { num: 31, text: "Top 5 Enterprise AI Agent Platforms in 2025  -  SearchUnify", url: "https://www.searchunify.com/resource-center/blog/top-5-enterprise-ai-agent-platforms-in-2025/" },
+  { num: 33, text: "Why orchestration matters: Common challenges in deploying AI agents  -  UiPath", url: "https://www.uipath.com/blog/ai/common-challenges-deploying-ai-agents-and-solutions-why-orchestration" },
+  { num: 34, text: "AI agent orchestration: In-depth guide to coordinating autonomous systems  -  N-iX", url: "https://www.n-ix.com/ai-agent-orchestration/" },
+  { num: 44, text: "Best AI Agent Frameworks in 2026: CrewAI vs. AutoGen vs. LangGraph  -  Medium", url: "https://medium.com/@kia556867/best-ai-agent-frameworks-in-2026-crewai-vs-autogen-vs-langgraph-06d1fba2c220" },
+  { num: 50, text: "What Is MCP (Model Context Protocol) and Why It Matters for Enterprise AI  -  Unito", url: "https://unito.io/blog/mcp-definition/" },
+  { num: 55, text: "The Rise of Agent-First Data Architectures  -  Medium / Scrapegraphai", url: "https://medium.com/@scrapegraphai/the-rise-of-agent-first-data-architectures-how-ai-is-reshaping-enterprise-information-systems-312c6bf599c0" },
+  { num: 57, text: "IAM Best Practices for AI Agents  -  Ping Identity", url: "https://www.pingidentity.com/en/resources/identity-fundamentals/agentic-ai/iam-best-practices-ai-agents.html" },
+  { num: 59, text: "2025: The year the Frontier Firm is born  -  Microsoft WorkLab", url: "https://www.microsoft.com/en-us/worklab/work-trend-index/2025-the-year-the-frontier-firm-is-born" },
+  { num: 60, text: "Agents of change: New organizational roles in the age of AI  -  KPMG", url: "https://kpmg.com/us/en/articles/2025/agents-change-new-organizational-roles-ai.html" },
+  { num: 66, text: "How AI Agents Are Transforming the Future of SaaS Products  -  Acemero Technologies", url: "https://www.acemero.com/how-ai-agents-are-transforming-the-future-of-saas-products/" },
 ];

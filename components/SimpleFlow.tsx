@@ -50,8 +50,8 @@ export default function SimpleFlow({ variant = "cad" }: { variant?: FlowVariant 
   const steps = variant === "cad" ? CAD_FLOW : MARKETING_FLOW;
   const flowLabel =
     variant === "cad"
-      ? "From 2D drawing to 3D — in plain English"
-      : "One message, many customers — done right";
+      ? "From 2D drawing to 3D  -  in plain English"
+      : "One message, many customers  -  done right";
 
   return (
     <motion.div

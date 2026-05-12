@@ -14,7 +14,7 @@
   --card: #fffefb;
   --border: #e5e2dc;
   --max-width-content: 1200px;
-  /* Reading width / inset content — Notion-like columns */
+  /* Reading width / inset content  -  Notion-like columns */
   --max-width-readable: 65ch;
   --max-width-narrow: 42rem;
 
@@ -32,7 +32,7 @@
   --ds-text-on-card: var(--ds-text-body);
   --ds-text-muted-semantic: var(--ds-text-muted);
 
-  /* ── Spacing scale (px) — for arbitrary spacing-[length:var(--ds-space-md)] ── */
+  /* ── Spacing scale (px)  -  for arbitrary spacing-[length:var(--ds-space-md)] ── */
   --ds-space-0: 0px;
   --ds-space-xs: 4px;
   --ds-space-sm: 8px;
@@ -48,13 +48,13 @@
   --ds-radius-lg: 12px;
   --ds-radius-xl: 16px;
 
-  /* Card chrome — aligned with ds.card in lib/design-system.ts */
+  /* Card chrome  -  aligned with ds.card in lib/design-system.ts */
   --ds-card-bg: var(--card);
   --ds-card-border: var(--border);
   --ds-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 3px rgb(0 0 0 / 0.06);
   --ds-shadow-card-dark: 0 4px 14px rgb(0 0 0 / 0.35);
 
-  /* ── Illustration min font — nothing below this in any mockup UI ── */
+  /* ── Illustration min font  -  nothing below this in any mockup UI ── */
   --ds-illus-min-font: 12px;
 
   /* ── Chart / dashboard color vars ── */
@@ -99,7 +99,7 @@
   --shadow-ds-card: var(--ds-shadow-card);
 }
 
-/* Doto variable font — company name on landing */
+/* Doto variable font  -  company name on landing */
 .doto-title {
   font-family: "Doto", sans-serif;
   font-optical-sizing: auto;
@@ -151,7 +151,7 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ProductSteps ExecuteVisual3 — vehicle card skeleton */
+/* ProductSteps ExecuteVisual3  -  vehicle card skeleton */
 @keyframes vehicleCardShimmer {
   0% {
     transform: translateX(-100%);
@@ -244,7 +244,7 @@ button:focus-visible .cta-text-roll > span {
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Final CTA — soft AI-style glow: fixed shape, only gradient angle moves */
+/* Final CTA  -  soft AI-style glow: fixed shape, only gradient angle moves */
 @property --cta-ai-glow-angle {
   syntax: "<angle>";
   inherits: false;
@@ -270,7 +270,7 @@ button:focus-visible .cta-text-roll > span {
 .cta-ai-glow-wrap .cta-ai-glow-backdrop {
   position: absolute;
   z-index: 0;
-  /* Tight halo — reads as under-glow / shadow, not a large aura */
+  /* Tight halo  -  reads as under-glow / shadow, not a large aura */
   inset: -5px;
   pointer-events: none;
   overflow: visible;
@@ -303,7 +303,7 @@ button:focus-visible .cta-text-roll > span {
   opacity: 0.62;
 }
 
-/* Active indicator — heartbeat dot with expanding halo */
+/* Active indicator  -  heartbeat dot with expanding halo */
 @keyframes heartbeat-dot {
   0%, 100% { transform: scale(1); }
   14% { transform: scale(1.45); }
@@ -339,6 +339,25 @@ button:focus-visible .cta-text-roll > span {
   transform-origin: center;
   animation: heartbeat-halo 1.4s ease-out infinite;
   pointer-events: none;
+}
+
+/* Leaders carousel  -  seamless infinite marquee */
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Use !important so the universal `prefers-reduced-motion` override below cannot
+ * neutralize the brand strip rotation (it is core content, not decoration). */
+.marquee-track {
+  animation: marquee-x var(--marquee-duration, 60s) linear infinite !important;
+  animation-play-state: running !important;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused !important;
 }
 
 /* Respect reduced motion */

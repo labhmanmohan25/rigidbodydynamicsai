@@ -11,7 +11,7 @@ function getContent(): string {
 }
 
 export const metadata = {
-  title: "Travel Pain Points & App Strategy — RBD AI Reports",
+  title: "Travel Pain Points & App Strategy  -  RBD AI Reports",
   description:
     "Market dynamics, traveler friction, willingness to pay, and the post-commoditization landscape in global travel and tourism.",
 };

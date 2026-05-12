@@ -28,7 +28,7 @@ const SECTIONS = [
           If you are agreeing on behalf of a company, you confirm that you have
           authority to bind that company. The Service is intended for business
           use by brand owners, manufacturers, distributors, and their authorized
-          users — not for personal, household, or consumer use.
+          users  -  not for personal, household, or consumer use.
         </p>
       </>
     ),
@@ -40,29 +40,29 @@ const SECTIONS = [
       <>
         <ul>
           <li>
-            <span className="font-medium text-foreground">&ldquo;Customer&rdquo;</span> — the
+            <span className="font-medium text-foreground">&ldquo;Customer&rdquo;</span>  -  the
             company that has signed an order form or otherwise contracted to
             use the Service.
           </li>
           <li>
-            <span className="font-medium text-foreground">&ldquo;Authorized Users&rdquo;</span> —
+            <span className="font-medium text-foreground">&ldquo;Authorized Users&rdquo;</span>  - 
             employees, contractors, or partners that the Customer permits to
             access the Service.
           </li>
           <li>
-            <span className="font-medium text-foreground">&ldquo;Customer Data&rdquo;</span> —
+            <span className="font-medium text-foreground">&ldquo;Customer Data&rdquo;</span>  - 
             the operational data the Customer or its Authorized Users provide
             to the Service or that the Service ingests from connected channels
             (WhatsApp, email, voice, Excel, ERP, etc.).
           </li>
           <li>
-            <span className="font-medium text-foreground">&ldquo;Agents&rdquo;</span> — the
+            <span className="font-medium text-foreground">&ldquo;Agents&rdquo;</span>  -  the
             AI workflows we operate (for example the Procurement Agent,
             Production Planner, Dispatch Coordinator, Field Listener, Credit
             Watchdog, and Forecast Engine).
           </li>
           <li>
-            <span className="font-medium text-foreground">&ldquo;Output&rdquo;</span> — the
+            <span className="font-medium text-foreground">&ldquo;Output&rdquo;</span>  -  the
             structured data, messages, summaries, plans, and actions the Agents
             produce from Customer Data.
           </li>
@@ -236,7 +236,7 @@ const SECTIONS = [
           maintenance and events outside our reasonable control. Specific
           service levels, response times, and support channels (including
           dedicated support for production and dispatch workflows) are set out
-          in the order form. The Service is delivered as a managed service —
+          in the order form. The Service is delivered as a managed service  - 
           we monitor agents around the clock and intervene where automated
           recovery is not possible.
         </p>

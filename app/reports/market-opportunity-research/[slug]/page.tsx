@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: Props) {
   const sub = getSubResearchBySlug(slug);
   if (!sub) return { title: "Not Found" };
   return {
-    title: `${sub.title} — AI Market Opportunity Research`,
+    title: `${sub.title}  -  AI Market Opportunity Research`,
     description: sub.description ?? undefined,
   };
 }

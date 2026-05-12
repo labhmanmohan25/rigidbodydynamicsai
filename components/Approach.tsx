@@ -69,7 +69,7 @@ export default function Approach() {
           </h2>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             We pick one workflow, solve it end-to-end, then move to the next. No
-            scattered features — focused execution.
+            scattered features  -  focused execution.
           </p>
         </motion.div>
 

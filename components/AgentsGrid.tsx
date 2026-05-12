@@ -310,7 +310,7 @@ export default function AgentsGrid() {
             One ops team that never sleeps.
           </h2>
           <p className={`mt-3 max-w-xl ${ds.text.sectionDesc}`}>
-            Same channels and sheets—agents run the work continuously. Reduce operational load today and unlock rapid growth tomorrow.
+            Same channels and sheets — agents run the work continuously. Reducing operational load today to unlock rapid growth tomorrow.
           </p>
         </div>
 
