@@ -21,7 +21,7 @@ export default function SupplyHero() {
           )}
         >
           Turn your back-office into fully automated operations with <strong>5x more
-          efficiency</strong>  -  no new tools, no new hires. Built for{" "}
+          efficiency</strong>  -  no new tools, no new hires. Built for FMCG{" "}
      
           <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
             brand owners
