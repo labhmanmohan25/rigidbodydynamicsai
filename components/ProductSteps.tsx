@@ -61,12 +61,12 @@ const PHASES: Phase[] = [
       {
         title: "Captures inbound from all sources",
         description:
-          "Your buyers and field teams keep ordering the way they always have  -  WhatsApp messages, Excel sheets, emails, even phone calls. Nothing changes for them. We capture everything automatically.",
+          "WhatsApp, Excel, email, phone calls - your buyers order the way they always have. We capture it all automatically.",
       },
       {
         title: "AI reads every format and language",
         description:
-          "Hindi, Marathi, Gujarati, English  -  mixed in one message or email. Our agents parse it into structured order lines: SKU, quantity, delivery window  -  before anything hits the plant schedule.",
+          "Hindi, Marathi, Gujarati, English - mixed in one message. Parsed into structured SKU, quantity, and delivery lines.",
       },
     ],
   },
@@ -84,7 +84,7 @@ const PHASES: Phase[] = [
       {
         title: "SKU resolution & live stock snapshot",
         description:
-          '"80 cartons Nescafe Sunrise" maps to SKU-302 and your WMS snapshot in one pass. When inventory is running lean, the system triggers procurement automatically.',
+          "Maps orders to exact SKUs with live WMS stock checks. Low inventory automatically triggers procurement.",
      
       },
       {
@@ -109,17 +109,17 @@ const PHASES: Phase[] = [
       {
         title: "Procurement triggers fire automatically",
         description:
-          "When raw materials or packaging stock drops below safety levels, purchase orders go out automatically. Quotes are compared across your approved vendors, and the best option is selected with full rationale.",
+          "Stock below safety levels? POs go out automatically. Vendor quotes compared and best option selected.",
       },
       {
         title: "Production schedules rebalance",
         description:
-          "Nestlé demand signals update the MES / packaging lines you already run: committed volumes adjust, slotting tightens on hot SKUs, and materials reserved to orders stay traceable.",
+          "Demand signals update your MES and packaging lines. Volumes adjust, hot SKUs slot tighter, materials stay traced.",
       },
       {
         title: "Delivery scheduled",
         description:
-          "Plant dispatch and primary freight timelines align with what buyers were promised  -  pickup windows, lanes, and negotiated rates stay in one thread so the yard and customer service see the same truth.",
+          "Dispatch and freight align with buyer promises. Pickup windows, lanes, and rates in one shared view.",
       },
     ],
   },
@@ -1677,30 +1677,53 @@ function ExecuteVisual1() {
 function ExecuteVisual2() {
   const visRef = useRef<HTMLDivElement>(null);
   const isVisible = useVisibleInViewport(visRef);
-  const manufacturerSteps = [
-    { title: "Order received", sub: "ORD-4821 · Pune wholesaler · Nescafe + Maggi lines" },
-    { title: "Low-stock signal raised", sub: "Nescafe Sunrise (SKU-302) below safety cover for 80 ctns" },
-    { title: "Procurement order placed", sub: "Soluble coffee base from CCL Products India  -  ties to SKU-302 gap" },
-    { title: "Inventory reservation posted", sub: "Sunrise −80 ctns · Maggi Noodles −120 ctns allocated" },
-    { title: "Manufacturing scheduled", sub: "Line A · Nescafe Sunrise WO-9921 · May 9, 6 AM slot" },
-    { title: "Logistics scheduled", sub: "Pune WH-A → Pune wholesaler · Thu 10:45 AM pickup" },
-    { title: "ETA calculated", sub: "Arrive Thu 1:20 PM  -  synced to plant dispatch board" },
-    { title: "Confirmation sent", sub: "WhatsApp & email to buyer with committed window", channelIcons: true },
-  ];
 
-  const [activeStep, setActiveStep] = useState(0);
+  const topSteps = [
+    { title: "Order received", sub: "ORD-4821 · Pune wholesaler · Nescafe + Maggi lines" },
+    { title: "Low-stock signal raised", sub: "Nescafe Sunrise (SKU-302) below safety cover" },
+  ];
+  const blurredSteps = [
+    { title: "Procurement order placed", sub: "Soluble coffee base from CCL Products India" },
+    { title: "Inventory reservation posted", sub: "Sunrise 80 ctns · Maggi Noodles 120 ctns allocated" },
+    { title: "Manufacturing scheduled", sub: "Line A · Nescafe Sunrise WO-9921 · May 9 slot" },
+    { title: "Logistics scheduled", sub: "Pune WH-A · Thu 10:45 AM pickup window" },
+    { title: "ETA calculated", sub: "Arrive Thu 1:20 PM · synced to dispatch board" },
+  ];
+  const bottomStep = { title: "Confirmation sent", sub: "WhatsApp & email to buyer with committed window", channelIcons: true as const };
+
+  const totalVisible = topSteps.length + 1 + 1; // top + blur block + bottom
+  const [activeSection, setActiveSection] = useState(0);
 
   useEffect(() => {
     if (!isVisible) return;
     const interval = window.setInterval(() => {
-      setActiveStep((prev) => (prev + 1) % manufacturerSteps.length);
-    }, 1200);
+      setActiveSection((prev) => (prev + 1) % totalVisible);
+    }, 1400);
     return () => window.clearInterval(interval);
-  }, [isVisible, manufacturerSteps.length]);
+  }, [isVisible, totalVisible]);
 
-  const plannedPct = Math.round((Math.min(activeStep, manufacturerSteps.length - 1) / (manufacturerSteps.length - 1)) * 50);
   const tagCls =
     "bg-violet-600 px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-0 dark:bg-violet-500";
+
+  const checkIcon = (active: boolean) => (
+    <svg viewBox="0 0 8 8" className={`h-2 w-2 transition-opacity duration-300 ${active ? "opacity-100" : "opacity-0"}`} fill="none">
+      <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+
+  const dot = (active: boolean, glow: boolean) => (
+    <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+      active ? "scale-100 border-emerald-500 bg-emerald-500" : "scale-95 border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
+    } ${glow ? "shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" : ""}`}>
+      {checkIcon(active)}
+    </div>
+  );
+
+  const connector = (active: boolean) => (
+    <div className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full transition-colors duration-500 ${
+      active ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
+    }`} />
+  );
 
   return (
     <div ref={visRef} className="flex h-full w-full items-center justify-center px-6 sm:px-10">
@@ -1729,49 +1752,75 @@ function ExecuteVisual2() {
 
           <div className="p-3.5">
             <div className="flex flex-col">
-              {manufacturerSteps.map((s, i) => (
-                <div key={`${s.title}-${i}`} className="flex gap-3">
+              {/* Top clear steps */}
+              {topSteps.map((s, i) => (
+                <div key={s.title} className="flex gap-3">
                   <div className="flex w-4 shrink-0 flex-col items-center self-stretch pt-[3px]">
-                    <div
-                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-                        i <= activeStep
-                          ? "scale-100 border-emerald-500 bg-emerald-500"
-                          : "scale-95 border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
-                      } ${i === activeStep ? "shadow-[0_0_0_4px_rgba(16,185,129,0.18)]" : ""}`}
-                    >
-                      <svg
-                        viewBox="0 0 8 8"
-                        className={`h-2 w-2 transition-opacity duration-300 ${i <= activeStep ? "opacity-100" : "opacity-0"}`}
-                        fill="none"
-                      >
-                        <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </div>
-                    {i < manufacturerSteps.length - 1 ? (
-                      <div
-                        className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full transition-colors duration-500 ${
-                          i < activeStep ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
-                        }`}
-                      />
-                    ) : null}
+                    {dot(i <= activeSection, i === activeSection)}
+                    {connector(i < activeSection)}
                   </div>
-                  <div className={`min-w-0 flex-1 leading-snug ${i < manufacturerSteps.length - 1 ? "pb-2.5" : ""}`}>
-                    <p className="flex flex-wrap items-center gap-1.5 text-[12px] font-semibold text-neutral-900 dark:text-white">
-                      <span>{s.title}</span>
-                      {s.channelIcons ? (
-                        <span
-                          className="inline-flex items-center gap-0.5"
-                          aria-label="WhatsApp and email"
-                        >
-                          <img src="/icons/whatsapp.png" alt="" className="h-3.5 w-3.5 object-contain" />
-                          <img src="/icons/gmail.png" alt="" className="h-3.5 w-3.5 object-contain" />
-                        </span>
-                      ) : null}
-                    </p>
+                  <div className="min-w-0 flex-1 pb-2.5 leading-snug">
+                    <p className="text-[12px] font-semibold text-neutral-900 dark:text-white">{s.title}</p>
                     <p className="mt-0.5 text-sm font-medium text-neutral-600 dark:text-white/55">{s.sub}</p>
                   </div>
                 </div>
               ))}
+
+              {/* Blurred middle section - each step has its own dot + connector */}
+              <div className="relative">
+                <div className="select-none blur-[3px] opacity-40">
+                  {blurredSteps.map((s, i) => (
+                    <div key={s.title} className="flex gap-3">
+                      <div className="flex w-4 shrink-0 flex-col items-center self-stretch pt-[3px]">
+                        <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
+                          activeSection >= topSteps.length ? "border-emerald-500 bg-emerald-500" : "border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
+                        }`}>
+                          <svg viewBox="0 0 8 8" className={`h-2 w-2 ${activeSection >= topSteps.length ? "opacity-100" : "opacity-0"}`} fill="none">
+                            <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        </div>
+                        {i < blurredSteps.length - 1 && (
+                          <div className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full ${
+                            activeSection >= topSteps.length ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
+                          }`} />
+                        )}
+                        {i === blurredSteps.length - 1 && (
+                          <div className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full ${
+                            activeSection > topSteps.length ? "bg-emerald-300 dark:bg-emerald-400/70" : "bg-neutral-200 dark:bg-white/10"
+                          }`} />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1 pb-2.5 leading-snug">
+                        <p className="text-[12px] font-semibold text-neutral-900 dark:text-white">{s.title}</p>
+                        <p className="mt-0.5 text-sm font-medium text-neutral-600 dark:text-white/55">{s.sub}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {/* Overlay text - left aligned */}
+                <div className="pointer-events-none absolute inset-0 flex items-center">
+                  <div className="pl-7">
+                    <p className="text-[12px] font-semibold text-violet-700 dark:text-violet-300">AI agents handle from order to delivery</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom clear step */}
+              <div className="flex gap-3">
+                <div className="flex w-4 shrink-0 flex-col items-center self-stretch pt-[3px]">
+                  {dot(activeSection >= topSteps.length + 1, activeSection === topSteps.length + 1)}
+                </div>
+                <div className="min-w-0 flex-1 leading-snug">
+                  <p className="flex flex-wrap items-center gap-1.5 text-[12px] font-semibold text-neutral-900 dark:text-white">
+                    <span>{bottomStep.title}</span>
+                    <span className="inline-flex items-center gap-0.5" aria-label="WhatsApp and email">
+                      <img src="/icons/whatsapp.png" alt="" className="h-3.5 w-3.5 object-contain" />
+                      <img src="/icons/gmail.png" alt="" className="h-3.5 w-3.5 object-contain" />
+                    </span>
+                  </p>
+                  <p className="mt-0.5 text-sm font-medium text-neutral-600 dark:text-white/55">{bottomStep.sub}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

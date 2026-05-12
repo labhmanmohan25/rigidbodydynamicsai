@@ -1,20 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import MeteorShowerPixels from "./MeteorShowerPixels";
-import { useHomeAppearance } from "./HomeAppearance";
+import LeadersCarousel from "./LeadersCarousel";
 import { cn, ds } from "@/lib/design-system";
 
 export default function SupplyHero() {
-  const { homeTheme } = useHomeAppearance();
-
   return (
-    <section className="relative isolate overflow-hidden bg-background pb-40 pt-44 dark:bg-black sm:pb-48 sm:pt-52">
-      <div className="pointer-events-none absolute inset-0 z-0 opacity-[0.82] dark:opacity-100">
-        <MeteorShowerPixels surface={homeTheme} />
-      </div>
-      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/45 via-transparent to-background/75 dark:hidden" aria-hidden />
-
+    <section className="relative isolate overflow-hidden bg-background pt-44 pb-0 dark:bg-black sm:pt-52">
       <div className="relative z-10 mx-auto max-w-5xl px-4 text-center text-neutral-950 sm:px-6 dark:text-white">
         <h1
           className={`mx-auto max-w-5xl text-neutral-950 dark:text-white ${ds.text.heroHeading}`}
@@ -28,8 +20,9 @@ export default function SupplyHero() {
             ds.text.body,
           )}
         >
-          Turn your back-office into fully automated operations with 5x more
-          efficiency  -  no new tools, no new hires. Built for{" "}
+          Turn your back-office into fully automated operations with <strong>5x more
+          efficiency</strong>  -  no new tools, no new hires. Built for{" "}
+     
           <span className="underline underline-offset-[0.12em] decoration-from-font decoration-black dark:decoration-white">
             brand owners
           </span>{" "}
@@ -53,6 +46,10 @@ export default function SupplyHero() {
             </span>
           </Link>
         </div>
+      </div>
+
+      <div className="relative z-10 mt-16 sm:mt-20">
+        <LeadersCarousel />
       </div>
     </section>
   );
