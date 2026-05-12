@@ -1,6 +1,10 @@
+import { ds } from "@/lib/design-system";
+
 const OUTCOMES = [
   {
-    metric: "99.99% accuracy",
+    metric: "Zero lost orders",
+    subtitle:
+      "Every WhatsApp message, every Excel sheet — captured and confirmed automatically.",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -17,6 +21,7 @@ const OUTCOMES = [
   },
   {
     metric: "80% less admin time",
+    subtitle: "Agents handle order entry, follow-ups, and coordination — your team focuses on decisions.",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -34,6 +39,7 @@ const OUTCOMES = [
   },
   {
     metric: "4-week deployment",
+    subtitle: "Live on your existing WhatsApp & Excel — no IT involvement needed",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -53,21 +59,22 @@ export default function OutcomesStrip() {
   return (
     <section className="w-full bg-background py-10 dark:bg-black sm:py-14">
       <div
-        className="w-full border-y border-neutral-300/90 bg-background [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:border-white/15 dark:bg-black dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)]"
+        className="w-full border-y border-neutral-200 bg-background [background-size:24px_24px] [background-image:linear-gradient(to_right,rgba(0,0,0,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.04)_1px,transparent_1px)] dark:border-white/10 dark:bg-black dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)]"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="grid w-full grid-cols-1 gap-px bg-neutral-300/80 dark:bg-white/10 sm:grid-cols-3">
             {OUTCOMES.map((o) => (
               <div
                 key={o.metric}
-                className="group relative flex items-center justify-center gap-3 bg-background px-5 py-5 transition-colors first:border-l first:border-neutral-300/90 last:border-r last:border-neutral-300/90 hover:bg-card dark:bg-black dark:first:border-white/15 dark:last:border-white/15 dark:hover:bg-white/[0.03] sm:py-6"
+                className="group relative flex items-center gap-3 bg-background px-5 py-5 transition-colors first:border-l first:border-neutral-200 last:border-r last:border-neutral-200 hover:bg-card dark:bg-black dark:first:border-white/10 dark:last:border-white/10 dark:hover:bg-white/[0.03] sm:py-6"
               >
-                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-neutral-300/90 bg-white/80 text-neutral-800 dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
+                <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white dark:border-white/10 dark:bg-white/[0.04] text-neutral-700 dark:text-white/80">
                   {o.icon}
                 </span>
-                <p className="min-w-0 text-center text-[18px] font-semibold leading-tight tracking-tight text-neutral-900 sm:text-[21px] dark:text-neutral-100">
-                  {o.metric}
-                </p>
+                <div className="min-w-0">
+                  <p className={ds.text.metric}>{o.metric}</p>
+                  <p className={`mt-1 ${ds.text.metricDesc}`}>{o.subtitle}</p>
+                </div>
               </div>
             ))}
           </div>

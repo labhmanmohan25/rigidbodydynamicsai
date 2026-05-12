@@ -67,6 +67,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased font-sans bg-background text-foreground`}
+        suppressHydrationWarning
       >
         <GoogleAnalytics />
         <a

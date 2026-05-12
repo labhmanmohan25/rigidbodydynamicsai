@@ -14,6 +14,67 @@
   --card: #fffefb;
   --border: #e5e2dc;
   --max-width-content: 1200px;
+  /* Reading width / inset content — Notion-like columns */
+  --max-width-readable: 65ch;
+  --max-width-narrow: 42rem;
+
+  /* ── Design-system readable text palette ──
+   * Body text bumped for readability (was neutral-600 / white-55) */
+  --ds-text-body: #404040;           /* neutral-700 */
+  --ds-text-body-dark: rgba(255,255,255,0.70);
+  --ds-text-secondary: #525252;      /* neutral-600 */
+  --ds-text-secondary-dark: rgba(255,255,255,0.60);
+  --ds-text-muted: #737373;          /* neutral-500 */
+  --ds-text-muted-dark: rgba(255,255,255,0.50);
+
+  /* Semantic text (use with text-[color:var(--ds-text-primary)] etc.) */
+  --ds-text-primary: var(--foreground);
+  --ds-text-on-card: var(--ds-text-body);
+  --ds-text-muted-semantic: var(--ds-text-muted);
+
+  /* ── Spacing scale (px) — for arbitrary spacing-[length:var(--ds-space-md)] ── */
+  --ds-space-0: 0px;
+  --ds-space-xs: 4px;
+  --ds-space-sm: 8px;
+  --ds-space-md: 12px;
+  --ds-space-base: 16px;
+  --ds-space-lg: 24px;
+  --ds-space-xl: 32px;
+  --ds-space-2xl: 48px;
+
+  /* ── Border radius scale ── */
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 8px;
+  --ds-radius-lg: 12px;
+  --ds-radius-xl: 16px;
+
+  /* Card chrome — aligned with ds.card in lib/design-system.ts */
+  --ds-card-bg: var(--card);
+  --ds-card-border: var(--border);
+  --ds-shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 3px rgb(0 0 0 / 0.06);
+  --ds-shadow-card-dark: 0 4px 14px rgb(0 0 0 / 0.35);
+
+  /* ── Illustration min font — nothing below this in any mockup UI ── */
+  --ds-illus-min-font: 12px;
+
+  /* ── Chart / dashboard color vars ── */
+  --demand-grid: rgba(255,255,255,0.06);
+  --demand-forecast-stroke: rgba(255,255,255,0.35);
+  --demand-actual-stroke: rgba(255,255,255,0.85);
+  --demand-fill-start: rgba(255,255,255,0.12);
+  --demand-fill-end: rgba(255,255,255,0.01);
+  --demand-marker-fill: #f59e0b;
+  --demand-marker-ring: rgba(245,158,11,0.35);
+  --demand-callout-line: rgba(255,255,255,0.15);
+}
+
+/* Dark surfaces: semantic DS text vars flip for children under `.dark` */
+.dark {
+  --ds-text-primary: #fafafa;
+  --ds-text-on-card: var(--ds-text-body-dark);
+  --ds-text-muted-semantic: var(--ds-text-muted-dark);
+  --ds-card-bg: #0a0a0a;
+  --ds-card-border: rgba(255, 255, 255, 0.1);
 }
 
 @theme inline {
@@ -29,6 +90,13 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-serif);
   --max-width-content: var(--max-width-content);
+  --max-width-readable: var(--max-width-readable);
+  --max-width-narrow: var(--max-width-narrow);
+  --radius-ds-sm: var(--ds-radius-sm);
+  --radius-ds-md: var(--ds-radius-md);
+  --radius-ds-lg: var(--ds-radius-lg);
+  --radius-ds-xl: var(--ds-radius-xl);
+  --shadow-ds-card: var(--ds-shadow-card);
 }
 
 /* Doto variable font — company name on landing */
@@ -81,6 +149,16 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(4px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ProductSteps ExecuteVisual3 — vehicle card skeleton */
+@keyframes vehicleCardShimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 /* Why-us capability panel: direction hints when changing tabs */

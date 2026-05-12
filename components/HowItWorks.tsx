@@ -1,6 +1,47 @@
 "use client";
 
+import type { ReactNode } from "react";
 import Image from "next/image";
+
+import { ds } from "@/lib/design-system";
+
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const iconSrc = (file: string) => (basePath ? `${basePath}/icons/${file}` : `/icons/${file}`);
+
+const CHANNEL_TOOLS = [
+  { src: iconSrc("whatsapp.png"), alt: "WhatsApp", label: "WhatsApp" },
+  { src: iconSrc("gmail.png"), alt: "Email", label: "Email" },
+  { src: iconSrc("mobile.png"), alt: "Phone call", label: "Call" },
+  { src: iconSrc("excel.png"), alt: "Microsoft Excel", label: "Excel" },
+] as const;
+
+/** ~1em cap height, inline with body copy */
+function InlineChannelLogo({ file, alt }: { file: string; alt: string }) {
+  return (
+    <Image
+      src={iconSrc(file)}
+      alt={alt}
+      width={16}
+      height={16}
+      className="mx-[0.15em] inline-block size-[1em] shrink-0 align-middle object-contain"
+      sizes="16px"
+    />
+  );
+}
+
+/** Visual cluster: WhatsApp, Gmail, phone — paired with sr-only text where used */
+function InlineOrderChannels() {
+  return (
+    <>
+      <span className="sr-only">WhatsApp, email, and phone </span>
+      <span className="inline-flex items-center gap-[0.2em] align-middle" aria-hidden>
+        <InlineChannelLogo file="whatsapp.png" alt="" />
+        <InlineChannelLogo file="gmail.png" alt="" />
+        <InlineChannelLogo file="mobile.png" alt="" />
+      </span>
+    </>
+  );
+}
 
 /** Clears fixed `LandingHeader` (top offset + bar + inset) — keep in sync with header layout */
 const SECTION_STYLE = {
@@ -35,18 +76,23 @@ const FEATURE_ICONS = {
   ),
 } satisfies Record<string, React.ReactNode>;
 
-const FEATURES = [
+const FEATURES: { icon: ReactNode; title: string; description: ReactNode }[] = [
   {
     icon: FEATURE_ICONS.chat,
-    title: "Orders in, instantly",
-    description:
-      "WhatsApp voice notes and mixed-language messages become confirmed orders — SKU-matched and logged without retyping.",
+    title: "Orders processed instantly",
+    description: (
+      <>
+        <span className="sr-only">WhatsApp, phone, and email: </span>
+        WhatsApp, Email, Excel Sheets, Phone call
+        and mixed-language messages become confirmed orders.
+      </>
+    ),
   },
   {
     icon: FEATURE_ICONS.box,
     title: "Matched, checked, confirmed",
     description:
-      "Inventory checked, orders created, confirmations sent back on chat. Works with how your team already works.",
+      "Inventory checked, orders created, confirmations sent back. Works with how your team already operates.",
   },
   {
     icon: FEATURE_ICONS.pulse,
@@ -58,7 +104,7 @@ const FEATURES = [
     icon: FEATURE_ICONS.truck,
     title: "Production and dispatch, in sync",
     description:
-      "Schedules and loads rebalance to meet spikes. Your ops team gets clear updates without chasing status.",
+      "When demand spikes, production schedules and dispatch plans adjust automatically. Your team sees what changed and why — no status calls needed.",
   },
 ];
 
@@ -69,8 +115,8 @@ export default function HowItWorks() {
       style={SECTION_STYLE}
       className="scroll-mt-[var(--how-header-clearance)] bg-background text-neutral-950 dark:bg-black dark:text-white"
     >
-      <div className="grid lg:grid-cols-[minmax(0,1fr)_auto] lg:h-[calc(100svh-var(--how-header-clearance))] lg:min-h-0">
-        <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:aspect-auto lg:h-full lg:max-h-none lg:min-h-0 lg:min-w-0">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_auto] lg:min-h-[calc(100svh-var(--how-header-clearance))] lg:items-stretch">
+        <div className="relative aspect-[5/4] w-full min-h-[200px] max-h-[42svh] sm:aspect-[4/3] sm:max-h-[44svh] lg:aspect-auto lg:h-full lg:min-h-0 lg:min-w-0 lg:max-h-none">
           <Image
             src="/fmcg.jpeg"
             alt="FMCG warehouse and distribution — stacked cartons and supply operations"
@@ -91,14 +137,20 @@ export default function HowItWorks() {
 
             <div className="shrink-0 space-y-3 sm:space-y-4 lg:space-y-[clamp(0.4rem,1.15vmin,0.85rem)]">
               <h2 className="mt-6 max-w-3xl text-3xl font-normal leading-[1.05] tracking-tight text-neutral-950 sm:text-5xl md:text-6xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.85rem,5.6vmin,4.35rem)] lg:leading-[1.04] dark:text-white">
-                We plug into your operations
+                We plug into your operations.
                 <br />
-                no new tools, no migration.
+                No new tools, no migration.
               </h2>
-              <p className="mt-4 max-w-xl text-sm leading-relaxed text-neutral-600 sm:text-base lg:mt-0 lg:max-w-none lg:text-[clamp(0.875rem,1.55vmin,1.125rem)] lg:leading-relaxed dark:text-white/55">
-                Your team already sends orders on WhatsApp and tracks stock in
-                Excel. We wire into those channels directly — no retraining, no
-                new logins, no IT project.
+              <p
+                className={`${ds.text.sectionDesc} mt-4 max-w-xl text-lg leading-relaxed text-neutral-800 sm:text-xl lg:mt-0 lg:max-w-none lg:text-[clamp(1.0625rem,1.85vmin,1.3125rem)] lg:leading-relaxed dark:text-white/85`}
+              >
+                Your team already sends orders on <InlineOrderChannels />
+                and tracks stock in{" "}
+                <span className="sr-only">Excel </span>
+                <span className="inline-block align-middle" aria-hidden>
+                  <InlineChannelLogo file="excel.png" alt="" />
+                </span>
+                . We wire into those channels directly — no migration downtime, no retraining.
               </p>
             </div>
 
@@ -108,14 +160,14 @@ export default function HowItWorks() {
                   key={feature.title}
                   className={`flex items-start gap-4 py-4 sm:gap-5 sm:py-5 lg:gap-3.5 lg:py-[clamp(0.65rem,2vmin,1rem)] ${i > 0 ? "border-t border-neutral-200 dark:border-white/10" : ""}`}
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-300/80 bg-white text-neutral-800 lg:size-[clamp(2.35rem,5.25vmin,2.85rem)] lg:[&_svg]:size-[clamp(1rem,2.35vmin,1.25rem)] dark:border-white/[0.12] dark:bg-white/[0.035] dark:text-white/85">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-neutral-200 bg-white text-neutral-700 lg:size-[clamp(2.35rem,5.25vmin,2.85rem)] lg:[&_svg]:size-[clamp(1rem,2.35vmin,1.25rem)] dark:border-white/10 dark:bg-white/[0.04] dark:text-white/80">
                     {feature.icon}
                   </div>
                   <div className="min-w-0 flex-1 pt-0.5 lg:pt-0">
-                    <h3 className="text-lg font-normal leading-snug text-neutral-950 lg:text-[clamp(1.0625rem,1.85vmin,1.1875rem)] lg:leading-snug dark:text-white">
+                    <h3 className="text-lg font-medium leading-snug text-neutral-900 lg:text-[clamp(1.0625rem,1.85vmin,1.1875rem)] lg:leading-snug dark:text-white">
                       {feature.title}
                     </h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-neutral-600 sm:mt-2 lg:mt-1.5 lg:text-[clamp(0.9375rem,1.45vmin,1.0625rem)] lg:leading-relaxed dark:text-white/55">
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-neutral-700 sm:mt-2 lg:mt-1.5 lg:text-[clamp(0.9375rem,1.55vmin,1.0625rem)] lg:leading-relaxed dark:text-white/70">
                       {feature.description}
                     </p>
                   </div>

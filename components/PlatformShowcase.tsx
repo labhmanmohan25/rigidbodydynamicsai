@@ -12,7 +12,7 @@ import {
 } from "motion/react";
 
 /* ────────────────────────────────────────────────────────────────────────────
- *  Demand vs Forecast — last 14 days, Maharashtra · SKU-228 (200ml glucose)
+ *  Demand vs Forecast — last 14 days, Maharashtra — SKU-228 Maggi Sauce 500g (canonical with ProductSteps)
  *  Forecast is intentionally wavy (typical rolling model output); actual tracks close.
  *  Y-axis zooms to ~88–102 so small ripples read clearly (common in forecast vs actual UI).
  * ──────────────────────────────────────────────────────────────────────────── */
@@ -152,7 +152,7 @@ function DemandChart() {
 
       {/* x-axis day labels */}
       <div
-        className="mt-1 grid px-2 font-mono text-[9.5px] text-white/35"
+        className="mt-1 grid px-2 font-mono text-[10px] text-white/35"
         style={{ gridTemplateColumns: `repeat(${X_LABELS.length}, minmax(0, 1fr))` }}
       >
         {X_LABELS.map((d, i) => (
@@ -175,7 +175,7 @@ function DemandChart() {
           top: `${(divergeY / h) * 100 - 4}%`,
         }}
       >
-        +1% above forecast · within ±15% tolerance, no replenishment triggered
+        +1% above forecast — within ±15% tolerance; no replenishment triggered
       </div>
     </div>
   );
@@ -204,28 +204,170 @@ function Sparkline({ values, w = 60, h = 18 }: { values: number[]; w?: number; h
 }
 
 const KPIS = [
-  { k: "Orders processed", v: "12,840", d: "+12%", source: "from WhatsApp + phone", trend: [40, 42, 38, 50, 55, 52, 60, 64], up: true },
-  { k: "On-time fulfilment", v: "94.2%", d: "+1.4 pts", trend: [88, 89, 90, 91, 92, 93, 93, 94], up: true },
-  { k: "Outstanding (₹ Cr)", v: "28.4", d: "-6%", trend: [34, 33, 32, 31, 30, 30, 29, 28], up: false },
-  { k: "Stockouts averted", v: "37", d: "+5", source: "auto-procurement", trend: [12, 14, 18, 22, 25, 30, 33, 37], up: true },
-  { k: "Active disruptions", v: "3", d: "-2", source: "auto-resolved", trend: [6, 5, 5, 4, 4, 5, 4, 3], up: false },
+  {
+    k: "Orders processed",
+    v: "12,840",
+    vUnit: "orders",
+    d: "+12% MoM",
+    dNote: "vs prior calendar month — same basis: orders processed (count)",
+    source: "from WhatsApp + phone",
+    trend: [40, 42, 38, 50, 55, 52, 60, 64],
+    up: true,
+  },
+  {
+    k: "On-time fulfilment",
+    v: "94.2%",
+    vUnit: "of lines shipped on time",
+    d: "+1.4 pp vs last month",
+    trend: [88, 89, 90, 91, 92, 93, 93, 94],
+    up: true,
+  },
+  {
+    k: "Outstanding",
+    v: "₹28.4 Cr",
+    vUnit: "receivables",
+    d: "-6% vs last month",
+    dNote: "vs prior month — same basis: ₹ outstanding",
+    trend: [34, 33, 32, 31, 30, 30, 29, 28],
+    up: false,
+  },
+  {
+    k: "Stockouts averted",
+    v: "37",
+    vUnit: "SKUs",
+    d: "+5 vs last week",
+    dNote: "week-over-week — distinct SKU count",
+    source: "auto-procurement",
+    trend: [12, 14, 18, 22, 25, 30, 33, 37],
+    up: true,
+  },
+  {
+    k: "Active disruptions",
+    v: "3",
+    vUnit: "open issues",
+    d: "-2 vs last week",
+    dNote: "week-over-week — open disruption tickets",
+    source: "auto-resolved",
+    trend: [6, 5, 5, 4, 4, 5, 4, 3],
+    up: false,
+  },
 ];
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Disruption radar
  * ──────────────────────────────────────────────────────────────────────────── */
-const DISRUPTIONS = [
-  "Sugar - Vendor #4 delayed 36h -> auto-routed to Vendor #2",
-  "SKU-228 demand +18% in MH -> procurement triggered",
-  "Distributor D-087 over credit limit -> orders on hold",
+type DisruptionItem = {
+  id: string;
+  headline: string;
+  suggestion: string;
+  autoLabel: string;
+};
+
+const DISRUPTION_ITEMS: DisruptionItem[] = [
+  {
+    id: "beans",
+    headline: "Coffee beans — Vendor #4 is 36h late on Lot B712.",
+    suggestion: "Shift this week’s inbound to Vendor #2 and SMS Indore DC the revised ETA.",
+    autoLabel: "Run auto-reroute",
+  },
+  {
+    id: "sunrise",
+    headline: "Nescafe Sunrise 100g (SKU-302) — demand up ~18% in Pune Region.",
+    suggestion: "Raise safety stock for 7 days and confirm an extra PO slot with the primary vendor.",
+    autoLabel: "Run auto-procure",
+  },
+  {
+    id: "credit",
+    headline: "Buyer D-087 (Coimbatore District) — over credit limit.",
+    suggestion: "Hold new orders until collections posts ₹4.2L; offer part-ship on prepaid terms.",
+    autoLabel: "Run auto-hold",
+  },
 ];
+
+function DemandSkuSearchMock() {
+  return (
+    <div className="mt-3 max-w-md">
+      <div
+        className="w-full rounded-md border border-neutral-200/90 bg-white px-2.5 py-1.5 font-mono text-[11px] text-neutral-900 dark:border-white/12 dark:bg-white/[0.03] dark:text-white"
+        aria-hidden
+      >
+        SKU-228 — Maggi Sauce 500g
+      </div>
+      <p className="mt-1 text-[10px] text-neutral-500 dark:text-white/40">
+        Demo search — filters the chart view only in a live build.
+      </p>
+    </div>
+  );
+}
+
+function DisruptionRadarPanel() {
+  return (
+    <>
+      <ul className="mt-4 space-y-3">
+        {DISRUPTION_ITEMS.map((item) => {
+          return (
+            <li
+              key={item.id}
+              className="rounded border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/8 dark:bg-white/[0.02]"
+            >
+              <p className="font-mono text-[11px] font-medium leading-snug text-neutral-900 dark:text-white/90">
+                {item.headline}
+              </p>
+              <div className="mt-2.5 flex gap-2">
+                <div
+                  className="group flex min-w-0 flex-1 items-start gap-2 rounded-md border border-transparent text-left"
+                  aria-hidden
+                >
+                  <span
+                    className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] leading-none border-neutral-300 bg-white text-transparent dark:border-white/25 dark:bg-transparent"
+                  >
+                    ✓
+                  </span>
+                  <span
+                    className="font-mono text-[10.5px] leading-relaxed text-neutral-700 dark:text-white/70"
+                  >
+                    {item.suggestion}
+                  </span>
+                </div>
+              </div>
+              <div className="mt-2 flex flex-wrap items-center gap-2">
+                <div
+                  className="rounded border border-neutral-200/90 bg-white px-2 py-1 font-mono text-[10px] uppercase tracking-wider text-neutral-700 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/75"
+                  aria-hidden
+                >
+                  {item.autoLabel}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+
+      <div className="mt-3 border-t border-neutral-200/80 pt-3 dark:border-white/10">
+        <div
+          className="w-full rounded-md border border-dashed border-neutral-300/90 bg-neutral-50/50 py-2 text-center font-mono text-[10.5px] text-neutral-700 dark:border-white/15 dark:bg-white/[0.02] dark:text-white/75"
+          aria-hidden
+        >
+          Check news for related items
+        </div>
+      </div>
+    </>
+  );
+}
 
 /* ────────────────────────────────────────────────────────────────────────────
  *  Inventory heatmap — 5 SKU groups × 6 depots
  *  Values 0–100 = days of cover; <14 = risk, 14–30 = healthy, >45 = excess
  * ──────────────────────────────────────────────────────────────────────────── */
-const DEPOTS = ["Pune", "Indore", "Surat", "Coim.", "Kolk.", "Patna"];
-const SKU_GROUPS = ["Glucose", "Biscuits", "Snacks", "Beverages", "Spreads"];
+const DEPOT_COLS = [
+  { name: "Pune Region", gloss: "Wholesale hub" },
+  { name: "Indore Region", gloss: "Distributor (MP)" },
+  { name: "Surat Region", gloss: "Regional DC" },
+  { name: "Coimbatore", gloss: "District / TN distributor" },
+  { name: "Kolkata", gloss: "Eastern region hub" },
+  { name: "Patna Region", gloss: "Distributor (Bihar)" },
+] as const;
+const SKU_GROUPS = ["Noodles", "Coffee", "Chocolates", "Dairy", "Sauces"];
 const COVER = [
   [22, 18, 11, 26, 31, 14],
   [28, 24, 30, 19, 12, 21],
@@ -256,9 +398,9 @@ const AGING = [
  *  OEE = Availability × Performance × Quality
  * ──────────────────────────────────────────────────────────────────────────── */
 const PRODUCTION_LINES = [
-  { line: "Line A", product: "Glucose 200g", oee: 82, availability: 88, performance: 95, quality: 98, status: "running" as const },
-  { line: "Line B", product: "Biscuits 150g", oee: 77, availability: 84, performance: 94, quality: 97, status: "running" as const },
-  { line: "Line C", product: "Beverages 250ml", oee: 91, availability: 96, performance: 97, quality: 98, status: "running" as const },
+  { line: "Line A", product: "Maggi Noodles 70g", oee: 82, availability: 88, performance: 95, quality: 98, status: "running" as const },
+  { line: "Line B", product: "Nescafe Sunrise 100g", oee: 77, availability: 84, performance: 94, quality: 97, status: "running" as const },
+  { line: "Line C", product: "KitKat 4-Finger", oee: 91, availability: 96, performance: 97, quality: 98, status: "running" as const },
 ];
 
 const UNITS_YTD = 428297;
@@ -368,7 +510,7 @@ export default function PlatformShowcase() {
           <br />
           run themselves.
         </h2>
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-neutral-600 sm:text-base dark:text-white/55">
+        <p className="mt-4 max-w-3xl text-base leading-relaxed text-neutral-700 sm:text-lg dark:text-white/70">
           Every order, payment, and shipment lands in one live view. You see
           what the agents are doing, what they've decided, and what needs your
           call - without chasing anyone for an update.
@@ -399,8 +541,8 @@ export default function PlatformShowcase() {
               <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]/95 dark:bg-white/20" />
               <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]/95 dark:bg-white/15" />
             </div>
-            <span className="min-w-0 flex-1 basis-auto truncate pl-0 font-mono text-xs text-neutral-500 dark:text-white/45">
-              ops.rigidbody.ai / acme-foods · operations
+            <span className="min-w-0 flex-1 basis-auto truncate pl-0 text-center font-mono text-xs text-neutral-500 dark:text-white/45">
+              dashboard
             </span>
             <span className="ml-auto inline-flex shrink-0 items-center gap-1.5 rounded border border-neutral-200/90 bg-white px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-neutral-600 dark:border-white/15 dark:bg-white/[0.04] dark:text-white/70">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse dark:bg-green-400" />
@@ -411,12 +553,13 @@ export default function PlatformShowcase() {
           {/* Sub-nav */}
           <div className="flex flex-wrap items-center gap-1 border-b border-neutral-200/80 bg-[#fffefb] px-3 dark:border-white/10 dark:bg-[#0a0a0a]">
             {[
-              "Operations",
+              "Overview",
               "Demand",
               "Production",
               "Inventory",
               "Credit",
-              "Agents",
+              "Disruptions",
+              "Forecast",
             ].map((t, i) => {
               const active = i === 0;
               return (
@@ -449,15 +592,23 @@ export default function PlatformShowcase() {
                 <div className="mt-2 flex items-baseline justify-between gap-2">
                   <span className="text-[22px] font-semibold leading-none text-neutral-900 dark:text-white">
                     {k.v}
+                    {"vUnit" in k && k.vUnit ? (
+                      <span className="ml-1 text-[11px] font-normal text-neutral-500 dark:text-white/45">
+                        {k.vUnit}
+                      </span>
+                    ) : null}
                   </span>
                   <span
-                    className={`font-mono text-[11px] ${
-                      k.up ? "text-emerald-800 dark:text-white/85" : "text-neutral-600 dark:text-white/55"
+                    className={`text-right font-mono text-[11px] leading-snug ${
+                      k.up ? "text-emerald-800 dark:text-white/85" : "text-neutral-700 dark:text-white/70"
                     }`}
                   >
                     {k.d}
                   </span>
                 </div>
+                {"dNote" in k && k.dNote ? (
+                  <p className="mt-1 text-[9.5px] leading-snug text-neutral-500 dark:text-white/38">{k.dNote}</p>
+                ) : null}
                 {"source" in k && k.source ? (
                   <p className="mt-1 text-[10px] text-neutral-500 dark:text-white/40">{k.source}</p>
                 ) : null}
@@ -475,10 +626,10 @@ export default function PlatformShowcase() {
                     Demand vs Forecast
                   </p>
                   <p className="mt-0.5 font-mono text-[11px] text-neutral-500 dark:text-white/45">
-                    SKU-228 · Maharashtra · last 14 days
+                    SKU-228 — Maggi Sauce 500g — Maharashtra — last 14 days
                   </p>
                 </div>
-                <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-neutral-600 dark:text-white/55">
+                <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-neutral-700 dark:text-white/70">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="inline-block h-[2px] w-3 bg-neutral-900 dark:bg-white" />
                     Actual
@@ -495,12 +646,15 @@ export default function PlatformShowcase() {
                   </span>
                 </div>
               </div>
+              <DemandSkuSearchMock />
               <div className="mt-5">
                 <DemandChart />
               </div>
-              <div className="mt-4 flex flex-row items-center justify-between gap-0 border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
-                <span>Forecast accuracy · 91%</span>
-                <span>Auto-corrections this week · 4</span>
+              <div className="mt-4 flex flex-row items-center justify-between gap-2 border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
+                <span>Forecast accuracy — 91% (14-d MAPE)</span>
+                <span className="text-right">
+                  4 replenishment runs auto-adjusted this week (schedule + safety stock)
+                </span>
               </div>
             </div>
 
@@ -513,22 +667,10 @@ export default function PlatformShowcase() {
                 </span>
               </div>
 
-              <ul className="mt-4 space-y-3">
-                {DISRUPTIONS.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded border border-neutral-200/80 bg-neutral-50/80 p-3 dark:border-white/8 dark:bg-white/[0.02]"
-                  >
-                    <p className="font-mono text-[11px] leading-relaxed text-neutral-700 dark:text-white/70">
-                      {item}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              <DisruptionRadarPanel />
 
-              <div className="mt-4 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
-                <span>MTTR · 6m 22s</span>
-                <span>Auto-resolved · 87%</span>
+              <div className="mt-4 flex items-center justify-end border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
+                <span>Auto-resolved — 87% (of closed disruption tickets)</span>
               </div>
             </div>
           </div>
@@ -542,7 +684,7 @@ export default function PlatformShowcase() {
                   Production line performance
                 </p>
                 <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
-                  OEE · 3 active lines
+                  OEE — 3 active lines
                 </p>
               </div>
 
@@ -553,7 +695,10 @@ export default function PlatformShowcase() {
                       <div className="flex items-center gap-2">
                         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                         <span className="font-mono text-[11.5px] text-neutral-900 dark:text-white">{line.line}</span>
-                        <span className="font-mono text-[10.5px] text-neutral-500 dark:text-white/45">· {line.product}</span>
+                        <span className="font-mono text-[10.5px] text-neutral-500 dark:text-white/45">
+                          {" "}
+                          — {line.product}
+                        </span>
                       </div>
                       <span className={`font-mono text-[13px] font-semibold ${
                         line.oee >= 85 ? "text-emerald-700 dark:text-emerald-400" : line.oee >= 70 ? "text-neutral-800 dark:text-white/85" : "text-neutral-500 dark:text-white/55"
@@ -589,8 +734,8 @@ export default function PlatformShowcase() {
               </div>
 
               <div className="mt-4 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
-                <span>Plant OEE · 83.3%</span>
-                <span>Target · 85%</span>
+                <span>Plant OEE — 83.3%</span>
+                <span>Target — 85%</span>
               </div>
             </div>
 
@@ -621,7 +766,8 @@ export default function PlatformShowcase() {
                 />
               </div>
               <p className="mt-1.5 font-mono text-[10.5px] text-neutral-500 dark:text-white/45">
-                {((UNITS_YTD / UNITS_TARGET) * 100).toFixed(1)}% of target · {(UNITS_TARGET - UNITS_YTD).toLocaleString()} remaining
+                {((UNITS_YTD / UNITS_TARGET) * 100).toFixed(1)}% of target — {(UNITS_TARGET - UNITS_YTD).toLocaleString()}{" "}
+                units remaining
               </p>
 
               {/* Lost units */}
@@ -639,7 +785,7 @@ export default function PlatformShowcase() {
                           style={{ width: `${c.pct}%` }}
                         />
                       </div>
-                      <span className="w-24 text-right font-mono text-[10.5px] text-neutral-600 dark:text-white/55">{c.cause}</span>
+                      <span className="w-24 text-right font-mono text-[10.5px] text-neutral-700 dark:text-white/70">{c.cause}</span>
                       <span className="w-8 text-right font-mono text-[10.5px] text-neutral-800 dark:text-white/80">{c.pct}%</span>
                     </div>
                   ))}
@@ -657,23 +803,26 @@ export default function PlatformShowcase() {
                   Inventory cover
                 </p>
                 <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
-                  days of cover · by SKU group × depot
+                  days of cover — by SKU group × depot
                 </p>
               </div>
 
               <div className="mt-5 overflow-x-auto">
                 <div
                   className="grid gap-1.5"
-                  style={{ gridTemplateColumns: `92px repeat(${DEPOTS.length}, minmax(0, 1fr))` }}
+                  style={{ gridTemplateColumns: `92px repeat(${DEPOT_COLS.length}, minmax(0, 1fr))` }}
                 >
                   {/* header row */}
                   <div />
-                  {DEPOTS.map((d) => (
+                  {DEPOT_COLS.map((d) => (
                     <div
-                      key={d}
-                      className="text-center font-mono text-[10px] uppercase tracking-wider text-neutral-500 dark:text-white/45"
+                      key={d.name}
+                      className="text-center font-mono text-[9px] uppercase leading-tight tracking-wider text-neutral-500 dark:text-white/45"
                     >
-                      {d}
+                      <div className="text-neutral-600 dark:text-white/55">{d.name}</div>
+                      <div className="mt-0.5 normal-case tracking-normal text-[8px] text-neutral-400 dark:text-white/35">
+                        {d.gloss}
+                      </div>
                     </div>
                   ))}
 
@@ -689,7 +838,7 @@ export default function PlatformShowcase() {
                       <div
                         key={`${r}-${c}`}
                         className={`flex h-9 items-center justify-center rounded font-mono text-[11px] ${cellTone(v)}`}
-                        title={`${g} @ ${DEPOTS[c]} · ${v} days cover`}
+                        title={`${g} @ ${DEPOT_COLS[c]!.name} — ${v} days cover`}
                       >
                         {v}
                       </div>
@@ -701,11 +850,11 @@ export default function PlatformShowcase() {
               <div className="mt-5 flex flex-wrap items-center gap-3 border-t border-neutral-200/80 pt-3 font-mono text-[10.5px] text-neutral-600 dark:border-white/10 dark:text-white/55">
                 <span className="inline-flex items-center gap-1.5">
                   <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-950 dark:bg-white" />
-                  &lt; 14 d · risk
+                  &lt; 14 d — risk
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="inline-block h-2.5 w-2.5 rounded-sm bg-emerald-200 dark:bg-white/35" />
-                  14–30 d · healthy
+                  14–30 d — healthy
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-200 dark:bg-white/15" />
@@ -713,7 +862,7 @@ export default function PlatformShowcase() {
                 </span>
                 <span className="inline-flex items-center gap-1.5">
                   <span className="inline-block h-2.5 w-2.5 rounded-sm bg-neutral-100 ring-1 ring-neutral-300 dark:bg-white/5 dark:ring-white/10" />
-                  &gt; 45 d · excess
+                  &gt; 45 d — excess
                 </span>
               </div>
             </div>
@@ -725,7 +874,7 @@ export default function PlatformShowcase() {
                   Receivables aging
                 </p>
                 <p className="font-mono text-[11px] text-neutral-500 dark:text-white/45">
-                  ₹ Cr · 142 distributors
+                  ₹ Cr — 142 buyers
                 </p>
               </div>
 
@@ -736,7 +885,7 @@ export default function PlatformShowcase() {
                       key={a.bucket}
                       className={a.tone}
                       style={{ width: `${(a.amt / totalOutstanding) * 100}%` }}
-                      title={`${a.bucket} · ₹${a.amt.toFixed(1)} Cr`}
+                      title={`${a.bucket} — ₹${a.amt.toFixed(1)} Cr`}
                     />
                   ))}
                 </div>
@@ -761,8 +910,8 @@ export default function PlatformShowcase() {
               </div>
 
               <div className="mt-5 flex items-center justify-between border-t border-neutral-200/80 pt-3 font-mono text-[11px] text-neutral-600 dark:border-white/10 dark:text-white/55">
-                <span>Total · ₹{totalOutstanding.toFixed(1)} Cr</span>
-                <span>Auto-holds active · 9</span>
+                <span>Total — ₹{totalOutstanding.toFixed(1)} Cr</span>
+                <span>Auto-holds active — 9 accounts</span>
               </div>
             </div>
           </div>
