@@ -369,7 +369,7 @@ const SECTIONS = [
         <p>
           Questions about these Terms?{" "}
           <Link
-            href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+            href="https://calendar.app.google/BBf57YUkQsQxwzG28"
             className="cursor-pointer text-foreground underline underline-offset-2 hover:opacity-80"
             target="_blank"
             rel="noopener noreferrer"

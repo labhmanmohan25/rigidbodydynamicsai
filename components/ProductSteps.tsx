@@ -2292,7 +2292,7 @@ export default function ProductSteps() {
                   To customize according to your needs
                 </p>
                 <Link
-                  href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+                  href="https://calendar.app.google/BBf57YUkQsQxwzG28"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex h-11 cursor-pointer items-center justify-center rounded-lg bg-neutral-900 px-6 text-[13px] font-medium text-white transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-white/90"

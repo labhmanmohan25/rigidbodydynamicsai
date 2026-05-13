@@ -35,7 +35,7 @@ export default function SupplyHero() {
 
         <div className="mt-10 flex justify-center">
           <Link
-            href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+            href="https://calendar.app.google/BBf57YUkQsQxwzG28"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-11 cursor-pointer items-center justify-center rounded-md bg-neutral-900 px-6 text-[13px] font-medium uppercase tracking-[0.18em] text-accent-foreground transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-white/90"

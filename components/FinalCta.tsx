@@ -23,7 +23,7 @@ export default function FinalCta() {
               <span className="cta-ai-glow-rotor" />
             </span>
             <Link
-              href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+              href="https://calendar.app.google/BBf57YUkQsQxwzG28"
               target="_blank"
               rel="noopener noreferrer"
               className="relative z-10 inline-flex h-12 cursor-pointer items-center justify-center rounded-md bg-neutral-900 px-8 text-[13px] font-medium uppercase tracking-[0.18em] text-accent-foreground transition-colors hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-white/90"

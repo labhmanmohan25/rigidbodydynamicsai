@@ -173,7 +173,7 @@ export default function LandingHeader() {
 
           <div className="hidden shrink-0 items-center gap-2 md:flex">
             <Link
-              href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+              href="https://calendar.app.google/BBf57YUkQsQxwzG28"
               target="_blank"
               rel="noopener noreferrer"
               className={ctaClass}
@@ -200,7 +200,7 @@ export default function LandingHeader() {
 
           <div className="flex min-w-0 flex-1 items-center md:hidden">
             <Link
-              href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+              href="https://calendar.app.google/BBf57YUkQsQxwzG28"
               target="_blank"
               rel="noopener noreferrer"
               className={`${ctaBase} min-w-0 w-full max-w-full shrink justify-center`}
@@ -300,7 +300,7 @@ export default function LandingHeader() {
             })}
           </ul>
           <Link
-            href="https://calendar.app.google/7roAZLoLHpcUxiYu7"
+            href="https://calendar.app.google/BBf57YUkQsQxwzG28"
             target="_blank"
             rel="noopener noreferrer"
             className={`${ctaClass} mx-auto mt-4`}
