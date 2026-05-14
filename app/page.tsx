@@ -20,40 +20,29 @@ export default function Home() {
           <OutcomesStrip />
         </TrackedHomeSection>
         <SectionDivider />
-        <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">   
-          <SectionDivider />
-        </div>
         <TrackedHomeSection sectionId="how_it_works">
           <HowItWorks />
         </TrackedHomeSection>
-        <SectionDivider />
-        <div className="py-24 sm:py-36">
+        <div className="pt-24 pb-8">
           <SectionDivider />
         </div>
+   
         <TrackedHomeSection sectionId="agents">
           <AgentsGrid />
         </TrackedHomeSection>
-        <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">   
           <SectionDivider />
-        </div>
         <TrackedHomeSection sectionId="product_steps">
           <ProductSteps />
         </TrackedHomeSection>
         <SectionDivider />
-        <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">   
-          <SectionDivider />
-        </div>
         <TrackedHomeSection sectionId="platform">
           <PlatformShowcase />
         </TrackedHomeSection>
         <SectionDivider />
-        <div className="pt-24 pb-12 sm:pt-32 sm:pb-16">   
-          <SectionDivider />
-        </div>
         <TrackedHomeSection sectionId="cta">
           <FinalCta />
         </TrackedHomeSection>
-        <div className="py-12 sm:pt-32 sm:pb-16">   
+        <div className="py-12 sm:pt-24 sm:pb-16">   
           <SectionDivider />
         </div>
       </div>
