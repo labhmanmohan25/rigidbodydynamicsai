@@ -27,6 +27,7 @@ export default function AboutPage() {
             <ul className="mt-6 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed text-neutral-600 marker:text-neutral-400 dark:text-neutral-400 dark:marker:text-neutral-500">
               <li>IITian (same alma mater as CEOs of Google & IBM)</li>
               <li>Awarded by Prime Minister of India</li>
+              <li>Winner of India Australia Circular Economy Hackathon 2021</li>
               <li>Former Quant Strat at Goldman Sachs (FX and commodities)</li>
               <li>Leads market research, design, and product strategy</li>
             </ul>
@@ -51,6 +52,7 @@ export default function AboutPage() {
             <ul className="mt-6 list-outside list-disc space-y-2 pl-5 text-sm leading-relaxed text-neutral-600 marker:text-neutral-400 dark:text-neutral-400 dark:marker:text-neutral-500">
               <li>IITian (same alma mater as CEOs of Google & IBM)</li>
               <li>Awarded by Prime Minister of India</li>
+              <li>Winner of India Australia Circular Economy Hackathon 2021</li>
               <li>Senior SWE (5 yr experience, ex-Postman)</li>
               <li>Leads tech development and scalability</li>
               <li>Inventor: patented EEG-controlled medical bed (GYTI awardee)</li>
