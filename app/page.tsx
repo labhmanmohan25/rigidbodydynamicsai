@@ -1,4 +1,5 @@
 import AgentsGrid from "@/components/AgentsGrid";
+import BullwhipEffect from "@/components/BullwhipEffect";
 import FinalCta from "@/components/FinalCta";
 import HomeDarkFooter from "@/components/HomeDarkFooter";
 import HowItWorks from "@/components/HowItWorks";
@@ -37,6 +38,10 @@ export default function Home() {
         <SectionDivider />
         <TrackedHomeSection sectionId="platform">
           <PlatformShowcase />
+        </TrackedHomeSection>
+        <SectionDivider />
+        <TrackedHomeSection sectionId="bullwhip">
+          <BullwhipEffect />
         </TrackedHomeSection>
         <SectionDivider />
         <TrackedHomeSection sectionId="cta">

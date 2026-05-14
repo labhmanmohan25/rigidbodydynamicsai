@@ -1675,14 +1675,15 @@ function ExecuteVisual1() {
 
 /* ── EXECUTE VISUAL 2  -  Manufacturer production pipeline ──── */
 function ExecuteVisual2() {
+  const reduceMotion = useReducedMotion();
   const visRef = useRef<HTMLDivElement>(null);
   const isVisible = useVisibleInViewport(visRef);
 
   const topSteps = [
     { title: "Order received", sub: "ORD-4821 · Pune wholesaler · Nescafe + Maggi lines" },
-    { title: "Low-stock signal raised", sub: "Nescafe Sunrise (SKU-302) below safety cover" },
   ];
   const blurredSteps = [
+    { title: "Low-stock signal raised", sub: "Nescafe Sunrise (SKU-302) below safety cover" },
     { title: "Procurement order placed", sub: "Soluble coffee base from CCL Products India" },
     { title: "Inventory reservation posted", sub: "Sunrise 80 ctns · Maggi Noodles 120 ctns allocated" },
     { title: "Manufacturing scheduled", sub: "Line A · Nescafe Sunrise WO-9921 · May 9 slot" },
@@ -1692,15 +1693,28 @@ function ExecuteVisual2() {
   const bottomStep = { title: "Confirmation sent", sub: "WhatsApp & email to buyer with committed window", channelIcons: true as const };
 
   const totalVisible = topSteps.length + 1 + 1; // top + blur block + bottom
-  const [activeSection, setActiveSection] = useState(0);
+  const [activeSection, setActiveSection] = useState(reduceMotion ? totalVisible - 1 : 0);
 
   useEffect(() => {
+    if (reduceMotion) {
+      setActiveSection(totalVisible - 1);
+      return;
+    }
     if (!isVisible) return;
-    const interval = window.setInterval(() => {
-      setActiveSection((prev) => (prev + 1) % totalVisible);
-    }, 1400);
-    return () => window.clearInterval(interval);
-  }, [isVisible, totalVisible]);
+    let cancelled = false;
+    (async () => {
+      while (!cancelled) {
+        for (let i = 0; i < totalVisible; i++) {
+          setActiveSection(i);
+          await wait(i === totalVisible - 1 ? 3000 : 1400);
+          if (cancelled) break;
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [reduceMotion, isVisible, totalVisible]);
 
   const tagCls =
     "bg-violet-600 px-2.5 py-1 text-xs font-semibold text-white shadow-sm ring-0 dark:bg-violet-500";
@@ -1729,25 +1743,8 @@ function ExecuteVisual2() {
     <div ref={visRef} className="flex h-full w-full items-center justify-center px-6 sm:px-10">
       <div className="w-full max-w-[460px]">
         <div className="relative rounded-2xl border border-neutral-200 bg-white dark:border-white/10 dark:bg-neutral-900">
-          <span
-            className={`pointer-events-none absolute left-4 top-0 z-30 max-w-[calc(100%-8.5rem)] -translate-y-1/2 truncate rounded-full px-2.5 py-1 text-xs font-semibold leading-snug shadow-sm ${tagCls}`}
-          >
-            Manufacturer view
-          </span>
-          <span className="pointer-events-none absolute right-4 top-0 z-30 -translate-y-1/2 whitespace-nowrap rounded-full bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white shadow-sm dark:bg-emerald-500">
-            <span className="inline-flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-white/90" />
-              Synced
-            </span>
-          </span>
-          <div className="border-b border-neutral-100 px-4 pt-5 pb-2.5 dark:border-white/5">
-            <div className="flex items-start gap-2 pr-14">
-              <LogoBadge size="sm" animated />
-              <div className="min-w-0">
-                <p className="text-sm font-semibold text-neutral-800 dark:text-white">Production & dispatch timeline</p>
-                <p className={`${ds.text.caption} text-neutral-400`}>From order commit through buyer ETA</p>
-              </div>
-            </div>
+          <div className="border-b border-neutral-100 px-4 pt-5 pb-3 dark:border-white/5">
+            <p className="mt-0.5 text-xs text-neutral-800 dark:text-neutral-400">From order confirmation to buyer ETA, <Image src="/logo.png" alt="RBD" width={20} height={8} className="inline-block align-middle dark:hidden" /><Image src="/logowhite.png" alt="RBD" width={20} height={8} className="hidden align-middle dark:inline-block" /> handles the steps, while you remain in control.</p>
           </div>
 
           <div className="p-3.5">
@@ -1768,16 +1765,18 @@ function ExecuteVisual2() {
 
               {/* Blurred middle section - each step has its own dot + connector */}
               <div className="relative">
-                <div className="select-none blur-[3px] opacity-40">
+                <div className="select-none">
                   {blurredSteps.map((s, i) => (
-                    <div key={s.title} className="flex gap-3">
-                      <div className="flex w-4 shrink-0 flex-col items-center self-stretch pt-[3px]">
-                        <div className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-all duration-500 ${
-                          activeSection >= topSteps.length ? "border-emerald-500 bg-emerald-500" : "border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
-                        }`}>
-                          <svg viewBox="0 0 8 8" className={`h-2 w-2 ${activeSection >= topSteps.length ? "opacity-100" : "opacity-0"}`} fill="none">
-                            <path d="M1.5 4l1.5 1.5 3-3" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
+                    <div key={s.title} className="flex gap-3 relative z-10">
+                      <div className="flex w-4 shrink-0 flex-col items-center self-stretch overflow-visible pt-[3px]">
+                        <div className={`step-ai-glow-wrap ${activeSection >= topSteps.length ? "step-ai-glow-active" : ""}`}>
+                          <span className="step-ai-glow-border" aria-hidden />
+                          <div className={`relative z-10 flex h-4 w-4 shrink-0 items-center justify-center rounded-full transition-all duration-500 ${
+                            activeSection >= topSteps.length ? "bg-neutral-900 dark:bg-white" : "border border-neutral-300 bg-white dark:border-white/20 dark:bg-neutral-800"
+                          }`}>
+                            <Image src="/logowhite.png" alt="" width={10} height={10} className={`h-2.5 w-2.5 object-contain transition-opacity duration-500 dark:hidden ${activeSection >= topSteps.length ? "opacity-100" : "opacity-0"}`} />
+                            <Image src="/logo.png" alt="" width={10} height={10} className={`hidden h-2.5 w-2.5 object-contain transition-opacity duration-500 dark:block ${activeSection >= topSteps.length ? "opacity-100" : "opacity-0"}`} />
+                          </div>
                         </div>
                         {i < blurredSteps.length - 1 && (
                           <div className={`mx-auto mt-1 min-h-[18px] w-px flex-1 rounded-full ${
@@ -1796,12 +1795,6 @@ function ExecuteVisual2() {
                       </div>
                     </div>
                   ))}
-                </div>
-                {/* Overlay text - left aligned */}
-                <div className="pointer-events-none absolute inset-0 flex items-center">
-                  <div className="pl-7">
-                    <p className="text-[12px] font-semibold text-violet-700 dark:text-violet-300">AI agents handle from order to delivery</p>
-                  </div>
                 </div>
               </div>
 
@@ -1887,7 +1880,7 @@ function ExecuteVisual3() {
             <div className="flex items-center gap-2">
               <LogoBadge size="sm" animated={stage < 4} />
               <span className="text-sm font-semibold tracking-tight text-neutral-800 dark:text-white">
-                Dispatch coordination
+                Dispatch Rigid Body Dynamics
               </span>
             </div>
             <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2 py-0.5 dark:bg-emerald-900/30">

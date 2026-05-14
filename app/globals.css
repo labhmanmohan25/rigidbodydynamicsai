@@ -303,6 +303,55 @@ button:focus-visible .cta-text-roll > span {
   opacity: 0.62;
 }
 
+/* Checkbox AI border — rotating conic gradient border ring behind step dots */
+.step-ai-glow-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+
+.step-ai-glow-border {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  --cta-ai-glow-angle: 0deg;
+  background: conic-gradient(
+    from var(--cta-ai-glow-angle) at 50% 50%,
+    #22d3ee 0deg,
+    #6366f1 90deg,
+    #c084fc 180deg,
+    #f472b6 270deg,
+    #22d3ee 360deg
+  );
+  opacity: 0;
+  animation: cta-ai-glow-spin 2s linear infinite;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.step-ai-glow-active .step-ai-glow-border {
+  opacity: 1;
+}
+
+/* Mask out the center so only a 3px border ring shows */
+.step-ai-glow-border::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 9999px;
+  background: white;
+}
+
+.dark .step-ai-glow-border::after {
+  background: #171717;
+}
+
 /* Active indicator  -  heartbeat dot with expanding halo */
 @keyframes heartbeat-dot {
   0%, 100% { transform: scale(1); }
